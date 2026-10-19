@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Normalized X12 implementation guide",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["guide", "requirements"],
+  "properties": {
+    "guide": { "$ref": "#/$defs/guide" },
+    "requirements": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/requirement" }
+    }
+  },
+  "$defs": {
+    "guide": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "partner", "partner_role", "transaction_set", "version", "source"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "partner": { "type": "string", "minLength": 1 },
+        "partner_role": { "enum": ["shipper", "3pl", "carrier", "other"] },
+        "transaction_set": { "type": "string", "pattern": "^[0-9]{3}$" },
+        "version": { "type": "string", "pattern": "^[0-9]{6}$" },
+        "modes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["truckload", "ltl", "intermodal", "drayage", "air", "ocean", "rail"] }
+        },
+        "revision": { "type": "string" },
+        "revision_date": { "type": "string", "format": "date" },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["url", "sha256", "retrieved", "pages"],
+          "properties": {
+            "url": { "type": "string", "format": "uri" },
+            "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+            "retrieved": { "type": "string", "format": "date" },
+            "pages": { "type": "integer", "minimum": 1 }
+          }
+        }
+      }
+    },
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "usage", "evidence"],
+      "properties": {
+        "key": { "$ref": "#/$defs/key" },
+        "usage": { "$ref": "#/$defs/usage" },
+        "max_use": { "type": "integer", "minimum": 1 },
+        "loop_repeat": { "type": "integer", "minimum": 1 },
+        "codes": { "$ref": "#/$defs/codes" },
+        "conditions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/condition" }
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidence" }
+        },
+        "review": { "$ref": "#/$defs/review" }
+      }
+    },
+    "key": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["segment", "position"],
+      "properties": {
+        "segment": { "type": "string", "pattern": "^[A-Z][A-Z0-9]{1,2}$" },
+        "position": { "type": "string", "pattern": "^[0-9]{3}$" },
+        "loop": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[0-9]{4}$" }
+        },
+        "element": { "type": "string", "pattern": "^[A-Z][A-Z0-9]{1,2}[0-9]{2}$" },
+        "qualifier": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared"],
+      "properties": {
+        "base": { "enum": ["M", "O", "X"] },
+        "declared": { "$ref": "#/$defs/usage_level" },
+        "declared_label": { "type": "string" },
+        "effective": { "$ref": "#/$defs/usage_level" }
+      }
+    },
+    "usage_level": {
+      "enum": ["required", "recommended", "optional", "not_recommended", "not_used", "conditional", "unknown"]
+    },
+    "codes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {
+        "mode": { "enum": ["enumerated", "all_standard", "reference", "unspecified"] },
+        "values": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string" }
+        },
+        "ref": { "type": "string", "pattern": "^[A-Z][A-Z0-9]{1,2}[0-9]{2}$" },
+        "standard_total": { "type": "integer", "minimum": 1 }
+      },
+      "allOf": [
+        { "if": { "properties": { "mode": { "const": "enumerated" } } }, "then": { "required": ["values"] } },
+        { "if": { "properties": { "mode": { "const": "reference" } } }, "then": { "required": ["ref"] } }
+      ]
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "text"],
+      "properties": {
+        "kind": { "enum": ["syntax", "semantic", "timing", "context"] },
+        "text": { "type": "string", "minLength": 1 }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["page", "excerpt"],
+      "properties": {
+        "page": { "type": "integer", "minimum": 1 },
+        "excerpt": { "type": "string", "minLength": 1 },
+        "supports": {
+          "type": "array",
+          "items": { "enum": ["key", "usage", "max_use", "loop_repeat", "codes", "conditions"] }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason"],
+      "properties": {
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

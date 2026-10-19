@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Judgement on one aligned requirement pair",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["left", "right", "category", "label", "annotator"],
+  "properties": {
+    "left": { "$ref": "#/$defs/side" },
+    "right": { "$ref": "#/$defs/side" },
+    "category": { "enum": ["usage", "codes", "repetition", "condition", "extension"] },
+    "label": { "enum": ["same", "different", "unknown"] },
+    "annotator": { "type": "string", "minLength": 1 },
+    "rationale": { "type": "string" }
+  },
+  "$defs": {
+    "side": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["guide"],
+      "properties": {
+        "guide": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "key": { "$ref": "guide.schema.json#/$defs/key" }
+      }
+    }
+  }
+}
