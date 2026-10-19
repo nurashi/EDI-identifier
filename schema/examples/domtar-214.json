@@ -1,0 +1,62 @@
+{
+  "guide": {
+    "id": "domtar-214",
+    "partner": "Domtar Industries",
+    "partner_role": "shipper",
+    "transaction_set": "214",
+    "version": "004010",
+    "modes": ["truckload", "ltl"],
+    "revision_date": "2008-09-24",
+    "source": {
+      "url": "https://www.iconnect-corp.com/specifications/vendors/Domtar/214SPECS_toolkit.pdf",
+      "sha256": "098b98e96d796a67380f06788764749ed3e06a61d3122be83f6abf9527ac1691",
+      "retrieved": "2026-10-19",
+      "pages": 23
+    }
+  },
+  "requirements": [
+    {
+      "key": { "segment": "LX", "position": "130", "loop": ["0200"] },
+      "usage": { "declared": "unknown" },
+      "max_use": 1,
+      "loop_repeat": 999999,
+      "evidence": [
+        { "page": 8, "excerpt": "LOOP ID - 0200 999999 / 130 LX Assigned Number 1", "supports": ["max_use", "loop_repeat"] }
+      ],
+      "review": { "reason": "The transaction structure table has no usage column for LX." }
+    },
+    {
+      "key": { "segment": "AT7", "position": "140", "loop": ["0200", "0205"] },
+      "usage": { "declared": "optional", "declared_label": "Optional", "effective": "required" },
+      "max_use": 1,
+      "loop_repeat": 10,
+      "conditions": [
+        { "kind": "context", "text": "Truckload - Minimum of 5 statuses required (AA or EP/AB/AF/X1/D1 or S1)" },
+        { "kind": "context", "text": "LTL - Minimum of 3 statuses required (AB/AF/D1)" }
+      ],
+      "evidence": [
+        { "page": 8, "excerpt": "LOOP ID - 0205 10 / 140 AT7 Shipment Status Details 1", "supports": ["max_use", "loop_repeat"] },
+        { "page": 17, "excerpt": "AT7 Shipment Status Details / Position: 140 / Loop: 0205 Optional / Usage: Optional / Max Use: 1 / Notes: Truckload - Minimum of 5 statuses required (AA or EP/AB/AF/X1/D1 or S1) / LTL - Minimum of 3 statuses required (AB/AF/D1)", "supports": ["usage", "conditions"] }
+      ],
+      "review": { "reason": "The structured usage says Optional, while the segment note requires at least five truckload statuses." }
+    },
+    {
+      "key": { "segment": "AT7", "position": "140", "loop": ["0200", "0205"], "element": "AT704" },
+      "usage": { "declared": "unknown" },
+      "codes": { "mode": "reference", "ref": "AT702" },
+      "evidence": [
+        { "page": 20, "excerpt": "AT704 1651 Shipment Status or Appointment Reason Code ID 2/2 Same 70 codes as AT702", "supports": ["codes"] }
+      ]
+    },
+    {
+      "key": { "segment": "AT7", "position": "140", "loop": ["0200", "0205"], "element": "AT707" },
+      "usage": { "declared": "unknown" },
+      "codes": { "mode": "enumerated", "values": ["CT", "ET", "MT", "PT"] },
+      "evidence": [
+        { "page": 20, "excerpt": "AT707 623 Time Code ID 2/2 CT Central Time ET Eastern Time MT Mountain Time PT Pacific Time", "supports": ["codes"] },
+        { "page": 9, "excerpt": "AT7***AB**19980130*0802*LT", "supports": ["codes"] }
+      ],
+      "review": { "reason": "The sample messages use LT, which is absent from the enumerated AT707 code list." }
+    }
+  ]
+}

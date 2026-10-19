@@ -1,0 +1,61 @@
+{
+  "guide": {
+    "id": "kbx-214",
+    "partner": "KBX Technology Solutions",
+    "partner_role": "3pl",
+    "transaction_set": "214",
+    "version": "004010",
+    "modes": ["truckload", "intermodal", "ltl"],
+    "revision_date": "2023-11-09",
+    "source": {
+      "url": "https://kbx.com/wp-content/uploads/2025/09/KBXTECH214-1.pdf",
+      "sha256": "c5e6ed5f63faf46304aa9c012b3b9ae34de44e79cc0b2d654a92b48e8f5f224e",
+      "retrieved": "2026-10-19",
+      "pages": 30
+    }
+  },
+  "requirements": [
+    {
+      "key": { "segment": "L11", "position": "030" },
+      "usage": { "declared": "required", "declared_label": "M" },
+      "max_use": 300,
+      "evidence": [
+        { "page": 6, "excerpt": "16 030 L11 Business Instruction and Reference Number M 300", "supports": ["usage", "max_use"] },
+        { "page": 2, "excerpt": "5/3/2022 Update L11 Header position 030 L11*4F updated to optional / 5/4/2022 Correction L11 Updated L11 segment back to mandatory to avoid confusion surrounding L11*BM requirement", "supports": ["usage"] }
+      ]
+    },
+    {
+      "key": { "segment": "LX", "position": "130", "loop": ["0200"] },
+      "usage": { "declared": "required", "declared_label": "M" },
+      "max_use": 1,
+      "loop_repeat": 1,
+      "evidence": [
+        { "page": 6, "excerpt": "LOOP ID - 0200 1 / 23 130 LX Assigned Number M 1", "supports": ["usage", "max_use", "loop_repeat"] }
+      ]
+    },
+    {
+      "key": { "segment": "AT7", "position": "140", "loop": ["0200", "0205"] },
+      "usage": { "declared": "required", "declared_label": "Mandatory" },
+      "max_use": 1,
+      "loop_repeat": 10,
+      "evidence": [
+        { "page": 6, "excerpt": "LOOP ID - 0205 10 / 24 140 AT7 Shipment Status Details M 1", "supports": ["usage", "max_use", "loop_repeat"] },
+        { "page": 18, "excerpt": "Segment: AT7 Shipment Status Details / Position: 140 / Loop: 0205 Mandatory / Usage: Mandatory / Max Use: 1", "supports": ["usage", "max_use"] }
+      ]
+    },
+    {
+      "key": { "segment": "AT7", "position": "140", "loop": ["0200", "0205"], "element": "AT707" },
+      "usage": { "base": "X", "declared": "conditional", "declared_label": "X" },
+      "codes": { "mode": "enumerated", "values": ["LT"] },
+      "conditions": [
+        { "kind": "syntax", "text": "If AT706 is present then AT707 is required." },
+        { "kind": "semantic", "text": "LT is the only allowable Time Code for AT707. All times must be sent in the time zone of the reported location." }
+      ],
+      "evidence": [
+        { "page": 18, "excerpt": "5 If AT706 is present then AT707 is required.", "supports": ["conditions"] },
+        { "page": 18, "excerpt": "2 LT is the only allowable Time Code for AT707. All times must be sent in the time zone of the reported location.", "supports": ["codes", "conditions"] },
+        { "page": 20, "excerpt": "AT707 623 Time Code X ID 2/2 Code identifying the time zone. LT Local Time", "supports": ["usage", "codes"] }
+      ]
+    }
+  ]
+}
