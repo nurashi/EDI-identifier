@@ -20,3 +20,10 @@ jobs:
       - run: go vet ./...
       - run: go test -race ./...
       - run: docker build -t edi-backend .
+
+  schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: pipx run check-jsonschema --check-metaschema schema/guide.schema.json schema/divergence.schema.json
+      - run: pipx run check-jsonschema --schemafile schema/guide.schema.json schema/examples/*.json
