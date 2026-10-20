@@ -7,7 +7,7 @@
   "properties": {
     "left": { "$ref": "#/$defs/side" },
     "right": { "$ref": "#/$defs/side" },
-    "category": { "enum": ["usage", "codes", "repetition", "condition", "extension"] },
+    "category": { "enum": ["usage", "codes", "repetition", "condition"] },
     "label": { "enum": ["same", "different", "unknown"] },
     "annotator": { "type": "string", "minLength": 1 },
     "rationale": { "type": "string" }

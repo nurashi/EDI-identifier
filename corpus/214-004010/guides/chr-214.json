@@ -1,0 +1,1798 @@
+{
+  "guide": {
+    "id": "chr-214",
+    "partner": "C.H. Robinson",
+    "partner_role": "3pl",
+    "transaction_set": "214",
+    "version": "004010",
+    "modes": [
+      "truckload"
+    ],
+    "revision": "1.7 Final",
+    "revision_date": "2022-09-13",
+    "source": {
+      "url": "https://www.chrobinson.com/en-us/-/media/chrobinson/documents/carrier-specs-docs/carrier-specs-dec-2020/chr-truckload-tl-carrier-x12-214.pdf",
+      "sha256": "0d28243812f1bac25b550008054c59e652061688da47b15665a39f412d883eaa",
+      "retrieved": "2026-10-19",
+      "pages": 32
+    }
+  },
+  "requirements": [
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020"
+      },
+      "usage": {
+        "base": "M",
+        "declared": "required",
+        "declared_label": "Used"
+      },
+      "max_use": 1,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "E0105 - Only one of B1001 or B1005 may be present."
+        },
+        {
+          "kind": "syntax",
+          "text": "P0506 - If either B1005 or B1006 is present, then the other is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "R0106 - At least one of B1001 or B1006 is required."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 3,
+          "excerpt": "020 B10 Beginning Segment for M 1 Used",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 11,
+          "excerpt": "Pos: 020 Max: 1 / User Option (Usage): Used",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 11,
+          "excerpt": "E0105 - Only one of B1001 or B1005 may be present. / P0506 - If either B1005 or B1006 is present, then the other is required. / R0106 - At least one of B1001 or B1006 is required.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020",
+        "element": "B1001"
+      },
+      "usage": {
+        "base": "M",
+        "declared": "required",
+        "declared_label": "Used"
+      },
+      "evidence": [
+        {
+          "page": 11,
+          "excerpt": "B1001 127 Reference Identification M AN 1/30 Used",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020",
+        "element": "B1002"
+      },
+      "usage": {
+        "base": "O",
+        "declared": "optional",
+        "declared_label": "Used"
+      },
+      "evidence": [
+        {
+          "page": 11,
+          "excerpt": "B1002 145 Shipment Identification Number O AN 1/30 Used",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020",
+        "element": "B1003"
+      },
+      "usage": {
+        "base": "M",
+        "declared": "required",
+        "declared_label": "Used"
+      },
+      "codes": {
+        "mode": "unspecified"
+      },
+      "evidence": [
+        {
+          "page": 11,
+          "excerpt": "B1003 140 Standard Carrier Alpha Code M ID 2/4 Used",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "030"
+      },
+      "usage": {
+        "base": "O",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "max_use": 300,
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "AG - Qualifer is MANDATORY on all 214's."
+        },
+        {
+          "kind": "syntax",
+          "text": "P0102 - If either L1101 or L1102 is present, then the other is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "R0103 - At least one of L1101 or L1103 is required."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 3,
+          "excerpt": "030 L11 Business Instructions and O 300 Must use",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 12,
+          "excerpt": "Pos: 030 Max: 300 / User Option (Usage): Must use",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 12,
+          "excerpt": "P0102 - If either L1101 or L1102 is present, then the other is required. / R0103 - At least one of L1101 or L1103 is required. / AG - Qualifer is MANDATORY on all 214's.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "030",
+        "element": "L1101"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "C.H. Robinson Load Number - AG Qualifier (Should match the Load Number in the B10_02)"
+        }
+      ],
+      "evidence": [
+        {
+          "page": 12,
+          "excerpt": "L1101 127 Reference Identification X AN 1/30 Must use",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 12,
+          "excerpt": "User Note 1: C.H. Robinson Load Number - AG Qualifier (Should match the Load / Number in the B10_02)",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "030",
+        "element": "L1102"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "AG"
+        ],
+        "standard_total": 1503
+      },
+      "evidence": [
+        {
+          "page": 12,
+          "excerpt": "L1102 128 Reference Identification Qualifier X ID 2/3 Must use",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 12,
+          "excerpt": "Code List Summary (Total Codes: 1503, Included: 1) / AG Agent's Shipment Number",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "LX",
+        "position": "130",
+        "loop": [
+          "0200"
+        ]
+      },
+      "usage": {
+        "base": "O",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "max_use": 1,
+      "loop_repeat": 1,
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "If using the L11 segments to send Lat/Long, you do not need to use both formats. Please choose only one."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 3,
+          "excerpt": "LOOP ID - 0200 1 / 130 LX Assigned Number O 1 Must use",
+          "supports": [
+            "usage",
+            "max_use",
+            "loop_repeat"
+          ]
+        },
+        {
+          "page": 4,
+          "excerpt": "Only one status per 214 / A single 214 may contain 1 LX Loop with 1 AT7 Loop.",
+          "supports": [
+            "loop_repeat"
+          ]
+        },
+        {
+          "page": 19,
+          "excerpt": "Pos: 130 Max: 1 / User Option (Usage): Must use / Maximum of 1 LX Loop.",
+          "supports": [
+            "usage",
+            "max_use",
+            "loop_repeat"
+          ]
+        },
+        {
+          "page": 19,
+          "excerpt": "If using the L11 segments to send Lat/Long, you do not need to use both formats. Please choose only / one.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "LX",
+        "position": "130",
+        "loop": [
+          "0200"
+        ],
+        "element": "LX01"
+      },
+      "usage": {
+        "base": "M",
+        "declared": "required",
+        "declared_label": "Used"
+      },
+      "evidence": [
+        {
+          "page": 19,
+          "excerpt": "LX01 554 Assigned Number M N0 1/6 Used",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ]
+      },
+      "usage": {
+        "base": "O",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "max_use": 1,
+      "loop_repeat": 1,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "C0605 - If AT706 is present, then AT705 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "C0706 - If AT707 is present, then AT706 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "E0103 - Only one of AT701 or AT703 may be present."
+        },
+        {
+          "kind": "syntax",
+          "text": "P0102 - If either AT701 or AT702 is present, then the other is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "P0304 - If either AT703 or AT704 is present, then the other is required."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 3,
+          "excerpt": "LOOP ID - 0205 1 / 140 AT7 Shipment Status Details O 1 Must use",
+          "supports": [
+            "usage",
+            "max_use",
+            "loop_repeat"
+          ]
+        },
+        {
+          "page": 20,
+          "excerpt": "Pos: 140 Repeat: 1 / Loop Shipment Status Details Mandatory",
+          "supports": [
+            "loop_repeat"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "Pos: 140 Max: 1 / User Option (Usage): Must use",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 22,
+          "excerpt": "C0605 - If AT706 is present, then AT705 is required. / C0706 - If AT707 is present, then AT706 is required. / E0103 - Only one of AT701 or AT703 may be present. / P0102 - If either AT701 or AT702 is present, then the other is required. / P0304 - If either AT703 or AT704 is present, then the other is required.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT701"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "codes": {
+        "mode": "all_standard",
+        "standard_total": 42
+      },
+      "conditions": [
+        {
+          "kind": "context",
+          "text": "At a minimum C.H. Robinson must receive the X3 & AF for every Pick Up location and X1 & CD for every Delivery location on all shipments."
+        },
+        {
+          "kind": "timing",
+          "text": "Ideally within 15 minutes of the event."
+        },
+        {
+          "kind": "timing",
+          "text": "C.H. Robinson wants to recieve In-Transit updates every 15 minutes in the form of an X6 status code."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 21,
+          "excerpt": "AT701 1650 Shipment Status Code X ID 2/2 Used",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "All valid standard codes are used. (Total Codes: 42)",
+          "supports": [
+            "codes"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "- At a minimum C.H. Robinson must receive the X3 & AF for every Pick Up location / and X1 & CD for every Delivery location on all shipments. Ideally within 15 minutes / of the event. / - C.H. Robinson wants to recieve In-Transit updates every 15 minutes in the form / of an X6 status code.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT702"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "codes": {
+        "mode": "all_standard",
+        "standard_total": 86
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "NS - Normal Status or any Late Reason Code if necessary"
+        }
+      ],
+      "evidence": [
+        {
+          "page": 21,
+          "excerpt": "AT702 1651 Shipment Status or Appointment X ID 2/2 Used",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "User Note 1: NS - Normal Status or any Late Reason Code if necessary",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "All valid standard codes are used. (Total Codes: 86)",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT703"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "AA",
+          "AB"
+        ],
+        "standard_total": 9
+      },
+      "evidence": [
+        {
+          "page": 21,
+          "excerpt": "AT703 1652 Shipment Appointment Status Code X ID 2/2 Used",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "Code List Summary (Total Codes: 9, Included: 2) / AA Pick-up Appointment Date and/or Time / AB Delivery Appointment Date and/or Time",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT704"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "codes": {
+        "mode": "all_standard",
+        "standard_total": 86
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "NA - Normal Appointment or any Late Reason Code if necessary"
+        }
+      ],
+      "evidence": [
+        {
+          "page": 21,
+          "excerpt": "AT704 1651 Shipment Status or Appointment X ID 2/2 Used",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "User Note 1: NA - Normal Appointment or any Late Reason Code if necessary",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "All valid standard codes are used. (Total Codes: 86)",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT705"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "evidence": [
+        {
+          "page": 21,
+          "excerpt": "AT705 373 Status Date X DT 8/8 Must use",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT706"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "evidence": [
+        {
+          "page": 21,
+          "excerpt": "AT706 337 Status Time X TM 4/8 Must use",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT707"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "LT"
+        ],
+        "standard_total": 51
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "The status time represents the local time the status occurred."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 22,
+          "excerpt": "AT707 623 Time Code X ID 2/2 Used",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 22,
+          "excerpt": "The status time represents the local time the status occurred.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 22,
+          "excerpt": "Code List Summary (Total Codes: 51, Included: 1) / LT Local Time",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ]
+      },
+      "usage": {
+        "base": "O",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "max_use": 1,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "C0201 - If MS102 is present, then MS101 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "C0301 - If MS103 is present, then MS101 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "C0604 - If MS106 is present, then MS104 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "C0705 - If MS107 is present, then MS105 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "E0104 - Only one of MS101 or MS104 may be present."
+        },
+        {
+          "kind": "syntax",
+          "text": "P0405 - If either MS104 or MS105 is present, then the other is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "L010203 - If MS101 is present, then at least one of MS102 or MS103 is required."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 3,
+          "excerpt": "143 MS1 Equipment, Shipment, or O 1 Must use",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 23,
+          "excerpt": "Pos: 143 Max: 1 / User Option (Usage): Must use",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 23,
+          "excerpt": "C0201 - If MS102 is present, then MS101 is required. / C0301 - If MS103 is present, then MS101 is required. / C0604 - If MS106 is present, then MS104 is required. / C0705 - If MS107 is present, then MS105 is required. / E0104 - Only one of MS101 or MS104 may be present. / P0405 - If either MS104 or MS105 is present, then the other is required. / L010203 - If MS101 is present, then at least one of MS102 or MS103 is required.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS101"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "evidence": [
+        {
+          "page": 23,
+          "excerpt": "MS101 19 City Name X AN 2/30 Must use",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS102"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "codes": {
+        "mode": "unspecified"
+      },
+      "evidence": [
+        {
+          "page": 23,
+          "excerpt": "MS102 156 State or Province Code X ID 2/2 Must use",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS103"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "codes": {
+        "mode": "unspecified"
+      },
+      "evidence": [
+        {
+          "page": 23,
+          "excerpt": "MS103 26 Country Code X ID 2/3 Used",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ]
+      },
+      "usage": {
+        "base": "O",
+        "declared": "optional",
+        "declared_label": "Used"
+      },
+      "max_use": 1,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "C0402 - If MS204 is present, then MS202 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "P0102 - If either MS201 or MS202 is present, then the other is required."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 3,
+          "excerpt": "146 MS2 Equipment or Container O 1 Used",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 24,
+          "excerpt": "Pos: 146 Max: 1 / User Option (Usage): Used",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 24,
+          "excerpt": "C0402 - If MS204 is present, then MS202 is required. / P0102 - If either MS201 or MS202 is present, then the other is required.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS201"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "codes": {
+        "mode": "unspecified"
+      },
+      "evidence": [
+        {
+          "page": 24,
+          "excerpt": "MS201 140 Standard Carrier Alpha Code X ID 2/4 Used",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS202"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "evidence": [
+        {
+          "page": 24,
+          "excerpt": "MS202 207 Equipment Number X AN 1/10 Used",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS203"
+      },
+      "usage": {
+        "base": "O",
+        "declared": "not_used",
+        "declared_label": "Not used"
+      },
+      "codes": {
+        "mode": "all_standard",
+        "standard_total": 134
+      },
+      "evidence": [
+        {
+          "page": 24,
+          "excerpt": "MS203 40 Equipment Description Code O ID 2/2 Not used",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 24,
+          "excerpt": "All valid standard codes are used. (Total Codes: 134)",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS204"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "not_used",
+        "declared_label": "Not used"
+      },
+      "evidence": [
+        {
+          "page": 24,
+          "excerpt": "MS204 761 Equipment Number Check Digit X N0 1/1 Not used",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "qualifier": [
+          "QN"
+        ]
+      },
+      "usage": {
+        "base": "O",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "max_use": 1,
+      "conditions": [
+        {
+          "kind": "context",
+          "text": "QN - Location Stop Sequence Number is MANDATORY for TRUCKLOAD Carriers."
+        },
+        {
+          "kind": "semantic",
+          "text": "The stop number must match the stop sequence number that corresponds to the location on the load."
+        },
+        {
+          "kind": "semantic",
+          "text": "If you receive the load via 204 the location stop sequence number is in the S5_01."
+        },
+        {
+          "kind": "semantic",
+          "text": "C.H. Robinson does not accept '99' as the final stop."
+        },
+        {
+          "kind": "syntax",
+          "text": "P0102 - If either L1101 or L1102 is present, then the other is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "R0103 - At least one of L1101 or L1103 is required."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 3,
+          "excerpt": "150 L11 Business Instructions and O 1 Must use",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 25,
+          "excerpt": "Pos: 150 Max: 1 / User Option (Usage): Must use / QN Stop Sequence Number",
+          "supports": [
+            "key",
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 25,
+          "excerpt": "QN - Location Stop Sequence Number is MANDATORY for TRUCKLOAD Carriers. / The stop number must match the stop sequence number that corresponds to the location on the load. / If you receive the load via 204 the location stop sequence number is in the S5_01. C.H. Robinson does / not accept '99' as the final stop.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 25,
+          "excerpt": "P0102 - If either L1101 or L1102 is present, then the other is required. / R0103 - At least one of L1101 or L1103 is required.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1101",
+        "qualifier": [
+          "QN"
+        ]
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "evidence": [
+        {
+          "page": 25,
+          "excerpt": "L1101 127 Reference Identification X AN 1/30 Must use",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1102",
+        "qualifier": [
+          "QN"
+        ]
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "QN"
+        ],
+        "standard_total": 1503
+      },
+      "evidence": [
+        {
+          "page": 25,
+          "excerpt": "L1102 128 Reference Identification Qualifier X ID 2/3 Must use",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 25,
+          "excerpt": "Code List Summary (Total Codes: 1503, Included: 1) / QN Stop Sequence Number",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "qualifier": [
+          "LK",
+          "LQ"
+        ]
+      },
+      "usage": {
+        "base": "O",
+        "declared": "recommended",
+        "declared_label": "Recommended"
+      },
+      "max_use": 2,
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "Sending Lat/Long does not replace the requirement for sending city/state in the MS1."
+        },
+        {
+          "kind": "syntax",
+          "text": "P0102 - If either L1101 or L1102 is present, then the other is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "R0103 - At least one of L1101 or L1103 is required."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 3,
+          "excerpt": "150 L11 Business Instructions and O 2 Recommended",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 26,
+          "excerpt": "Pos: 150 Max: 2 / User Option (Usage): Recommended",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 26,
+          "excerpt": "Sending Lat/Long does not replace the requirement for sending city/state in the MS1. / P0102 - If either L1101 or L1102 is present, then the other is required. / R0103 - At least one of L1101 or L1103 is required.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1101",
+        "qualifier": [
+          "LK",
+          "LQ"
+        ]
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "evidence": [
+        {
+          "page": 26,
+          "excerpt": "L1101 127 Reference Identification X AN 1/30 Must use",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1102",
+        "qualifier": [
+          "LK",
+          "LQ"
+        ]
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "LK",
+          "LQ"
+        ],
+        "standard_total": 1503
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "Send Longitude in following format: degrees (3 positions), minutes (2 positions), and seconds (2 positions)."
+        },
+        {
+          "kind": "semantic",
+          "text": "Send Latitude in following format: degrees (2 positions), minutes (2 positions), and seconds (2 positions)."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 26,
+          "excerpt": "L1102 128 Reference Identification Qualifier X ID 2/3 Must use",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 26,
+          "excerpt": "Code List Summary (Total Codes: 1503, Included: 2) / LK Longitude expressed in Degrees, Minutes and Seconds / LQ Latitude Expressed in Degrees, Minutes and Seconds",
+          "supports": [
+            "key",
+            "codes"
+          ]
+        },
+        {
+          "page": 26,
+          "excerpt": "Send Longitude in following format: degrees (3 positions), minutes (2 / positions), and seconds (2 positions). / Send Latitude in following format: degrees (2 positions), minutes (2",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1103",
+        "qualifier": [
+          "LK",
+          "LQ"
+        ]
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "When L11/02 is \"LK\" . Please define East/West using \"E\" or \"W\"."
+        },
+        {
+          "kind": "semantic",
+          "text": "When L11/02 is \"LQ\". Please define North/South using \"N\" or \"S\"."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 26,
+          "excerpt": "L1103 352 Description X AN 1/80 Used",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 26,
+          "excerpt": "User Note 1: When L11/02 is \"LK\" . Please define East/West using \"E\" or \"W\". / When L11/02 is \"LQ\". Please define North/South using \"N\" or \"S\".",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "qualifier": [
+          "LH",
+          "LL"
+        ]
+      },
+      "usage": {
+        "base": "O",
+        "declared": "recommended",
+        "declared_label": "Recommended"
+      },
+      "max_use": 2,
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "Sending Lat/Long does not replace the requirement for sending city/state in the MS1."
+        },
+        {
+          "kind": "syntax",
+          "text": "P0102 - If either L1101 or L1102 is present, then the other is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "R0103 - At least one of L1101 or L1103 is required."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 3,
+          "excerpt": "150 L11 Business Instructions and O 2 Recommended",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 27,
+          "excerpt": "Pos: 150 Max: 2 / User Option (Usage): Recommended",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 27,
+          "excerpt": "Sending Lat/Long does not replace the requirement for sending city/state in the MS1. / P0102 - If either L1101 or L1102 is present, then the other is required. / R0103 - At least one of L1101 or L1103 is required.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1101",
+        "qualifier": [
+          "LH",
+          "LL"
+        ]
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "evidence": [
+        {
+          "page": 27,
+          "excerpt": "L1101 127 Reference Identification X AN 1/30 Must use",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1102",
+        "qualifier": [
+          "LH",
+          "LL"
+        ]
+      },
+      "usage": {
+        "base": "X",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "LH",
+          "LL"
+        ],
+        "standard_total": 1503
+      },
+      "evidence": [
+        {
+          "page": 27,
+          "excerpt": "L1102 128 Reference Identification Qualifier X ID 2/3 Must use",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 27,
+          "excerpt": "Code List Summary (Total Codes: 1503, Included: 2) / LH Longitude Expressed in Seconds / LL Latitude Expressed in Seconds",
+          "supports": [
+            "key",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "qualifier": [
+          "VT"
+        ]
+      },
+      "usage": {
+        "base": "O",
+        "declared": "required",
+        "declared_label": "Must use"
+      },
+      "max_use": 1,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "P0102 - If either L1101 or L1102 is present, then the other is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "R0103 - At least one of L1101 or L1103 is required."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 3,
+          "excerpt": "150 L11 Business Instructions and O 1 Must use",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 28,
+          "excerpt": "Pos: 150 Max: 1 / User Option (Usage): Must use",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 28,
+          "excerpt": "P0102 - If either L1101 or L1102 is present, then the other is required. / R0103 - At least one of L1101 or L1103 is required.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1101",
+        "qualifier": [
+          "VT"
+        ]
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "evidence": [
+        {
+          "page": 28,
+          "excerpt": "L1101 127 Reference Identification X AN 1/30 Used",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1102",
+        "qualifier": [
+          "VT"
+        ]
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "VT"
+        ],
+        "standard_total": 1503
+      },
+      "evidence": [
+        {
+          "page": 28,
+          "excerpt": "L1102 128 Reference Identification Qualifier X ID 2/3 Used",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 28,
+          "excerpt": "Code List Summary (Total Codes: 1503, Included: 1) / VT Motor Vehicle ID Number",
+          "supports": [
+            "key",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ]
+      },
+      "usage": {
+        "base": "O",
+        "declared": "optional",
+        "declared_label": "Used"
+      },
+      "max_use": 10,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "P0607 - If either AT806 or AT807 is present, then the other is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "P010203 - If either AT801, AT802 or AT803 are present, then the others are required."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 3,
+          "excerpt": "200 AT8 Shipment Weight, O 10 Used",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 29,
+          "excerpt": "Pos: 200 Max: 10 / User Option (Usage): Used",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 29,
+          "excerpt": "P0607 - If either AT806 or AT807 is present, then the other is required. / P010203 - If either AT801, AT802 or AT803 are present, then the others are required.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT801"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "codes": {
+        "mode": "all_standard",
+        "standard_total": 51
+      },
+      "evidence": [
+        {
+          "page": 29,
+          "excerpt": "AT801 187 Weight Qualifier X ID 1/2 Used / All valid standard codes are used. (Total Codes: 51)",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT802"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "codes": {
+        "mode": "all_standard",
+        "standard_total": 8
+      },
+      "evidence": [
+        {
+          "page": 29,
+          "excerpt": "AT802 188 Weight Unit Code X ID 1/1 Used / All valid standard codes are used. (Total Codes: 8)",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT803"
+      },
+      "usage": {
+        "base": "X",
+        "declared": "conditional",
+        "declared_label": "Used"
+      },
+      "evidence": [
+        {
+          "page": 29,
+          "excerpt": "AT803 81 Weight X R 1/10 Used",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT804"
+      },
+      "usage": {
+        "base": "O",
+        "declared": "optional",
+        "declared_label": "Used"
+      },
+      "evidence": [
+        {
+          "page": 29,
+          "excerpt": "AT804 80 Lading Quantity O N0 1/7 Used",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT805"
+      },
+      "usage": {
+        "base": "O",
+        "declared": "optional",
+        "declared_label": "Used"
+      },
+      "evidence": [
+        {
+          "page": 29,
+          "excerpt": "AT805 80 Lading Quantity O N0 1/7 Used",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,996 @@
+{
+  "guide": {
+    "id": "domtar-214",
+    "partner": "Domtar Industries",
+    "partner_role": "shipper",
+    "transaction_set": "214",
+    "version": "004010",
+    "modes": [
+      "truckload",
+      "ltl"
+    ],
+    "revision": "214SPECS_toolkit.DOC, cover dated March 12, 2002",
+    "revision_date": "2008-09-24",
+    "source": {
+      "url": "https://www.iconnect-corp.com/specifications/vendors/Domtar/214SPECS_toolkit.pdf",
+      "sha256": "098b98e96d796a67380f06788764749ed3e06a61d3122be83f6abf9527ac1691",
+      "retrieved": "2026-10-19",
+      "pages": 23
+    }
+  },
+  "requirements": [
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "Mandatory"
+      },
+      "max_use": 1,
+      "evidence": [
+        {
+          "page": 8,
+          "excerpt": "020 B10 Beginning Segment for 1",
+          "supports": [
+            "max_use"
+          ]
+        },
+        {
+          "page": 12,
+          "excerpt": "B10 Beginning Segment for Transportation Carrier Shipment Status",
+          "supports": [
+            "key"
+          ]
+        },
+        {
+          "page": 13,
+          "excerpt": "Position: 020 Loop: Level: Usage: Mandatory Max Use: 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020",
+        "element": "B1001"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "evidence": [
+        {
+          "page": 13,
+          "excerpt": "B1001 127 Reference Identification AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020",
+        "element": "B1002"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "evidence": [
+        {
+          "page": 13,
+          "excerpt": "B1002 145 Shipment Identification Number AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020",
+        "element": "B1003"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "codes": {
+        "mode": "unspecified"
+      },
+      "evidence": [
+        {
+          "page": 13,
+          "excerpt": "B1003 140 Standard Carrier Alpha Code ID 2/4",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "030"
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "Optional"
+      },
+      "max_use": 300,
+      "evidence": [
+        {
+          "page": 8,
+          "excerpt": "030 L11 Business Instructions and 300",
+          "supports": [
+            "max_use"
+          ]
+        },
+        {
+          "page": 13,
+          "excerpt": "L11 Business Instructions and Reference Number (BM/CMN) Position: 030 Loop: Level: Usage: Optional Max Use: 300",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "030",
+        "element": "L1101"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "evidence": [
+        {
+          "page": 13,
+          "excerpt": "L1101 127 Reference Identification AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "030",
+        "element": "L1102"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "BM",
+          "CMN"
+        ]
+      },
+      "evidence": [
+        {
+          "page": 13,
+          "excerpt": "L1102 128 Reference Identification Qualifier ID 2/3 BM Bill of Lading Number CMN Continuous Move Number",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "LX",
+        "position": "130",
+        "loop": [
+          "0200"
+        ]
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "Optional"
+      },
+      "max_use": 1,
+      "loop_repeat": 999999,
+      "evidence": [
+        {
+          "page": 8,
+          "excerpt": "LOOP ID - 0200 999999 / 130 LX Assigned Number 1",
+          "supports": [
+            "max_use",
+            "loop_repeat"
+          ]
+        },
+        {
+          "page": 17,
+          "excerpt": "LX Assigned Number Position: 130 Loop: 0200 Optional Level: Usage: Optional Max Use: 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "LX",
+        "position": "130",
+        "loop": [
+          "0200"
+        ],
+        "element": "LX01"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "evidence": [
+        {
+          "page": 17,
+          "excerpt": "LX01 554 Assigned Number N0 1/6",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ]
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "Optional"
+      },
+      "max_use": 1,
+      "loop_repeat": 10,
+      "conditions": [
+        {
+          "kind": "context",
+          "text": "Truckload - Minimum of 5 statuses required (AA or EP/AB/AF/X1/D1 or S1)"
+        }
+      ],
+      "evidence": [
+        {
+          "page": 8,
+          "excerpt": "LOOP ID - 0205 10 / 140 AT7 Shipment Status Details 1",
+          "supports": [
+            "max_use",
+            "loop_repeat"
+          ]
+        },
+        {
+          "page": 17,
+          "excerpt": "AT7 Shipment Status Details Position: 140 Loop: 0205 Optional Level: Usage: Optional Max Use: 1 Notes: Truckload - Minimum of 5 statuses required (AA or EP/AB/AF/X1/D1 or S1)",
+          "supports": [
+            "usage",
+            "max_use",
+            "conditions"
+          ]
+        }
+      ],
+      "review": {
+        "reason": "The usage field says Optional, while the segment note requires at least five truckload statuses. The LTL note on the same page is outside the truckload scope."
+      }
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT701"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "A3",
+          "A7",
+          "A9",
+          "AF",
+          "AH",
+          "AI",
+          "AJ",
+          "AM",
+          "AP",
+          "AR",
+          "AV",
+          "B6",
+          "BA",
+          "BC",
+          "C1",
+          "CA",
+          "CD",
+          "CP",
+          "D1",
+          "I1",
+          "J1",
+          "K1",
+          "L1",
+          "OA",
+          "OO",
+          "P1",
+          "PR",
+          "R1",
+          "RL",
+          "S1",
+          "SD",
+          "X1",
+          "X2",
+          "X3",
+          "X4",
+          "X5",
+          "X6",
+          "X8"
+        ]
+      },
+      "evidence": [
+        {
+          "page": 17,
+          "excerpt": "AT701 1650 Shipment Status Code ID 2/2",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 17,
+          "excerpt": "A3 Shipment Returned to Shipper / CD Carrier Departed Delivery Location",
+          "supports": [
+            "codes"
+          ]
+        },
+        {
+          "page": 18,
+          "excerpt": "CP Completed Loading at Pick-up Location / X8 Arrived at Pick-up Location Loading Dock",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT702"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "A1",
+          "A2",
+          "A3",
+          "A5",
+          "A6",
+          "AA",
+          "AD",
+          "AF",
+          "AH",
+          "AI",
+          "AK",
+          "AL",
+          "AM",
+          "AN",
+          "AO",
+          "AP",
+          "AQ",
+          "AR",
+          "AS",
+          "AT",
+          "AU",
+          "AV",
+          "AW",
+          "AX",
+          "AY",
+          "AZ",
+          "B1",
+          "B2",
+          "B5",
+          "B8",
+          "B9",
+          "BB",
+          "BC",
+          "BD",
+          "BE",
+          "BF",
+          "BH",
+          "BI",
+          "BJ",
+          "BK",
+          "BL",
+          "BM",
+          "BN",
+          "BO",
+          "BP",
+          "BQ",
+          "BR",
+          "BS",
+          "BT",
+          "C1",
+          "C5",
+          "C6",
+          "C7",
+          "C8",
+          "CA",
+          "CB",
+          "CC",
+          "D1",
+          "D2",
+          "HB",
+          "NA",
+          "P1",
+          "P2",
+          "P4",
+          "RC",
+          "S1",
+          "T2",
+          "T3",
+          "T4",
+          "T7"
+        ]
+      },
+      "evidence": [
+        {
+          "page": 18,
+          "excerpt": "AT702 1651 Shipment Status or Appointment Reason Code ID 2/2",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 18,
+          "excerpt": "A1 Missed Delivery / AZ Alternate Carrier Delivered",
+          "supports": [
+            "codes"
+          ]
+        },
+        {
+          "page": 19,
+          "excerpt": "B1 Consignee Closed / T7 Insufficient Delivery Time",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT703"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "AA",
+          "AB",
+          "EP",
+          "AC"
+        ]
+      },
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "AT703 1652 Shipment Appointment Status Code ID 2/2",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 20,
+          "excerpt": "AA Pick-up Appointment Date and/or Time AB Delivery Appointment Date and/or Time EP Pick-up No Earlier Than Date and/or Time AC Estimated Delivery Appointment Date and/or Time",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT704"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "codes": {
+        "mode": "reference",
+        "ref": "AT702"
+      },
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "AT704 1651 Shipment Status or Appointment Reason Code ID 2/2 Same 70 codes as AT702",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT705"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "AT705 373 Date DT 8/8",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT706"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "AT706 337 Time TM 4/8",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT707"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "CT",
+          "ET",
+          "MT",
+          "PT"
+        ]
+      },
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "AT707 623 Time Code ID 2/2 CT Central Time ET Eastern Time MT Mountain Time PT Pacific Time",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        },
+        {
+          "page": 9,
+          "excerpt": "AT7***AB**19980130*0802*LT",
+          "supports": [
+            "codes"
+          ]
+        }
+      ],
+      "review": {
+        "reason": "The transaction examples send LT in AT707, which the AT707 code list does not include."
+      }
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ]
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "Optional"
+      },
+      "max_use": 1,
+      "evidence": [
+        {
+          "page": 8,
+          "excerpt": "143 MS1 Equipment, Shipment, or Real 1",
+          "supports": [
+            "max_use"
+          ]
+        },
+        {
+          "page": 20,
+          "excerpt": "MS1 Equipment, Shipment, or Real Property Location Position: 143 Loop: 0205 Optional Level: Usage: Optional Max Use: 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS101"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "MS101 19 City Name AN 2/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS102"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "codes": {
+        "mode": "unspecified"
+      },
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "MS102 156 State or Province Code ID 2/2",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS103"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "codes": {
+        "mode": "unspecified"
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "Shown if not U.S."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "MS103 26 Country Code ID 2/3 Shown if not U.S.",
+          "supports": [
+            "usage",
+            "codes",
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ]
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "Optional"
+      },
+      "max_use": 1,
+      "evidence": [
+        {
+          "page": 8,
+          "excerpt": "146 MS2 Equipment or Container Owner 1",
+          "supports": [
+            "max_use"
+          ]
+        },
+        {
+          "page": 20,
+          "excerpt": "MS2 Equipment or Container Owner and Type Position: 146 Loop: 0205 Optional Level: Usage: Optional Max Use: 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS201"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "codes": {
+        "mode": "unspecified"
+      },
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "MS201 140 Standard Carrier Alpha Code ID 2/4",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS202"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "evidence": [
+        {
+          "page": 21,
+          "excerpt": "MS202 207 Equipment Number AN 1/10",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ]
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "Optional"
+      },
+      "max_use": 10,
+      "evidence": [
+        {
+          "page": 8,
+          "excerpt": "150 L11 Business Instructions and 10",
+          "supports": [
+            "max_use"
+          ]
+        },
+        {
+          "page": 22,
+          "excerpt": "L11 Business Instructions and Reference Number (QN/VN) Position: 150 Loop: 0200 Optional Level: Usage: Optional Max Use: 10",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1101"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "evidence": [
+        {
+          "page": 22,
+          "excerpt": "L1101 127 Reference Identification AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1102"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "QN",
+          "VN"
+        ]
+      },
+      "evidence": [
+        {
+          "page": 22,
+          "excerpt": "L1102 128 Reference Identification Qualifier ID 2/3 QN Stop Sequence Number VN Vendor Order Number (DII’s internal order number)",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "K1",
+        "position": "170",
+        "loop": [
+          "0200"
+        ]
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "Optional"
+      },
+      "max_use": 10,
+      "evidence": [
+        {
+          "page": 8,
+          "excerpt": "170 K1 Remarks 10",
+          "supports": [
+            "max_use"
+          ]
+        },
+        {
+          "page": 22,
+          "excerpt": "K1 Remarks Position: 170 Loop: 0200 Optional Level: Usage: Optional Max Use: 10",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "K1",
+        "position": "170",
+        "loop": [
+          "0200"
+        ],
+        "element": "K101"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "evidence": [
+        {
+          "page": 22,
+          "excerpt": "K101 61 Free-Form Message AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "K1",
+        "position": "170",
+        "loop": [
+          "0200"
+        ],
+        "element": "K102"
+      },
+      "usage": {
+        "declared": "unknown"
+      },
+      "evidence": [
+        {
+          "page": 22,
+          "excerpt": "K102 61 Free-Form Message AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    }
+  ]
+}

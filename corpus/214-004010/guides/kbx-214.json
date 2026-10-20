@@ -1,0 +1,1974 @@
+{
+  "guide": {
+    "id": "kbx-214",
+    "partner": "KBX Technology Solutions",
+    "partner_role": "3pl",
+    "transaction_set": "214",
+    "version": "004010",
+    "modes": [
+      "truckload",
+      "intermodal",
+      "ltl"
+    ],
+    "revision": "KBX_X12_4010_214, page footer dated May 9, 2022",
+    "revision_date": "2023-11-09",
+    "source": {
+      "url": "https://kbx.com/wp-content/uploads/2025/09/KBXTECH214-1.pdf",
+      "sha256": "c5e6ed5f63faf46304aa9c012b3b9ae34de44e79cc0b2d654a92b48e8f5f224e",
+      "retrieved": "2026-10-19",
+      "pages": 30
+    }
+  },
+  "requirements": [
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "Mandatory"
+      },
+      "max_use": 1,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "B1001 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "B1002 is required when used in Transaction Set 214."
+        },
+        {
+          "kind": "syntax",
+          "text": "B1003 is required when used in Transaction Set 214."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 6,
+          "excerpt": "15 020 B10 Beginning Segment for Transportation Carrier M 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 11,
+          "excerpt": "Segment: B10 Beginning Segment for Transportation Carrier Shipment Status Message Position: 020 Loop: Level: Usage: Mandatory Max Use: 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 11,
+          "excerpt": "Syntax Notes: 1 B1001 is required. / 2 B1002 is required when used in Transaction Set 214. / 3 B1003 is required when used in Transaction Set 214.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020",
+        "element": "B1001"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "evidence": [
+        {
+          "page": 11,
+          "excerpt": "M B1001 127 Reference Identification M AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020",
+        "element": "B1002"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "Shipment id (SID) from 204-B204. Must be exact."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 11,
+          "excerpt": "M B1002 145 Shipment Identification Number M AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 11,
+          "excerpt": "Shipment id (SID) from 204-B204. Must be exact.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "B10",
+        "position": "020",
+        "element": "B1003"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "codes": {
+        "mode": "unspecified"
+      },
+      "evidence": [
+        {
+          "page": 11,
+          "excerpt": "M B1003 140 Standard Carrier Alpha Code M ID 2/4",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "030"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "Mandatory"
+      },
+      "max_use": 300,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "L1101 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "If either L1101 or L1102 is present, then the other is required."
+        },
+        {
+          "kind": "semantic",
+          "text": "The Bill of Lading number is required. From 204-L11 w/BM qualifier. Must be exact."
+        },
+        {
+          "kind": "context",
+          "text": "Continuous Move Number and Return Goods Authorization Number are optional and will only be required upon request."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 6,
+          "excerpt": "16 030 L11 Business Instruction and Reference Number M 300",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 12,
+          "excerpt": "Segment: L11 Business Instructions and Reference Number Position: 030 Loop: Level: Usage: Mandatory Max Use: 300",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 12,
+          "excerpt": "Syntax Notes: 1 L1101 is required. / 2 If either L1101 or L1102 is present, then the other is required. / Comments: The Bill of Lading number is required. From 204-L11 w/BM qualifier. Must be exact. / Notes: Continuous Move Number and Return Goods Authorization Number are optional and will only be required upon request.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 2,
+          "excerpt": "5/3/2022 Update L11 Header position 030 L1101, L1102 L11*4F updated to optional in / 5/4/2022 Correction L11 Header position 030 L1101, L1102 Updated L11 segment back to / mandatory to avoid confusion / surrounding L11*BM requirement",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "030",
+        "element": "L1101"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "evidence": [
+        {
+          "page": 12,
+          "excerpt": "M L1101 127 Reference Identification M AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "030",
+        "element": "L1102"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "4F",
+          "BM",
+          "CMN",
+          "RZ",
+          "BN",
+          "PO",
+          "PRT",
+          "RB",
+          "SI",
+          "VN"
+        ]
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "4F Reference will be sent to a carrier in the outbound 204 from KBXTECH and should be returned on the 214 as it was sent."
+        },
+        {
+          "kind": "context",
+          "text": "Carriers who are not getting a 204 tender from KBXTECH will be instructed on the proper code to be used when sending an EDI 214 message."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 12,
+          "excerpt": "M L1102 128 Reference Identification Qualifier M ID 2/3",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 12,
+          "excerpt": "4F Carrier’s-Assigned Shipper Number / BM Bill of Lading Number / CMN Continuous Move Number / RZ Return Goods Authorization Number / BN Booking Number / PO Purchase Order Number / PRT Product Type / RB Rate Code Number / SI Shipper’s Identifying Number / VN Vendor Number",
+          "supports": [
+            "codes"
+          ]
+        },
+        {
+          "page": 12,
+          "excerpt": "-4F Reference will be sent to a carrier in the outbound / 204 from KBXTECH and should be returned on the 214 as / it was sent. / -Carriers who are not getting a 204 tender from / KBXTECH will be instructed on the proper code to be / used when sending an EDI 214 message.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ],
+      "review": {
+        "reason": "CMN is printed twice in the code list; it is recorded once."
+      }
+    },
+    {
+      "key": {
+        "segment": "LX",
+        "position": "130",
+        "loop": [
+          "0200"
+        ]
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "Mandatory"
+      },
+      "max_use": 1,
+      "loop_repeat": 1,
+      "evidence": [
+        {
+          "page": 6,
+          "excerpt": "LOOP ID – 0200 1 / 23 130 LX Assigned Number M 1",
+          "supports": [
+            "usage",
+            "max_use",
+            "loop_repeat"
+          ]
+        },
+        {
+          "page": 17,
+          "excerpt": "Segment: LX Assigned Number Position: 130 Loop: 0200 Mandatory Level: Usage: Mandatory Max Use: 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 2,
+          "excerpt": "6/28/2021 Correction LX LX Loop 200 LX_01 Correction made in PDF version / page 3 Loop ID 200 changed from / 99999 to 1.",
+          "supports": [
+            "loop_repeat"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "LX",
+        "position": "130",
+        "loop": [
+          "0200"
+        ],
+        "element": "LX01"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "evidence": [
+        {
+          "page": 17,
+          "excerpt": "M LX01 554 Assigned Number M N0 1/6",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ]
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "Mandatory"
+      },
+      "max_use": 1,
+      "loop_repeat": 10,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "Only one of AT701 or AT703 may be present."
+        },
+        {
+          "kind": "syntax",
+          "text": "If either AT701 or AT702 is present, then the other is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "If either AT703 or AT704 is present, then the other is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "AT705 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "If AT706 is present then AT707 is required."
+        },
+        {
+          "kind": "semantic",
+          "text": "If AT701 is present, AT705 is the date the status occurred. If AT703 is present, AT705 is a date related to an appointment."
+        },
+        {
+          "kind": "semantic",
+          "text": "If AT701 is present, AT706 is the time of the status. If AT703 is present, AT706 is the time of the appointment."
+        },
+        {
+          "kind": "semantic",
+          "text": "An AT701 or AT703 is required."
+        },
+        {
+          "kind": "semantic",
+          "text": "LT is the only allowable Time Code for AT707. All times must be sent in the time zone of the reported location."
+        },
+        {
+          "kind": "semantic",
+          "text": "KBX will use the code ‘ZZ’ in the AT701 for En Route to Pick-Up Reporting"
+        },
+        {
+          "kind": "semantic",
+          "text": "XB should be used to indicate a carrier’s Estimated Arrival to the Origin Stop"
+        }
+      ],
+      "evidence": [
+        {
+          "page": 6,
+          "excerpt": "LOOP ID – 0205 10 / 24 140 AT7 Shipment Status Details M 1",
+          "supports": [
+            "usage",
+            "max_use",
+            "loop_repeat"
+          ]
+        },
+        {
+          "page": 18,
+          "excerpt": "Segment: AT7 Shipment Status Details Position: 140 Loop: 0205 Mandatory Level: Usage: Mandatory Max Use: 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 18,
+          "excerpt": "Syntax Notes: 1 Only one of AT701 or AT703 may be present. / 2 If either AT701 or AT702 is present, then the other is required. / 3 If either AT703 or AT704 is present, then the other is required. / 4 AT705 is required. / 5 If AT706 is present then AT707 is required.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 18,
+          "excerpt": "Semantic Notes: 1 If AT701 is present, AT705 is the date the status occurred. If AT703 is present, AT705 is a date related / to an appointment. / 2 If AT701 is present, AT706 is the time of the status. If AT703 is present, AT706 is the time of the / appointment.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 18,
+          "excerpt": "Notes: 1 An AT701 or AT703 is required. / 2 LT is the only allowable Time Code for AT707. All times must be sent in the time zone of the reported / location. / 3 KBX will use the code ‘ZZ’ in the AT701 for En Route to Pick-Up Reporting / 4 XB should be used to indicate a carrier’s Estimated Arrival to the Origin Stop",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT701"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "AF",
+          "AG",
+          "AR",
+          "CD",
+          "K1",
+          "P1",
+          "PR",
+          "RA",
+          "RD",
+          "RL",
+          "XB",
+          "X1",
+          "X3",
+          "X4",
+          "X6",
+          "ZZ"
+        ]
+      },
+      "conditions": [
+        {
+          "kind": "timing",
+          "text": "Please send the Shipment Status Code as soon as you can. Preference would be not to hold the status up for a late reason code."
+        },
+        {
+          "kind": "context",
+          "text": "Truckload: XB, X3, AF, AG, X1 and CD are required (R); X6 is conditional (C*), required unless communicating in-transit through another means (API, P44, Tops2Go); ZZ, PR and K1 are optional (O)."
+        },
+        {
+          "kind": "timing",
+          "text": "Send actuals within 1 hour of the event."
+        },
+        {
+          "kind": "timing",
+          "text": "Send trailer / load location updates every 15 minutes."
+        },
+        {
+          "kind": "semantic",
+          "text": "XB Shipment Acknowledged should be used for Estimated Arrival to Origin Stop."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 18,
+          "excerpt": "AT701 1650 Shipment Status Code X ID 2/2",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 18,
+          "excerpt": "AF Carrier Departed Pick-up Location with Shipment / ZZ En Route to Pick-up Location",
+          "supports": [
+            "codes"
+          ]
+        },
+        {
+          "page": 18,
+          "excerpt": "Please send the Shipment Status Code as soon as you can. Preference would / be not to hold the status up for a late reason code.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 5,
+          "excerpt": "Sending AT7_01 and AT7_03 Status or Appointment Codes / XB X X R / ZZ X X O / X3 X X X R / AF depart the Pick-up stop with X X X R / X6 depart the shipper location X X X C* / *Conditional- Required unless communicating in-transit through / another means (API, P44, Tops2Go) / AG X X X R / PR at Bonded X O / K1 Load has arrived at Customs. X O / X1 prepared to have the X X X R / CD X X X R / Send actuals within 1 hour of the event. / Send trailer / load location updates every 15 minutes until the",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 3,
+          "excerpt": "XB Shipment Acknowledged should be used for Estimated Arrival to Origin Stop.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ],
+      "review": {
+        "reason": "The truckload requirement per status code is read from the table on page 5, whose columns are only aligned by position."
+      }
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT702"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "A1",
+          "A2",
+          "A3",
+          "A5",
+          "A6",
+          "AA",
+          "AD",
+          "AF",
+          "AG",
+          "AH",
+          "AI",
+          "AJ",
+          "AK",
+          "AL",
+          "AM",
+          "AN",
+          "AO",
+          "AP",
+          "AQ",
+          "AR",
+          "AS",
+          "AT",
+          "AU",
+          "AV",
+          "AW",
+          "AX",
+          "AY",
+          "B1",
+          "B2",
+          "B5",
+          "B8",
+          "B9",
+          "BB",
+          "BC",
+          "BD",
+          "BE",
+          "BF",
+          "BG",
+          "BH",
+          "BI",
+          "BJ",
+          "BK",
+          "BL",
+          "BM",
+          "BN",
+          "BO",
+          "BP",
+          "BQ",
+          "BR",
+          "BS",
+          "BT",
+          "C1",
+          "C4",
+          "C5",
+          "C6",
+          "C7",
+          "C8",
+          "CA",
+          "CB",
+          "CC",
+          "D1",
+          "D2",
+          "HB",
+          "NA",
+          "NS",
+          "P1",
+          "P2",
+          "P4",
+          "RC",
+          "S1",
+          "T2",
+          "T3",
+          "T4",
+          "T7"
+        ]
+      },
+      "conditions": [
+        {
+          "kind": "timing",
+          "text": "Please send the Shipment Status Code as soon as you can. Preference would be not to hold the status up for a late reason code."
+        },
+        {
+          "kind": "semantic",
+          "text": "Use codes pertaining to Shipment Status Reporting."
+        },
+        {
+          "kind": "semantic",
+          "text": "‘NA’ is NOT VALID for Status Reporting."
+        },
+        {
+          "kind": "semantic",
+          "text": "‘NS’ should be used for Normal Status."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 19,
+          "excerpt": "AT702 1651 Shipment Status or Appointment Reason Code X ID 2/2",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 19,
+          "excerpt": "Please send the Shipment Status Code as soon as you can. Preference would / be not to hold the status up for a late reason code. / Use codes pertaining to Shipment Status Reporting. / ‘NA’ is NOT VALID for Status Reporting. / ‘NS’ should be used for Normal Status.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 19,
+          "excerpt": "A1 Missed Delivery / BM Flatcar Shortage",
+          "supports": [
+            "codes"
+          ]
+        },
+        {
+          "page": 20,
+          "excerpt": "BN Failed to Release Billing / NA Normal Appointment (Only for use in AT7_04) / NS Normal Status (Only for use in AT7-02) / T7 Insufficient Delivery Time",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT703"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "AA",
+          "AB"
+        ]
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "AA Pick-up Appointment Date and/or Time (No longer should be used as an Estimated Arrival to Shipper)"
+        },
+        {
+          "kind": "context",
+          "text": "Truckload: AB is required (R); AA is conditional (*C), only required if the shipper goes by Appointment."
+        },
+        {
+          "kind": "semantic",
+          "text": "AA should not be used for Estimated Arrival to Origin. Only use AA for communicating Origin Appointments."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "AT703 1652 Shipment Appointment Status Code X ID 2/2",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 20,
+          "excerpt": "AA Pick-up Appointment Date and/or Time (No longer / should be used as an Estimated Arrival to Shipper) / AB Delivery Appointment Date and/or Time",
+          "supports": [
+            "codes",
+            "conditions"
+          ]
+        },
+        {
+          "page": 5,
+          "excerpt": "*Conditional- Only required if the shipper goes by Appointment. / AA appointment at a Pick-up X X *C -If no Appointment it is not Required. / AB appointment at a delivery X X X R",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 3,
+          "excerpt": "AA should not be used for Estimated Arrival to Origin. Only use AA for communicating Origin / Appointments.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT704"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "codes": {
+        "mode": "reference",
+        "ref": "AT702"
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "Use codes as found in the AT702 data element list pertaining to Appointment Status Reporting."
+        },
+        {
+          "kind": "semantic",
+          "text": "‘NS’ is NOT VALID for Appointment Reporting."
+        },
+        {
+          "kind": "semantic",
+          "text": "‘NA’ should be used for Normal Appointments."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "AT704 1651 Shipment Status or Appointment Reason Code X ID 2/2",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 20,
+          "excerpt": "Use codes as found in the AT702 data element list pertaining to / Appointment Status Reporting. / ‘NS’ is NOT VALID for Appointment Reporting. / ‘NA’ should be used for Normal Appointments. / *All other reason codes from the AT7_02 list above may be used.",
+          "supports": [
+            "codes",
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT705"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "M AT705 373 Date M DT 8/8",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT706"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "AT706 337 Time X TM 4/8",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT7",
+        "position": "140",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "AT707"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "LT"
+        ]
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "AT7_07 should always contain ‘LT’ for ‘Local Time’ of the appropriate time zone location of the event."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 20,
+          "excerpt": "AT707 623 Time Code X ID 2/2 / Code identifying the time zone. / LT Local Time",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        },
+        {
+          "page": 3,
+          "excerpt": "AT7_07 should always contain ‘LT’ for ‘Local Time’ of the appropriate time zone location of the",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ]
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "Mandatory"
+      },
+      "max_use": 1,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "If MS101 is present, then MS102 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "If MS101 and MS102 are present then MS103 is required if the country is not US."
+        },
+        {
+          "kind": "syntax",
+          "text": "Only one MS101 or MS104 may be present."
+        },
+        {
+          "kind": "syntax",
+          "text": "If MS102 is present, then MS101 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "If MS103 is present, then MS101 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "If either MS104 or MS105 is present, then the other is required"
+        },
+        {
+          "kind": "syntax",
+          "text": "If MS104 and MS105 are present than MS101, MS102 and MS103 should not be present."
+        },
+        {
+          "kind": "syntax",
+          "text": "If MS104 is present with longitude specified in degrees minutes and seconds format, then MS106 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "If MS105 is present with latitude specified in degrees minutes and seconds format, then MS107 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "If MS106 is present, then MS104 is required."
+        },
+        {
+          "kind": "syntax",
+          "text": "If MS107 is present, then MS105 is required."
+        },
+        {
+          "kind": "semantic",
+          "text": "The location information must be the last known equipment location for the Shipment Status Codes (AT701) indicating that a shipment status event has already occurred (IE. AF, X6, X1) and must indicate the intended equipment position for Shipment Status codes (AT701) indicating a future estimated or planned activity (IE. AG, XB)."
+        },
+        {
+          "kind": "semantic",
+          "text": "The location information must be the location for which the Shipment Appointment Status Code (AT703) is being reported."
+        },
+        {
+          "kind": "semantic",
+          "text": "Decimal format is no longer an option for sending MS1_04 and MS1_05"
+        },
+        {
+          "kind": "semantic",
+          "text": "The location information can be reported in any of the following formats listed in order of preference: a. Longitude/Latitude in degree/minute/second format; b. City/State/Country"
+        }
+      ],
+      "evidence": [
+        {
+          "page": 6,
+          "excerpt": "28 143 MS1 Equipment, Shipment, or Real Property Location M 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "Segment: MS1 Equipment, Shipment, or Real Property Location Position: 143 Loop: 0205 Mandatory Level: Usage: Mandatory Max Use: 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "Syntax Notes: 1 If MS101 is present, then MS102 is required. / 2 If MS101 and MS102 are present then MS103 is required if the country is not US. / 3 Only one MS101 or MS104 may be present. / 4 If MS102 is present, then MS101 is required. / 5 If MS103 is present, then MS101 is required. / 6 If either MS104 or MS105 is present, then the other is required / 7 If MS104 and MS105 are present than MS101, MS102 and MS103 should not be present. / 8 If MS104 is present with longitude specified in degrees minutes and seconds format, then MS106 is / 9 If MS105 is present with latitude specified in degrees minutes and seconds format, then MS107 is / 10 If MS106 is present, then MS104 is required. / 11 If MS107 is present, then MS105 is required.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "Notes: 1 The location information must be the last known equipment location for the Shipment Status Codes / (AT701) indicating that a shipment status event has already occurred (IE. AF, X6, X1) and must indicate the intended equipment / position for Shipment Status codes (AT701) indicating a future estimated or planned activity (IE. AG, XB). / 2 The location information must be the location for which the Shipment Appointment Status Code / 3 Decimal format is no longer an option for sending MS1_04 and MS1_05 / 4 The location information can be reported in any of the following formats listed in order of preference / a. Longitude/Latitude in degree/minute/second format / b. City/State/Country",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS101"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "evidence": [
+        {
+          "page": 21,
+          "excerpt": "MS101 19 City Name X AN 2/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS102"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "codes": {
+        "mode": "unspecified"
+      },
+      "evidence": [
+        {
+          "page": 21,
+          "excerpt": "MS102 156 State or Province Code X ID 2/2",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS103"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "CA",
+          "CAN",
+          "MX",
+          "MEX",
+          "US",
+          "USA"
+        ]
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "Mandatory if not US and MS101 and MS102 are present."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 21,
+          "excerpt": "MS103 26 Country Code X ID 2/3",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "Mandatory if not US and MS101 and MS102 are present.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "CA CANADA CAN CANADA MX MEXICO MEX MEXICO US UNITED STATES OF AMERICA USA UNITED STATES OF AMERICA",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS104"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "All values must specify leading and trailing zeroes."
+        },
+        {
+          "kind": "semantic",
+          "text": "When this format is used the geographic direction must be specified in MS106."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 21,
+          "excerpt": "MS104 1654 Longitude Code X R 4/9",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 21,
+          "excerpt": "positions), minutes (2 positions) and seconds (2 positions). All values must / specify leading and trailing zeroes.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 22,
+          "excerpt": "format is used the geographic direction must be specified in MS106.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS105"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "All values must specify leading and trailing zeroes."
+        },
+        {
+          "kind": "semantic",
+          "text": "When this format is used the geographic direction must be specified in MS107."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 22,
+          "excerpt": "MS105 1655 Latitude Code X R 4/9",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 22,
+          "excerpt": "specify leading and trailing zeroes. / format is used the geographic direction must be specified in MS107.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS106"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "E",
+          "W"
+        ]
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "Mandatory if MS104 Longitude was specified in Degree Minute Second format."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 22,
+          "excerpt": "MS106 1280 Direction Identifier Code X ID 1/1",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 22,
+          "excerpt": "Mandatory if MS104 Longitude was specified in Degree Minute Second / format.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 22,
+          "excerpt": "E East / W West",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS1",
+        "position": "143",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS107"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "N",
+          "S"
+        ]
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "Mandatory if MS105 Latitude was specified in Degree Minute Second format."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 22,
+          "excerpt": "MS107 1280 Direction Identifier Code X ID 1/1",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 22,
+          "excerpt": "Mandatory if MS105 Latitude was specified in Degree Minute Second format.",
+          "supports": [
+            "conditions"
+          ]
+        },
+        {
+          "page": 22,
+          "excerpt": "N North / S South",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ]
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "Mandatory except for reporting Appointment Status Codes (AT703)"
+      },
+      "max_use": 1,
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "MS202 is optional for instances when the Equipment number in not known."
+        },
+        {
+          "kind": "context",
+          "text": "The MS2 segment is not required for any status sent prior to Actual Depart Shipper (AT701= AF)."
+        },
+        {
+          "kind": "context",
+          "text": "AF must include the MS2 segment and must include the actual Equipment Number that the load is being moved with."
+        },
+        {
+          "kind": "context",
+          "text": "All statuses sent after the Actual Depart from Shipper should have an MS2 segment with the actual Equipment number."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 6,
+          "excerpt": "31 146 MS2 Equipment or Container Owner and Type M 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 23,
+          "excerpt": "Segment: MS2 Equipment or Container Owner and Type Position: 146 Loop: 0205 Mandatory Level: Usage: Mandatory except for reporting Appointment Status Codes (AT703) Max Use: 1",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 23,
+          "excerpt": "2 MS202 is optional for instances when the Equipment number in not known. / Notes: The MS2 segment is not required for any status sent prior to Actual Depart Shipper / (AT701= AF). AF must include the MS2 segment and must include the actual / Equipment Number that the load is being moved with. All statuses sent after the / Actual Depart from Shipper should have an MS2 segment with the actual / Equipment number.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ],
+      "review": {
+        "reason": "The usage field exempts only appointment statuses, while the notes also exempt every status sent before AF."
+      }
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS201"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "codes": {
+        "mode": "unspecified"
+      },
+      "evidence": [
+        {
+          "page": 23,
+          "excerpt": "M MS201 140 Standard Carrier Alpha Code M ID 2/4",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS202"
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "O"
+      },
+      "evidence": [
+        {
+          "page": 23,
+          "excerpt": "MS202 207 Equipment Number O AN 1/10",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "MS2",
+        "position": "146",
+        "loop": [
+          "0200",
+          "0205"
+        ],
+        "element": "MS203"
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "O"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "AF",
+          "BO",
+          "BR",
+          "BX",
+          "CH",
+          "CN",
+          "DD",
+          "FT",
+          "HV",
+          "LU",
+          "OV",
+          "RA",
+          "RD",
+          "RS",
+          "RT",
+          "SD",
+          "ST",
+          "TA",
+          "TF",
+          "TG",
+          "TI",
+          "TJ",
+          "TK",
+          "TL",
+          "TM",
+          "TP",
+          "TQ",
+          "TV",
+          "TW",
+          "VE"
+        ]
+      },
+      "evidence": [
+        {
+          "page": 23,
+          "excerpt": "MS203 40 Equipment Description Code O ID 2/2",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 23,
+          "excerpt": "AF AIR FREIGHT / TV TRUCK, VAN",
+          "supports": [
+            "codes"
+          ]
+        },
+        {
+          "page": 24,
+          "excerpt": "TW TRAILER, REFRIGERATED / VE VESSEL, OCEAN",
+          "supports": [
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ]
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "Mandatory except for reporting En Route (AT701 Shipment Status Code is ZZ or X6)"
+      },
+      "max_use": 300,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "If either L1101 or L1102 is present, then the other is required."
+        },
+        {
+          "kind": "semantic",
+          "text": "QN is mandatory unless carrier is reporting En Route Status Codes (ZZ or X6)"
+        },
+        {
+          "kind": "semantic",
+          "text": "PO is optional"
+        },
+        {
+          "kind": "semantic",
+          "text": "VN is mandatory"
+        },
+        {
+          "kind": "semantic",
+          "text": "When including the ‘VN’s and ‘PO’s for the stop ALL ‘VN’s and ‘PO’s reported on the load tender for the stop MUST be present."
+        },
+        {
+          "kind": "context",
+          "text": "The L11 segments for stop sequence (QN) are not required for reporting En Route (AT701 Shipment Status Code is ZZ or X6)"
+        },
+        {
+          "kind": "semantic",
+          "text": "Stop sequence numbering is ‘01, 02, 03, 04, etc.’"
+        },
+        {
+          "kind": "semantic",
+          "text": "The Stop Number must be the same as communicated on the EDI 204 segment S5 element S501."
+        },
+        {
+          "kind": "semantic",
+          "text": "The initial Pick-up Stop is 01."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 6,
+          "excerpt": "33 150 L11 Business Instructions and Reference Number M 300",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 25,
+          "excerpt": "Segment: L11 Business Instructions and Reference Number Position: 150 Loop: 0200 Mandatory Level: Usage: Mandatory except for reporting En Route (AT701 Shipment Status Code is ZZ or X6) Max Use: 300",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 25,
+          "excerpt": "Syntax Notes: 1 If either L1101 or L1102 is present, then the other is required. / Semantic Notes: 1 QN is mandatory unless carrier is reporting En Route Status Codes (ZZ or X6) / 2 PO is optional / 3 VN is mandatory / Comments: When including the ‘VN’s and ‘PO’s for the stop ALL ‘VN’s and ‘PO’s reported on the load tender for the / stop MUST be present. / Notes: The L11 segments for stop sequence (QN) are not required for reporting En Route / (AT701 Shipment Status Code is ZZ or X6) / sequence numbering is ‘01, 02, 03, 04, etc.’ / is being reported. The Stop Number must be the same as communicated on the EDI 204 / segment S5 element S501. / NOTE: The initial Pick-up Stop is 01.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1101"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "2-digit QN Stop Sequence Number must be used"
+        }
+      ],
+      "evidence": [
+        {
+          "page": 25,
+          "excerpt": "M L1101 127 Reference Identification M AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 25,
+          "excerpt": "2-digit QN Stop Sequence Number must be used",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "L11",
+        "position": "150",
+        "loop": [
+          "0200"
+        ],
+        "element": "L1102"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "PO",
+          "QN",
+          "VN"
+        ]
+      },
+      "conditions": [
+        {
+          "kind": "semantic",
+          "text": "PO Purchase Order Number (optional)"
+        },
+        {
+          "kind": "semantic",
+          "text": "QN Stop Sequence Number (Required on all statuses except X6 or ZZ)"
+        },
+        {
+          "kind": "semantic",
+          "text": "VN Vendor Number ‘Internal order#’ (Required)"
+        }
+      ],
+      "evidence": [
+        {
+          "page": 25,
+          "excerpt": "M L1102 128 Reference Identification Qualifier M ID 2/3",
+          "supports": [
+            "usage"
+          ]
+        },
+        {
+          "page": 25,
+          "excerpt": "PO Purchase Order Number (optional) / QN Stop Sequence Number (Required on all statuses except / X6 or ZZ) / VN Vendor Number ‘Internal order#’ (Required)",
+          "supports": [
+            "codes",
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "K1",
+        "position": "170",
+        "loop": [
+          "0200"
+        ]
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "Optional"
+      },
+      "max_use": 10,
+      "evidence": [
+        {
+          "page": 6,
+          "excerpt": "34 170 K1 Remarks O 10",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 26,
+          "excerpt": "Segment: K1 Remarks Position: 170 Loop: 0200 Mandatory Level: Usage: Optional Max Use: 10",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "K1",
+        "position": "170",
+        "loop": [
+          "0200"
+        ],
+        "element": "K101"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "evidence": [
+        {
+          "page": 26,
+          "excerpt": "M K101 61 Free-Form Message M AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "K1",
+        "position": "170",
+        "loop": [
+          "0200"
+        ],
+        "element": "K102"
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "O"
+      },
+      "evidence": [
+        {
+          "page": 26,
+          "excerpt": "K102 61 Free-Form Message O AN 1/30",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ]
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "Mandatory"
+      },
+      "max_use": 10,
+      "conditions": [
+        {
+          "kind": "syntax",
+          "text": "AT801, AT802, AT803, AT804 are required."
+        }
+      ],
+      "evidence": [
+        {
+          "page": 6,
+          "excerpt": "35 200 AT8 Shipment Weight, Packaging and Quantity Data M 10",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 27,
+          "excerpt": "Segment: AT8 Shipment Weight, Packaging and Quantity Data Position: 200 Loop: 0200 Mandatory Level: Usage: Mandatory Max Use: 10",
+          "supports": [
+            "usage",
+            "max_use"
+          ]
+        },
+        {
+          "page": 27,
+          "excerpt": "Syntax Notes: 1 AT801, AT802, AT803, AT804 are required.",
+          "supports": [
+            "conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT801"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "G"
+        ]
+      },
+      "evidence": [
+        {
+          "page": 27,
+          "excerpt": "M AT801 187 Weight Qualifier M ID 1/2 / G Gross Weight",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT802"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "K",
+          "L"
+        ]
+      },
+      "evidence": [
+        {
+          "page": 27,
+          "excerpt": "M AT802 188 Weight Unit Code M ID 1/1 / K Kilograms / L Pounds",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT803"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "evidence": [
+        {
+          "page": 27,
+          "excerpt": "M AT803 81 Weight M R 1/10",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT804"
+      },
+      "usage": {
+        "declared": "required",
+        "declared_label": "M"
+      },
+      "evidence": [
+        {
+          "page": 27,
+          "excerpt": "M AT804 80 Lading Quantity M N0 1/7",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT805"
+      },
+      "usage": {
+        "declared": "optional",
+        "declared_label": "O"
+      },
+      "evidence": [
+        {
+          "page": 27,
+          "excerpt": "AT805 80 Lading Quantity O N0 1/7",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT806"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "codes": {
+        "mode": "enumerated",
+        "values": [
+          "E"
+        ]
+      },
+      "evidence": [
+        {
+          "page": 27,
+          "excerpt": "AT806 184 Volume Unit Qualifier X ID 1/1 / E Cubic Feet",
+          "supports": [
+            "usage",
+            "codes"
+          ]
+        }
+      ]
+    },
+    {
+      "key": {
+        "segment": "AT8",
+        "position": "200",
+        "loop": [
+          "0200"
+        ],
+        "element": "AT807"
+      },
+      "usage": {
+        "declared": "conditional",
+        "declared_label": "X"
+      },
+      "evidence": [
+        {
+          "page": 27,
+          "excerpt": "AT807 183 Volume X R 1/8",
+          "supports": [
+            "usage"
+          ]
+        }
+      ]
+    }
+  ]
+}
