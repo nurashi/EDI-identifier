@@ -2,6 +2,7 @@ package compare
 
 import (
 	"bytes"
+	"fmt"
 	"math"
 	"path/filepath"
 	"slices"
@@ -173,6 +174,23 @@ func TestKappaUndefined(t *testing.T) {
 	}
 	if s := stats[0]; s.Po != 1 || !math.IsNaN(s.Kappa) {
 		t.Fatalf("stats = %+v, want po 1 and undefined kappa", s)
+	}
+}
+
+func TestStatedSubset(t *testing.T) {
+	a, b := labelled("unknown", "same"), labelled("unknown", "different")
+	a[0].Left, b[0].Left = "usage not stated", "usage not stated"
+	stats, _, err := Compare(a, b, 10, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var got []string
+	for _, s := range stats {
+		got = append(got, fmt.Sprintf("%s %v n=%d agreed=%d", s.Category, s.Stated, s.N, s.Agreed))
+	}
+	want := []string{"usage false n=2 agreed=1", "usage true n=1 agreed=0", "all false n=2 agreed=1", "all true n=1 agreed=0"}
+	if !slices.Equal(got, want) {
+		t.Fatalf("stats = %q, want %q", got, want)
 	}
 }
 

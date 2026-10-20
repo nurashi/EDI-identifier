@@ -9,6 +9,7 @@ import (
 
 type Stats struct {
 	Category string
+	Stated   bool
 	N        int
 	Agreed   int
 	Po       float64
@@ -29,7 +30,11 @@ func Compare(a, b []Unit, iterations int, seed uint64) ([]Stats, []Disagreement,
 	if len(a) != len(b) {
 		return nil, nil, fmt.Errorf("sheets have %d and %d units", len(a), len(b))
 	}
-	byCategory := map[string][2][]int{}
+	type group struct {
+		category string
+		stated   bool
+	}
+	byGroup := map[group][2][]int{}
 	var disagreements []Disagreement
 	for i := range a {
 		x, y := a[i], b[i]
@@ -41,9 +46,15 @@ func Compare(a, b []Unit, iterations int, seed uint64) ([]Stats, []Disagreement,
 			return nil, nil, fmt.Errorf("unit %s: labels %q and %q, want one of %v", x.ID, x.Label, y.Label, Labels)
 		}
 		for _, c := range []string{x.Category, "all"} {
-			pair := byCategory[c]
-			pair[0], pair[1] = append(pair[0], lx), append(pair[1], ly)
-			byCategory[c] = pair
+			gs := []group{{c, false}}
+			if x.Stated() {
+				gs = append(gs, group{c, true})
+			}
+			for _, g := range gs {
+				pair := byGroup[g]
+				pair[0], pair[1] = append(pair[0], lx), append(pair[1], ly)
+				byGroup[g] = pair
+			}
 		}
 		if lx != ly {
 			disagreements = append(disagreements, Disagreement{Unit: x, LabelB: y.Label, NoteB: y.Note})
@@ -52,14 +63,16 @@ func Compare(a, b []Unit, iterations int, seed uint64) ([]Stats, []Disagreement,
 
 	var stats []Stats
 	for _, c := range append(slices.Clone(Categories), "all") {
-		pair, ok := byCategory[c]
-		if !ok {
-			continue
+		for _, st := range []bool{false, true} {
+			pair, ok := byGroup[group{c, st}]
+			if !ok {
+				continue
+			}
+			s := agreement(pair[0], pair[1])
+			s.Category, s.Stated = c, st
+			s.Low, s.High = bootstrap(pair[0], pair[1], iterations, seed)
+			stats = append(stats, s)
 		}
-		s := agreement(pair[0], pair[1])
-		s.Category = c
-		s.Low, s.High = bootstrap(pair[0], pair[1], iterations, seed)
-		stats = append(stats, s)
 	}
 	return stats, disagreements, nil
 }

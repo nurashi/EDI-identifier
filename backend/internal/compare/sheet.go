@@ -14,6 +14,13 @@ var Categories = []string{"usage", "codes", "repetition", "condition"}
 
 var Labels = []string{"same", "different", "unknown"}
 
+const (
+	noUsage      = "usage not stated"
+	noCodes      = "no code list"
+	noMaxUse     = "max use not stated"
+	noConditions = "no conditions stated"
+)
+
 var sheetHeader = []string{
 	"unit", "left_guide", "right_guide", "alignment", "left_key", "right_key", "category",
 	"left", "left_pages", "right", "right_pages", "label", "note",
@@ -64,6 +71,14 @@ func Units(alignments []Alignment) []Unit {
 	return units
 }
 
+func (u Unit) Stated() bool {
+	return stated(u.Left) && stated(u.Right)
+}
+
+func stated(s string) bool {
+	return s != noUsage && s != noCodes && s != noConditions && !strings.HasPrefix(s, noMaxUse)
+}
+
 func applies(category string, p Pair) bool {
 	switch category {
 	case "usage":
@@ -93,13 +108,13 @@ func describe(category string, r Requirement) string {
 			parts = append(parts, strconv.Quote(r.Usage.DeclaredLabel))
 		}
 		if len(parts) == 0 {
-			return "usage not stated"
+			return noUsage
 		}
 		return strings.Join(parts, "; ")
 	case "codes":
 		return describeCodes(r.Codes)
 	case "repetition":
-		s := "max use not stated"
+		s := noMaxUse
 		if r.MaxUse > 0 {
 			s = fmt.Sprintf("max use %d", r.MaxUse)
 		}
@@ -109,7 +124,7 @@ func describe(category string, r Requirement) string {
 		return s
 	case "condition":
 		if len(r.Conditions) == 0 {
-			return "no conditions stated"
+			return noConditions
 		}
 		parts := make([]string, len(r.Conditions))
 		for i, c := range r.Conditions {
@@ -122,7 +137,7 @@ func describe(category string, r Requirement) string {
 
 func describeCodes(c *Codes) string {
 	if c == nil {
-		return "no code list"
+		return noCodes
 	}
 	switch c.Mode {
 	case "enumerated":
@@ -144,7 +159,7 @@ func describeCodes(c *Codes) string {
 	case "reference":
 		return "same codes as " + c.Ref
 	}
-	return "no code list"
+	return noCodes
 }
 
 func pageList(ps []int) string {

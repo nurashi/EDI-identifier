@@ -168,13 +168,13 @@ func runAgree(args []string) error {
 	tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.AlignRight)
 	fmt.Fprintln(tw, "category\tn\tagreed\tpo\tpe\tkappa\t95% CI\t")
 	for _, s := range stats {
-		fmt.Fprintf(tw, "%s\t%d\t%d\t%.3f\t%.3f\t%s\t[%s, %s]\t\n", s.Category, s.N, s.Agreed, s.Po, s.Pe, num(s.Kappa), num(s.Low), num(s.High))
+		fmt.Fprintf(tw, "%s\t%d\t%d\t%.3f\t%.3f\t%s\t[%s, %s]\t\n", group(s), s.N, s.Agreed, s.Po, s.Pe, num(s.Kappa), num(s.Low), num(s.High))
 	}
 	if err := tw.Flush(); err != nil {
 		return err
 	}
 	for _, s := range stats {
-		fmt.Printf("\n%s: rows %s, columns %s\n", s.Category, filepath.Base(fs.Arg(0)), filepath.Base(fs.Arg(1)))
+		fmt.Printf("\n%s: rows %s, columns %s\n", group(s), filepath.Base(fs.Arg(0)), filepath.Base(fs.Arg(1)))
 		tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.AlignRight)
 		fmt.Fprintln(tw, "\tsame\tdifferent\tunknown\t")
 		for i, l := range compare.Labels {
@@ -262,6 +262,13 @@ func readSheet(path string) ([]compare.Unit, error) {
 		return nil, fmt.Errorf("%s: %w", path, err)
 	}
 	return units, nil
+}
+
+func group(s compare.Stats) string {
+	if s.Stated {
+		return s.Category + ", both stated"
+	}
+	return s.Category
 }
 
 func num(v float64) string {
