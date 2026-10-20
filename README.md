@@ -16,6 +16,10 @@ The first stage covers X12 214 Transportation Carrier Shipment Status Message, r
 | `corpus/` | Guide selection, reference corpus and annotations | Git, Python | Asylan Usen |
 | `evaluation/` | Precision, recall, F1 and inter-annotator agreement | Python, pandas, scikit-learn | Nurassyl Orazbek, Asylan Usen |
 
+## Pilot study
+
+The first research step tests whether two people can classify requirement differences between guides consistently. The pilot corpus, its scope and the commands that reproduce it are in [`corpus/214-004010`](corpus/214-004010/README.md); the labelling rules are in [`docs/codebook.md`](docs/codebook.md). `backend/cmd/study` checks the corpus against the source PDFs, aligns requirements across guides, writes the annotation sheet and computes agreement between coders.
+
 ## Running locally
 
 ```sh

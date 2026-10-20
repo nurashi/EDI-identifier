@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+env:
+  GUIDES: corpus/214-004010/guides/chr-214.json corpus/214-004010/guides/kbx-214.json corpus/214-004010/guides/domtar-214.json
+
 jobs:
   backend:
     runs-on: ubuntu-latest
@@ -26,4 +29,40 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - run: pipx run check-jsonschema --check-metaschema schema/guide.schema.json schema/divergence.schema.json
-      - run: pipx run check-jsonschema --schemafile schema/guide.schema.json schema/examples/*.json
+      - run: pipx run check-jsonschema --schemafile schema/guide.schema.json corpus/214-004010/guides/*.json
+
+  pilot:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: backend/go.mod
+          cache-dependency-path: backend/go.sum
+      - run: go -C backend build -o ../study ./cmd/study
+      - name: Download guides
+        run: |
+          mkdir pdfs
+          for f in $GUIDES; do
+            curl -fsSL --retry 3 -o "pdfs/$(jq -r .guide.id "$f").pdf" "$(jq -r .guide.source.url "$f")"
+          done
+          sha256sum pdfs/*.pdf
+      - run: sudo apt-get update -q && sudo apt-get install -y --no-install-recommends poppler-utils
+      - run: ./study evidence -pdfs pdfs $GUIDES | tee evidence.txt
+      - run: ./study align $GUIDES | tee alignment.txt
+      - name: Sheet is up to date
+        run: |
+          ./study sheet -out sheet.csv $GUIDES | tee sheet.txt
+          diff -u corpus/214-004010/annotation/sheet.csv sheet.csv
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pilot
+          path: |
+            evidence.txt
+            alignment.txt
+            sheet.txt
+            sheet.csv
