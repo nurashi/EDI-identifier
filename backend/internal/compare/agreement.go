@@ -41,6 +41,9 @@ func Compare(a, b []Unit, iterations int, seed uint64) ([]Stats, []Disagreement,
 		if !sameContent(x, y) {
 			return nil, nil, fmt.Errorf("unit %s differs between sheets", x.ID)
 		}
+		if x.Label == "" && y.Label == "" {
+			continue
+		}
 		lx, ly := slices.Index(Labels, x.Label), slices.Index(Labels, y.Label)
 		if lx < 0 || ly < 0 {
 			return nil, nil, fmt.Errorf("unit %s: labels %q and %q, want one of %v", x.ID, x.Label, y.Label, Labels)

@@ -5,7 +5,7 @@ Rules for labelling `corpus/214-004010/annotation/sheet.csv`. Each row is a unit
 ## Procedure
 
 1. Code alone. Do not discuss units or open the other coder's sheet until both sheets are committed.
-2. Copy `sheet.csv` to `<your-name>.csv`. Fill only `label` and `note`. `study agree` rejects a sheet whose other columns differ from the original.
+2. Copy `sheet.csv` to `<your-name>.csv`. Fill only `label` and `note`, and only for the units of the current round. `study agree` skips units that neither coder labelled, and rejects a unit labelled in one sheet only or a sheet whose other columns differ from the original.
 3. Read the cited pages of both PDFs for every unit. The `left` and `right` columns summarize the records; the page is the source. If a summary misstates the page, label by the page and start the note with `extraction:`.
 4. Round 1 (pilot) is C.H. Robinson ~ KBX, units U001–U072. After it the coders compare results, record the cause of every disagreement and revise this codebook. Round 2 covers the remaining units with the revised rules.
 

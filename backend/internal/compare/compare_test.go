@@ -205,6 +205,16 @@ func TestCompareRejectsChangedSheet(t *testing.T) {
 	}
 }
 
+func TestCompareSkipsUnitsOutsideRound(t *testing.T) {
+	stats, _, err := Compare(labelled("same", ""), labelled("same", ""), 10, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if stats[0].N != 1 {
+		t.Fatalf("n = %d, want 1", stats[0].N)
+	}
+}
+
 func TestCheckEvidence(t *testing.T) {
 	g := Guide{Requirements: []Requirement{{
 		Key:      Key{Segment: "AT7", Position: "140"},
