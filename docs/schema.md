@@ -1,9 +1,8 @@
 # Requirement schema v0
 
-The schema is the contract between the three parts of the toolkit: the extractor writes it, the backend stores and compares it, and the annotation workflow labels pairs of it.
+The schema is the contract between the parts of the toolkit: the extractor writes it, the backend stores and compares it, and the viewer shows it next to the source page.
 
 - `schema/guide.schema.json`: one normalized implementation guide.
-- `schema/divergence.schema.json`: one judgement about one aligned pair of requirements.
 - `corpus/214-004010/guides/`: the pilot corpus, three 214/004010 guides normalized by hand. Every value cites a page of the source PDF.
 
 ## Guide
@@ -69,20 +68,11 @@ Domtar describes `AT704` only as "Same 70 codes as AT702", which is recorded as 
 
 ## Evidence and review
 
-Every requirement has at least one `evidence` entry: the 1-based physical PDF page, the excerpt, and the fields it supports. ` / ` separates fragments that are not adjacent on the page; every fragment must occur on the cited page once whitespace is collapsed. `study evidence` checks this against the PDF.
+Every requirement has at least one `evidence` entry: the 1-based physical PDF page, the excerpt, and the fields it supports. ` / ` separates fragments that are not adjacent on the page; every fragment must occur on the cited page once whitespace is collapsed. `edi evidence` checks this against the PDF.
 
 `review` marks a requirement a human must decide on, with the reason.
 
 A requirement that a guide does not mention is not stored.
-
-## Divergence
-
-One record is one annotator's judgement on one aligned pair in one category:
-
-- categories: `usage`, `codes`, `repetition`, `condition`;
-- labels: `same`, `different`, `unknown`.
-
-The rules for labels are in `docs/codebook.md`. Agreement between annotators is computed per category over records with the same pair and category.
 
 ## Cases the pilot corpus covers
 

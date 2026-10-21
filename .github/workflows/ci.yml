@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - run: pipx run check-jsonschema --check-metaschema schema/guide.schema.json schema/divergence.schema.json
+      - run: pipx run check-jsonschema --check-metaschema schema/guide.schema.json
       - run: pipx run check-jsonschema --schemafile schema/guide.schema.json corpus/214-004010/guides/*.json
 
   pilot:
@@ -42,7 +42,7 @@ jobs:
         with:
           go-version-file: backend/go.mod
           cache-dependency-path: backend/go.sum
-      - run: go -C backend build -o ../study ./cmd/study
+      - run: go -C backend build -o ../edi ./cmd/edi
       - name: Download guides
         run: |
           mkdir pdfs
@@ -51,12 +51,8 @@ jobs:
           done
           sha256sum pdfs/*.pdf
       - run: sudo apt-get update -q && sudo apt-get install -y --no-install-recommends poppler-utils
-      - run: ./study evidence -pdfs pdfs $GUIDES | tee evidence.txt
-      - run: ./study align $GUIDES | tee alignment.txt
-      - name: Sheet is up to date
-        run: |
-          ./study sheet -out sheet.csv $GUIDES | tee sheet.txt
-          diff -u corpus/214-004010/annotation/sheet.csv sheet.csv
+      - run: ./edi evidence -pdfs pdfs $GUIDES | tee evidence.txt
+      - run: ./edi align $GUIDES | tee alignment.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -64,5 +60,3 @@ jobs:
           path: |
             evidence.txt
             alignment.txt
-            sheet.txt
-            sheet.csv

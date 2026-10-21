@@ -21,21 +21,13 @@ The PDFs are not stored here. Each guide file records the source URL and the SHA
 From the repository root, with Go and `pdftotext` (poppler) installed:
 
 ```sh
-go -C backend build -o ../study ./cmd/study
+go -C backend build -o ../edi ./cmd/edi
 guides="corpus/214-004010/guides/chr-214.json corpus/214-004010/guides/kbx-214.json corpus/214-004010/guides/domtar-214.json"
 
 # Download the PDFs from the URLs in the guide files into pdfs/<guide id>.pdf, then:
-./study evidence -pdfs pdfs $guides
-./study align $guides
-./study sheet -out corpus/214-004010/annotation/sheet.csv $guides
+./edi evidence -pdfs pdfs $guides
+./edi align $guides
 ```
 
-`evidence` verifies the SHA-256 and the page count of every PDF, then checks that every excerpt fragment occurs on the page it cites. CI runs the same three commands; the `pilot` job fails if the committed sheet differs from a regenerated one.
+`evidence` verifies the SHA-256 and the page count of every PDF, then checks that every excerpt fragment occurs on the page it cites. `align` pairs the requirements of every two guides by structural key and lists those found in one guide only. CI runs both commands in the `pilot` job.
 
-## Annotation
-
-`annotation/sheet.csv` holds 188 units in four categories. Coders follow `docs/codebook.md`, each in a copy named after them, and compare with:
-
-```sh
-./study agree -disagreements annotation/disagreements.csv annotation/<coder-a>.csv annotation/<coder-b>.csv
-```
