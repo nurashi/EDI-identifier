@@ -37,5 +37,5 @@ guides="corpus/214-004010/guides/chr-214.json corpus/214-004010/guides/kbx-214.j
 `annotation/sheet.csv` holds 188 units in four categories. Coders follow `docs/codebook.md`, each in a copy named after them, and compare with:
 
 ```sh
-./study agree annotation/<coder-a>.csv annotation/<coder-b>.csv -disagreements annotation/disagreements.csv
+./study agree -disagreements annotation/disagreements.csv annotation/<coder-a>.csv annotation/<coder-b>.csv
 ```

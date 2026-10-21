@@ -60,7 +60,7 @@ Rules for labelling `corpus/214-004010/annotation/sheet.csv`. Each row is a unit
 ## After a round
 
 ```sh
-study agree <coder-a>.csv <coder-b>.csv -disagreements disagreements.csv
+study agree -disagreements disagreements.csv <coder-a>.csv <coder-b>.csv
 ```
 
 `study agree` reports every category twice: over all units, and over the units in which both guides state the property. A unit where one side is silent is decided by G2 alone, so it shows whether the rule was followed, not whether the scheme separates constraints; the second figure is the one that answers the research question.

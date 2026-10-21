@@ -45,8 +45,7 @@ func main() {
 func runAlign(args []string) error {
 	fs := flag.NewFlagSet("align", flag.ExitOnError)
 	rule := fs.String("rule", string(compare.Qualifier), "rule for the detailed listing: exact or qualifier")
-	fs.Parse(args)
-	guides, err := compare.LoadAll(fs.Args())
+	guides, err := compare.LoadAll(parse(fs, args))
 	if err != nil {
 		return err
 	}
@@ -88,11 +87,11 @@ func runAlign(args []string) error {
 func runSheet(args []string) error {
 	fs := flag.NewFlagSet("sheet", flag.ExitOnError)
 	out := fs.String("out", "", "output CSV")
-	fs.Parse(args)
+	files := parse(fs, args)
 	if *out == "" {
 		return errors.New("sheet: -out is required")
 	}
-	guides, err := compare.LoadAll(fs.Args())
+	guides, err := compare.LoadAll(files)
 	if err != nil {
 		return err
 	}
@@ -148,15 +147,15 @@ func runAgree(args []string) error {
 	out := fs.String("disagreements", "", "write disagreeing units to this CSV")
 	iterations := fs.Int("iterations", 2000, "bootstrap resamples")
 	seed := fs.Uint64("seed", 214, "bootstrap seed")
-	fs.Parse(args)
-	if fs.NArg() != 2 {
+	files := parse(fs, args)
+	if len(files) != 2 {
 		return errors.New("agree: want two sheets")
 	}
-	a, err := readSheet(fs.Arg(0))
+	a, err := readSheet(files[0])
 	if err != nil {
 		return err
 	}
-	b, err := readSheet(fs.Arg(1))
+	b, err := readSheet(files[1])
 	if err != nil {
 		return err
 	}
@@ -174,7 +173,7 @@ func runAgree(args []string) error {
 		return err
 	}
 	for _, s := range stats {
-		fmt.Printf("\n%s: rows %s, columns %s\n", group(s), filepath.Base(fs.Arg(0)), filepath.Base(fs.Arg(1)))
+		fmt.Printf("\n%s: rows %s, columns %s\n", group(s), filepath.Base(files[0]), filepath.Base(files[1]))
 		tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.AlignRight)
 		fmt.Fprintln(tw, "\tsame\tdifferent\tunknown\t")
 		for i, l := range compare.Labels {
@@ -209,8 +208,7 @@ func runAgree(args []string) error {
 func runEvidence(args []string) error {
 	fs := flag.NewFlagSet("evidence", flag.ExitOnError)
 	dir := fs.String("pdfs", "", "directory with <guide id>.pdf files")
-	fs.Parse(args)
-	guides, err := compare.LoadAll(fs.Args())
+	guides, err := compare.LoadAll(parse(fs, args))
 	if err != nil {
 		return err
 	}
@@ -249,6 +247,19 @@ func runEvidence(args []string) error {
 		return errors.New("evidence check failed")
 	}
 	return nil
+}
+
+func parse(fs *flag.FlagSet, args []string) []string {
+	var positional []string
+	for {
+		fs.Parse(args)
+		args = fs.Args()
+		if len(args) == 0 {
+			return positional
+		}
+		positional = append(positional, args[0])
+		args = args[1:]
+	}
 }
 
 func readSheet(path string) ([]compare.Unit, error) {
