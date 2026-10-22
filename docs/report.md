@@ -42,6 +42,8 @@ Build a toolkit that extracts the requirements of X12 implementation guides from
 
 ### Scope
 
+Table: Scope of the project
+
 | In scope | Out of scope |
 |---|---|
 | X12 214 (shipment status), release 004010, truckload; 204 and 210 as extensions | EDIFACT, XML and API-based exchange |
@@ -59,6 +61,8 @@ The guides follow no common layout, and the same requirement is written as a tab
 
 The requirements in Section 6 rest on four assumptions. Each is listed with the evidence that supports it so far and its status.
 
+Table: Assumptions behind the requirements and their evidence
+
 | ID | Assumption | Evidence | Status |
 |---|---|---|---|
 | A1 | Guides for the same message differ materially between partners | Analysis of three public 214 guides (below) | Verified on three guides |
@@ -69,6 +73,8 @@ The requirements in Section 6 rest on four assumptions. Each is listed with the 
 ### Analysis of available data
 
 The pilot corpus contains three public truckload 214/004010 guides: C.H. Robinson (32 pages), KBX (30 pages) and Domtar (23 pages). Their 118 requirements were normalized by hand and every value was checked against its page in CI. Comparing them with the prototype (`edi diff`) gives the following counts of aligned requirement pairs.
+
+Table: Differing requirement pairs in the pilot corpus
 
 | Guide pair | Usage | Code list | Repetition | Only in one guide |
 |---|---|---|---|---|
@@ -84,10 +90,12 @@ Examples: C.H. Robinson allows all 42 standard shipment status codes in AT701, K
 
 Three to five integration engineers and EDI analysts outside the team are interviewed with five questions: how often they onboard partners or receive guide updates, how they compare guides today and how long it takes, which differences occur and which caused failures, whether the source page matters, and which form of tool they would use. Participants are anonymous; the record keeps role, company type and experience.
 
-| ID | Date | Role | Company type | Findings | Linked requirements |
-|---|---|---|---|---|---|
-| P1 | 22 Oct 2026 | EDI integration engineer | Transportation software company | A new partner or broker integration every month, updates of existing specifications every quarter. Compares a new guide by hand with a similar partner, 3–5 hours per specification. Language models help with basic fields but invent code lists, confuse loops and miss the difference between optional and conditional, so both PDFs are still checked by eye. Most failures come from conditional dependencies and closed code lists: in one case a broker required a reason code in AT702 for status X6 only when another element was filled; the condition was in a footnote on page 18, and messages were silently rejected in staging until it was found. Will not trust a reported difference without the page. Wants a web interface and an export to a spreadsheet to attach the differences to a development task; the report must show code-list differences, loop repeat limits, and syntax notes and conditional dependencies | FR6, FR7, FR9, FR10, FR16 |
-| P2 | 23 Oct 2026 | EDI integration engineer, video call | Transportation software company | A new partner every one to two weeks; large shippers release updates, including version changes and new qualifier rules, without a change log. Reads the PDF in full and compares it by hand with a template; the first audit and mapping matrix take 4–8 hours. Language models invent qualifiers from the base standard that the guide does not allow and move elements between loops, so both PDFs are checked line by line. Failures come from date and time formats, hidden mandatory qualifiers and repeat limits: a retailer required AT7 date and time in the local time of the delivery point, the team sent UTC, statuses arrived "from the future" and the customer's ERP quarantined them for two days until the footnote on page 23 was found. Will not trust a difference without the exact page and item. Wants a side-by-side view like a Git diff with export to a spreadsheet; the report must show "mandatory at A, optional at B", allowed qualifier codes, and a link to the exact place in the PDF | FR4, FR6, FR7, FR9, FR10, FR17 |
+Table: Discussions with user representatives
+
+| ID | Participant | Findings | Linked requirements |
+|---|---|---|---|
+| P1 | EDI integration engineer, transportation software company; written answers, 22 Oct 2026 | A new partner or broker integration every month, updates of existing specifications every quarter. Compares a new guide by hand with a similar partner, 3–5 hours per specification. Language models help with basic fields but invent code lists, confuse loops and miss the difference between optional and conditional, so both PDFs are still checked by eye. Most failures come from conditional dependencies and closed code lists: in one case a broker required a reason code in AT702 for status X6 only when another element was filled; the condition was in a footnote on page 18, and messages were silently rejected in staging until it was found. Will not trust a reported difference without the page. Wants a web interface and an export to a spreadsheet to attach the differences to a development task; the report must show code-list differences, loop repeat limits, and syntax notes and conditional dependencies | FR6, FR7, FR9, FR10, FR16 |
+| P2 | EDI integration engineer, transportation software company; video call, 23 Oct 2026 | A new partner every one to two weeks; large shippers release updates, including version changes and new qualifier rules, without a change log. Reads the PDF in full and compares it by hand with a template; the first audit and mapping matrix take 4–8 hours. Language models invent qualifiers from the base standard that the guide does not allow and move elements between loops, so both PDFs are checked line by line. Failures come from date and time formats, hidden mandatory qualifiers and repeat limits: a retailer required AT7 date and time in the local time of the delivery point, the team sent UTC, statuses arrived "from the future" and the customer's ERP quarantined them for two days until the footnote on page 23 was found. Will not trust a difference without the exact page and item. Wants a side-by-side view like a Git diff with export to a spreadsheet; the report must show "mandatory at A, optional at B", allowed qualifier codes, and a link to the exact place in the PDF | FR4, FR6, FR7, FR9, FR10, FR17 |
 
 ### What the discussions changed
 
@@ -130,6 +138,8 @@ Aligning the requirements of two guides is a case of schema matching. Rahm and B
 
 ### Analysis table
 
+Table: Analysis of the reviewed publications
+
 | # | Source | Type, year | Theme | Approach | Main finding | Limitation for this project |
 |---|---|---|---|---|---|---|
 | 1 | Coiera (2023) | Journal, 2023 | Divergence | Conceptual framework | No single persistent standard in open systems; conformance needs fitting | Health informatics, no measurement |
@@ -156,6 +166,8 @@ Work on standards explains why partner variants exist, health-informatics studie
 
 Five systems were compared: three EDI guide tools that model partner guides, one free specification editor, and a generic PDF comparison as the baseline an engineer could use today. Claims are taken only from the vendors' documentation, listed under the table; "not documented" means the documentation does not say.
 
+Table: Comparison of existing systems
+
 | Criterion | Stedi Guides | GEFEG.FX | TIBCO Foresight EDISIM Comparator | EdiNation / Spec Builder | Adobe Acrobat Compare | EDI-identifier |
 |---|---|---|---|---|---|---|
 | C1 Machine-readable model of a partner guide | Yes [ST2, ST5] | Yes [GF1] | Yes [TB1] | Yes, OpenEDI [EN3] | No | Yes |
@@ -169,13 +181,31 @@ Five systems were compared: three EDI guide tools that model partner guides, one
 
 TIBCO Foresight EDISIM Comparator is the closest system: its documentation describes checking a new partner's guideline against those of existing partners and reports requirement, code and repetition differences. It requires the guide to be entered by hand in its editor first and does not compare syntax rules. Stedi and EdiNation turn a guide into a machine-readable specification for validation but document no comparison between partners. GEFEG.FX compares guides modelled in it. Acrobat shows any textual change with its page, but it compares two versions of one document; on two different partners' guides almost every line differs, so the structural differences are lost in layout noise. None of the systems combines reading the PDF, structural comparison and page evidence, which is the combination the toolkit provides. Altova MapForce was also reviewed; it maps and validates EDI but documents no guide comparison, so it is not in the table.
 
-Sources: [ST1] stedi.com/docs/edi-platform/guides/what-is-a-stedi-guide; [ST2] stedi.com/docs/edi-platform/guides/customize-guides; [ST3] stedi.com/docs/edi-platform/guides/import-guides; [ST4] stedi.com/docs/edi-platform/guides/public-guides; [ST5] stedi.com/changelog/schemas-for-reading-or-writing; [ST6] stedi.com/pricing; [GF1] gefeg.com/en/gefeg-fx; [GF2] gefeg.com/en/news/2024/06/now-also-develop-json-schema-guides-with-gefeg-fx-gefeg-fx-2024-q2; [TB1] docs.tibco.com, TIBCO Foresight EDISIM 6.21.0 Comparator User's Guide (2021); [TB2] docs.tibco.com, Introduction to TIBCO Foresight EDISIM (Instream 9.3.0); [EN1] edifabric.com/edination.html; [EN2] edifabric.com/docs/edination/create-and-import-edi-specs.html; [EN3] edifabric.com/openedi; [EN5] edifabric.com/pricing.html; [AD2] adobe.com/acrobat/how-to/compare-two-pdf-files.html. Accessed 22 October 2026.
+Sources, accessed 22 October 2026:
+
+- [ST1] stedi.com/docs/edi-platform/guides/what-is-a-stedi-guide
+- [ST2] stedi.com/docs/edi-platform/guides/customize-guides
+- [ST3] stedi.com/docs/edi-platform/guides/import-guides
+- [ST4] stedi.com/docs/edi-platform/guides/public-guides
+- [ST5] stedi.com/changelog/schemas-for-reading-or-writing
+- [ST6] stedi.com/pricing
+- [GF1] gefeg.com/en/gefeg-fx
+- [GF2] gefeg.com/en/news/2024/06/now-also-develop-json-schema-guides-with-gefeg-fx-gefeg-fx-2024-q2
+- [TB1] docs.tibco.com, TIBCO Foresight EDISIM 6.21.0 Comparator User's Guide (2021)
+- [TB2] docs.tibco.com, Introduction to TIBCO Foresight EDISIM (Instream 9.3.0)
+- [EN1] edifabric.com/edination.html
+- [EN2] edifabric.com/docs/edination/create-and-import-edi-specs.html
+- [EN3] edifabric.com/openedi
+- [EN5] edifabric.com/pricing.html
+- [AD2] adobe.com/acrobat/how-to/compare-two-pdf-files.html
 
 ## 5. Technology comparison
 
 Each decision lists the options considered, the criteria taken from the requirements in Section 6, and the choice.
 
 ### 5.1 Reading text from PDF guides
+
+Table: Options for reading text from PDF guides
 
 | Criterion | poppler `pdftotext -layout` | pdfplumber | PyMuPDF | Learned layout models (Table Transformer, LayoutLMv3) |
 |---|---|---|---|---|
@@ -189,6 +219,8 @@ Choice: `pdftotext -layout` for the prototype. The two guide layouts in the corp
 
 ### 5.2 Backend platform
 
+Table: Backend platform options
+
 | Criterion | Go + Gin | Python + FastAPI | Java + Spring Boot |
 |---|---|---|---|
 | Deployment | Single static binary, small image | Interpreter and packages | JVM and packages |
@@ -199,6 +231,8 @@ Choice: `pdftotext -layout` for the prototype. The two guide layouts in the corp
 Choice: Go with Gin. The comparison engine and validator are CPU-bound code over in-memory requirement sets, the result ships as one binary, and the team member responsible for the backend uses Go daily. Python stays where its libraries matter, in extraction.
 
 ### 5.3 Requirement storage
+
+Table: Requirement storage options
 
 | Criterion | PostgreSQL (relational + JSONB) | MongoDB | JSON files in Git |
 |---|---|---|---|
@@ -211,6 +245,8 @@ Choice: JSON files in Git for the corpus during development, because every chang
 
 ### 5.4 Interaction between extractor and backend
 
+Table: Options for interaction between extractor and backend
+
 | Criterion | HTTP with JSON | Subprocess call to a CLI | Message queue |
 |---|---|---|---|
 | Independent deployment of Python and Go parts | Yes | No | Yes |
@@ -222,6 +258,8 @@ Choice: HTTP with JSON. The extractor already works as a CLI that writes schema-
 
 ### 5.5 Comparison method
 
+Table: Comparison method options
+
 | Criterion | Structural alignment by X12 key | Text similarity of requirement descriptions | Large language model comparison |
 |---|---|---|---|
 | Uses the structure the standard defines | Yes | No | Partly |
@@ -232,6 +270,8 @@ Choice: HTTP with JSON. The extractor already works as a CLI that writes schema-
 Choice: structural alignment by segment, position, loop, element and qualifier, with a rule per category. The user discussions confirm the risk of the third option: an engineer who tried a language model on guide excerpts reported invented code lists, confused loops and optional mixed up with conditional (Section 2). Prose that the rules cannot judge is flagged for review instead of guessed; a language model may later propose labels for such items, but only as suggestions checked against the source page.
 
 ### 5.6 Web viewer
+
+Table: Web viewer options
 
 | Criterion | React + TypeScript | Server-rendered Go templates | Vue |
 |---|---|---|---|
@@ -246,6 +286,8 @@ Choice: React with TypeScript.
 Priorities use MoSCoW. Status: done, prototype (works on the pilot corpus), planned.
 
 ### Functional requirements
+
+Table: Functional requirements
 
 | ID | Requirement | Priority | Acceptance criterion | Status |
 |---|---|---|---|---|
@@ -268,6 +310,8 @@ Priorities use MoSCoW. Status: done, prototype (works on the pilot corpus), plan
 | FR17 | Compare two revisions of one partner's guide and list what changed | Should | Two revisions of one guide give a report of changed, added and removed requirements, labelled with both revision dates | Works with the current comparison; revision history with FR4 |
 
 ### Non-functional requirements
+
+Table: Non-functional requirements
 
 | ID | Requirement | Acceptance criterion | Status |
 |---|---|---|---|
@@ -297,19 +341,21 @@ The CLI `edi` uses the comparison engine and evidence checker directly and serve
 
 ### System context
 
-![System context](diagrams/context.svg)
+![System context diagram](diagrams/context.svg)
 
 ### Use cases
 
-![Use cases](diagrams/use-cases.svg)
+![Use case diagram](diagrams/use-cases.svg)
 
 ### Components
 
-![Components](diagrams/components.svg)
+![Component diagram (draft)](diagrams/components.svg)
 
 Diagram sources are in `docs/diagrams/*.dot` (Graphviz) and are exported to SVG.
 
 ### Alignment of use cases, requirements and components
+
+Table: Alignment of use cases, requirements and components
 
 | Use case | Requirements | Components | Data |
 |---|---|---|---|
@@ -389,6 +435,8 @@ In the figure C.H. Robinson allows all 42 standard shipment status codes in AT70
 
 ### Testing
 
+Table: Testing levels
+
 | Level | What | Where |
 |---|---|---|
 | Unit | Key normalisation, alignment rules, each divergence rule, both layout parsers, evaluation counts | Go and Python tests, CI jobs `backend` and `extractor` |
@@ -397,6 +445,8 @@ In the figure C.H. Robinson allows all 42 standard shipment status codes in AT70
 | API and viewer | Endpoint integration tests; scripted viewer scenarios | Planned with FR10, FR12 |
 
 ### Metrics
+
+Table: Evaluation metrics and targets
 
 | Aim | Metric | Target |
 |---|---|---|
@@ -432,6 +482,8 @@ On the three development guides the extractor finds 118 of 118 reference require
 
 ### Responsibilities
 
+Table: Responsibilities of the team members
+
 | Member | Responsibility (approved plan) |
 |---|---|
 | Nurassyl Orazbek | Requirement model, comparison engine, backend and REST API, evaluation |
@@ -439,6 +491,8 @@ On the three development guides the extractor finds 118 of 118 reference require
 | Anuar Zhenissov | PDF extraction and normalization |
 
 ### Contributions to pre-defense 1
+
+Table: Contributions to pre-defense 1
 
 | Member | Contribution | Where to see it |
 |---|---|---|
@@ -448,6 +502,8 @@ On the three development guides the extractor finds 118 of 118 reference require
 
 ### Milestones
 
+Table: Milestones
+
 | Date | Milestone | Content |
 |---|---|---|
 | 24 Oct 2026 | Pre-defense 1 (`pre-defense-1`) | Analysis, design, plan; requirement model, pilot corpus, extraction and comparison prototypes |
@@ -455,6 +511,8 @@ On the three development guides the extractor finds 118 of 118 reference require
 | Final pre-defense | Complete system | Validation of test messages, 204 and 210, full evaluation, final report |
 
 ### Risks
+
+Table: Risks and mitigation
 
 | Risk | Likelihood | Impact | Mitigation |
 |---|---|---|---|
@@ -473,6 +531,8 @@ On the three development guides the extractor finds 118 of 118 reference require
 - Participants for user discussions and usability sessions.
 
 ## 11. Supervisor feedback
+
+Table: Supervisor feedback and decisions
 
 | Date | Deliverable reviewed | Comment | Decision |
 |---|---|---|---|
