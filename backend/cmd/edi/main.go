@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"errors"
 	"flag"
@@ -16,7 +17,7 @@ import (
 
 const usage = `usage:
   edi align [-rule exact|qualifier] GUIDE.json...
-  edi diff [-rule exact|qualifier] [-all] [-json OUT.json] GUIDE.json...
+  edi diff [-rule exact|qualifier] [-all] [-json OUT.json] [-csv OUT.csv] GUIDE.json...
   edi evidence -pdfs DIR GUIDE.json...`
 
 func main() {
@@ -87,6 +88,7 @@ func runDiff(args []string) error {
 	rule := fs.String("rule", string(compare.Qualifier), "alignment rule: exact or qualifier")
 	all := fs.Bool("all", false, "list every finding, not only differences and findings to review")
 	out := fs.String("json", "", "also write the reports to this JSON file")
+	table := fs.String("csv", "", "also write the findings to this CSV file")
 	guides, err := compare.LoadAll(parse(fs, args))
 	if err != nil {
 		return err
@@ -149,6 +151,11 @@ func runDiff(args []string) error {
 		}
 	}
 
+	if *table != "" {
+		if err := writeCSV(*table, reports); err != nil {
+			return err
+		}
+	}
 	if *out == "" {
 		return nil
 	}
@@ -157,6 +164,32 @@ func runDiff(args []string) error {
 		return err
 	}
 	return os.WriteFile(*out, append(data, '\n'), 0o644)
+}
+
+func writeCSV(path string, reports []compare.Report) error {
+	f, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	w := csv.NewWriter(f)
+	w.Write([]string{"left_guide", "right_guide", "category", "verdict", "left_key", "right_key", "left", "right", "detail", "left_pages", "right_pages"})
+	for _, r := range reports {
+		for _, x := range r.Findings {
+			w.Write([]string{r.Left, r.Right, x.Category, string(x.Verdict), x.LeftKey, x.RightKey, x.Left, x.Right, x.Detail, pageList(x.LeftPages), pageList(x.RightPages)})
+		}
+		for _, a := range r.LeftOnly {
+			w.Write([]string{r.Left, r.Right, "presence", "only_left", a.Key, "", "defined", "not defined", "", pageList(a.Pages), ""})
+		}
+		for _, a := range r.RightOnly {
+			w.Write([]string{r.Left, r.Right, "presence", "only_right", "", a.Key, "not defined", "defined", "", "", pageList(a.Pages)})
+		}
+	}
+	w.Flush()
+	if err := w.Error(); err != nil {
+		f.Close()
+		return err
+	}
+	return f.Close()
 }
 
 func pageList(ps []int) string {

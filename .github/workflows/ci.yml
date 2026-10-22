@@ -62,7 +62,7 @@ jobs:
       - run: sudo apt-get update -q && sudo apt-get install -y --no-install-recommends poppler-utils
       - run: ./edi evidence -pdfs pdfs $GUIDES | tee evidence.txt
       - run: ./edi align $GUIDES | tee alignment.txt
-      - run: ./edi diff -json diff.json $GUIDES | tee diff.txt
+      - run: ./edi diff -json diff.json -csv diff.csv $GUIDES | tee diff.txt
       - name: Extract guides from PDF
         run: |
           mkdir extracted
@@ -82,5 +82,6 @@ jobs:
             alignment.txt
             diff.txt
             diff.json
+            diff.csv
             extraction.txt
             extracted/
