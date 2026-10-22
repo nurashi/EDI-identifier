@@ -62,9 +62,9 @@ The requirements in Section 6 rest on four assumptions. Each is listed with the 
 | ID | Assumption | Evidence | Status |
 |---|---|---|---|
 | A1 | Guides for the same message differ materially between partners | Analysis of three public 214 guides (below) | Verified on three guides |
-| A2 | Engineers compare guides by hand when onboarding a partner, and it takes significant time | Professional practice of one team member; user discussions | Being verified in discussions |
-| A3 | Engineers need the source page to trust a reported difference | User discussions | Being verified in discussions |
-| A4 | A report of differences would be used in onboarding and guide updates | User discussions | Being verified in discussions |
+| A2 | Engineers compare guides by hand when onboarding a partner, and it takes significant time | User discussions (P1) | Supported: manual comparison, 3–5 hours per specification, a new partner monthly |
+| A3 | Engineers need the source page to trust a reported difference | User discussions (P1) | Supported: "without it I would not trust it" |
+| A4 | A report of differences would be used in onboarding and guide updates | User discussions (P1) | Supported: wanted in a web interface with export to attach to development tasks |
 
 ### Analysis of available data
 
@@ -84,8 +84,16 @@ Examples: C.H. Robinson allows all 42 standard shipment status codes in AT701, K
 
 Three to five integration engineers and EDI analysts outside the team are interviewed with five questions: how often they onboard partners or receive guide updates, how they compare guides today and how long it takes, which differences occur and which caused failures, whether the source page matters, and which form of tool they would use. Participants are anonymous; the record keeps role, company type and experience.
 
-| ID | Date | Role | Company type | EDI experience | Findings | Linked requirements |
-|---|---|---|---|---|---|---|
+| ID | Date | Role | Company type | Findings | Linked requirements |
+|---|---|---|---|---|---|
+| P1 | 23 Oct 2026 | EDI integration engineer | Transportation software company | A new partner or broker integration every month, updates of existing specifications every quarter. Compares a new guide by hand with a similar partner, 3–5 hours per specification. Language models help with basic fields but invent code lists, confuse loops and miss the difference between optional and conditional, so both PDFs are still checked by eye. Most failures come from conditional dependencies and closed code lists: in one case a broker required a reason code in AT702 for status X6 only when another element was filled; the condition was in a footnote on page 18, and messages were silently rejected in staging until it was found. Will not trust a reported difference without the page. Wants a web interface and an export to a spreadsheet to attach the differences to a development task; the report must show code-list differences, loop repeat limits, and syntax notes and conditional dependencies | FR6, FR7, FR9, FR10, FR16 |
+
+### What the discussions changed
+
+- The export of the report to a spreadsheet becomes a Must (FR9), because the differences are attached to development tasks.
+- Conditional dependencies caused the most failures, while the prototype only flags them for review; comparing them becomes a separate Must requirement (FR16).
+- Manual comparison at 3–5 hours per specification becomes the time baseline of the evaluation (Section 9).
+- The reported failures of language models on code lists, loops and usage support the choice of deterministic structural comparison (Section 5.5).
 
 ## 3. Literature review
 
@@ -218,7 +226,7 @@ Choice: HTTP with JSON. The extractor already works as a CLI that writes schema-
 | Each result traceable to both pages | Yes | Yes | Hard to guarantee |
 | Handles prose-only requirements | No, flags them | Partly | Yes |
 
-Choice: structural alignment by segment, position, loop, element and qualifier, with a rule per category. Prose that the rules cannot judge is flagged for review instead of guessed; a language model may later propose labels for such items, but only as suggestions checked against the source page.
+Choice: structural alignment by segment, position, loop, element and qualifier, with a rule per category. The user discussions confirm the risk of the third option: an engineer who tried a language model on guide excerpts reported invented code lists, confused loops and optional mixed up with conditional (Section 2). Prose that the rules cannot judge is flagged for review instead of guessed; a language model may later propose labels for such items, but only as suggestions checked against the source page.
 
 ### 5.6 Web viewer
 
@@ -246,13 +254,14 @@ Priorities use MoSCoW. Status: done, prototype (works on the pilot corpus), plan
 | FR6 | Classify each aligned pair in usage, codes, repetition and conditions as same, different, stated by one side, or needs review | Must | The known cases of the pilot corpus give the expected verdicts in tests | Done |
 | FR7 | Show both source pages and excerpts for every finding | Must | No finding without pages on both sides | Done |
 | FR8 | List requirements defined in one guide only | Must | Matches the alignment result | Done |
-| FR9 | Export the comparison report as JSON and CSV | Should | JSON validates against a report schema; CSV opens in a spreadsheet | JSON done |
+| FR9 | Export the comparison report as JSON and CSV | Must | JSON validates against a report schema; CSV opens in a spreadsheet | JSON done |
 | FR10 | Web viewer: two guides side by side, filters by category and verdict, source page panel | Must | A user opens the page of any finding in one action from the list | Prototype |
 | FR11 | Validate a test X12 214 message against the requirements of two partners | Should | Seeded violations in test messages are reported with the partner and rule | Planned |
 | FR12 | REST API for import, comparison and validation | Must | Endpoints documented with OpenAPI; integration tests in CI | Planned |
 | FR13 | Record reference labels for findings | Must | Labels stored per finding and reviewer; used by the evaluation | Planned |
 | FR14 | Evaluate extraction and comparison against reference data | Must | Command reports recall, precision and field accuracy per guide | Extraction done |
 | FR15 | Support transaction sets 204 and 210 | Could | One guide of each extracted and compared | Planned |
+| FR16 | Compare syntax notes and conditional dependencies between partners, not only flag them | Must | Syntax rules and conditions written in a structured form ("if X then Y") are aligned and compared; the rest stays flagged with both texts | Planned (syntax rules extracted) |
 
 ### Non-functional requirements
 
@@ -402,7 +411,7 @@ In the figure C.H. Robinson allows all 42 standard shipment status codes in AT70
 ### Baselines
 
 - **Text diff:** `diff` of the `pdftotext` output of two guides, the closest thing to what a generic document comparison offers. Measured: how many reference divergences it surfaces and how much unrelated change it reports.
-- **Manual comparison:** time an engineer needs to list the divergences of two guides by hand, from the user discussions and the usability sessions.
+- **Manual comparison:** 3–5 hours per specification reported in the user discussions (P1); measured again in the usability sessions.
 - **Hand-normalized corpus:** the reference for extraction.
 
 ### Current results
