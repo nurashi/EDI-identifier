@@ -86,12 +86,12 @@ Three to five integration engineers and EDI analysts outside the team are interv
 
 | ID | Date | Role | Company type | Findings | Linked requirements |
 |---|---|---|---|---|---|
-| P1 | 23 Oct 2026 | EDI integration engineer | Transportation software company | A new partner or broker integration every month, updates of existing specifications every quarter. Compares a new guide by hand with a similar partner, 3–5 hours per specification. Language models help with basic fields but invent code lists, confuse loops and miss the difference between optional and conditional, so both PDFs are still checked by eye. Most failures come from conditional dependencies and closed code lists: in one case a broker required a reason code in AT702 for status X6 only when another element was filled; the condition was in a footnote on page 18, and messages were silently rejected in staging until it was found. Will not trust a reported difference without the page. Wants a web interface and an export to a spreadsheet to attach the differences to a development task; the report must show code-list differences, loop repeat limits, and syntax notes and conditional dependencies | FR6, FR7, FR9, FR10, FR16 |
+| P1 | 22 Oct 2026 | EDI integration engineer | Transportation software company | A new partner or broker integration every month, updates of existing specifications every quarter. Compares a new guide by hand with a similar partner, 3–5 hours per specification. Language models help with basic fields but invent code lists, confuse loops and miss the difference between optional and conditional, so both PDFs are still checked by eye. Most failures come from conditional dependencies and closed code lists: in one case a broker required a reason code in AT702 for status X6 only when another element was filled; the condition was in a footnote on page 18, and messages were silently rejected in staging until it was found. Will not trust a reported difference without the page. Wants a web interface and an export to a spreadsheet to attach the differences to a development task; the report must show code-list differences, loop repeat limits, and syntax notes and conditional dependencies | FR6, FR7, FR9, FR10, FR16 |
 
 ### What the discussions changed
 
-- The export of the report to a spreadsheet becomes a Must (FR9), because the differences are attached to development tasks.
-- Conditional dependencies caused the most failures, while the prototype only flags them for review; comparing them becomes a separate Must requirement (FR16).
+- The export of the report to a spreadsheet becomes a Must (FR9), because the differences are attached to development tasks; it was implemented the same day (`edi diff -csv`, DIP-23).
+- Conditional dependencies caused the most failures, while the prototype only flags them for review; comparing them becomes a separate Must requirement (FR16, DIP-24).
 - Manual comparison at 3–5 hours per specification becomes the time baseline of the evaluation (Section 9).
 - The reported failures of language models on code lists, loops and usage support the choice of deterministic structural comparison (Section 5.5).
 
@@ -254,7 +254,7 @@ Priorities use MoSCoW. Status: done, prototype (works on the pilot corpus), plan
 | FR6 | Classify each aligned pair in usage, codes, repetition and conditions as same, different, stated by one side, or needs review | Must | The known cases of the pilot corpus give the expected verdicts in tests | Done |
 | FR7 | Show both source pages and excerpts for every finding | Must | No finding without pages on both sides | Done |
 | FR8 | List requirements defined in one guide only | Must | Matches the alignment result | Done |
-| FR9 | Export the comparison report as JSON and CSV | Must | JSON validates against a report schema; CSV opens in a spreadsheet | JSON done |
+| FR9 | Export the comparison report as JSON and CSV | Must | JSON validates against a report schema; CSV opens in a spreadsheet | Done |
 | FR10 | Web viewer: two guides side by side, filters by category and verdict, source page panel | Must | A user opens the page of any finding in one action from the list | Prototype |
 | FR11 | Validate a test X12 214 message against the requirements of two partners | Should | Seeded violations in test messages are reported with the partner and rule | Planned |
 | FR12 | REST API for import, comparison and validation | Must | Endpoints documented with OpenAPI; integration tests in CI | Planned |
@@ -311,7 +311,7 @@ Diagram sources are in `docs/diagrams/*.dot` (Graphviz) and are exported to SVG.
 |---|---|---|---|
 | UC1 Import a partner guide | FR1, FR2, FR4 | Extractor, evidence checker, REST API, stores | PDF, guide JSON |
 | UC2 Review flagged requirements | FR3 | Web viewer, REST API, requirement store | Guide versions |
-| UC3 Compare two guides | FR5, FR6, FR8 | Comparison engine, REST API, CLI | Two guide versions, report |
+| UC3 Compare two guides | FR5, FR6, FR8, FR16 | Comparison engine, REST API, CLI | Two guide versions, report |
 | UC4 Inspect a divergence at its source page | FR7, FR10 | Web viewer, PDF store | Finding with pages |
 | UC5 Export the report | FR9 | REST API, CLI | Report JSON / CSV |
 | UC6 Validate a test message | FR11 | Message validator, comparison engine | X12 file, two guides |
@@ -371,7 +371,7 @@ chr-214 ~ kbx-214
     loop repeat 1 vs 10
 ```
 
-`edi diff -json report.json` writes the same findings for the API and the viewer; `edi evidence -pdfs DIR` checks every excerpt of a guide file against its PDF.
+`edi diff -json report.json` writes the same findings for the API and the viewer, and `-csv report.csv` as a table to attach to a development task (added after user discussion P1); `edi evidence -pdfs DIR` checks every excerpt of a guide file against its PDF.
 
 ### Viewer prototype
 
