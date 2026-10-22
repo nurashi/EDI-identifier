@@ -91,13 +91,13 @@ Three to five integration engineers and EDI analysts outside the team are interv
 
 ### Search and selection
 
-Sources were searched in Crossref, Google Scholar and publisher libraries for five themes: divergence in the implementation of standards, B2B message interoperability, extraction of structured content from PDF, comparison of machine-readable interface specifications, and schema matching. A source was kept if it is peer reviewed or a widely used open-source system description, if it addresses one of the themes directly, and if its metadata could be confirmed at the publisher. Eighteen sources are used: seventeen peer-reviewed publications and one preprint; twelve are from 2021–2026, the rest are foundational. Every reference was checked against Crossref or PubMed.
+Sources were searched in Crossref, Google Scholar and publisher libraries for five themes: divergence in the implementation of standards, B2B message interoperability, extraction of structured content from PDF, comparison of machine-readable interface specifications, and schema matching. A source was kept if it is peer reviewed or a widely used open-source system description, if it addresses one of the themes directly, if its metadata could be confirmed at the publisher, and if its full text can be read free of charge. Sixteen sources are used: fifteen peer-reviewed publications and one preprint; twelve are from 2021–2026, the rest are foundational. Every reference was checked against Crossref or PubMed, and every full text was opened; where the publisher's copy is paywalled, the reference gives the free copy (author, institutional or arXiv version).
 
 ### Partner-specific divergence from a shared standard
 
-That conformance to one standard does not guarantee compatibility is an old observation. Egyedi (2007) traces incompatibility between standard-compliant IT products to how standards are written and implemented and concludes that for interoperability the two cannot be separated. Egyedi and Verwater-Lukszo (2005) identify the properties that make a standard flexible, specificity, abstraction, system level and simplicity, which is exactly the room partners use when they publish their own guides. Coiera (2023) generalises this as "the standard problem": in an open system no single definitive standard can persist, because contexts, implementations and versions drift, and interoperability then depends on fitting work between local variants. The most direct quantitative evidence comes from health care rather than freight: Kramer (2022) analysed about 3,000 FHIR profiles from 125 implementation guides and found heavy, inconsistent profiling of the same resources, and Rosenau et al. (2024) found systematic discrepancies when data from 20 hospitals were validated against stricter shared profiles. In freight EDI, research has concentrated on adoption: Premkumar et al. (1997) explain which trucking firms adopt EDI but not how the partners' requirements differ.
+That conformance to one standard does not guarantee compatibility is an old observation in standardisation research. Egyedi and Verwater-Lukszo (2005) identify the properties that make a standard flexible, specificity, abstraction, system level and simplicity, which is exactly the room partners use when they publish their own guides. Coiera (2023) generalises this as "the standard problem": in an open system no single definitive standard can persist, because contexts, implementations and versions drift, and interoperability then depends on fitting work between local variants. The most direct quantitative evidence comes from health care rather than freight: Kramer (2022) analysed about 3,000 FHIR profiles from 125 implementation guides and found heavy, inconsistent profiling of the same resources, and Rosenau et al. (2024) found systematic discrepancies when data from 20 hospitals were validated against stricter shared profiles. Our search found no comparable study of freight EDI guides.
 
-These works establish that partner-level variants of one standard are normal and costly, but they describe the phenomenon or measure it on machine-readable profiles. None measures how partners' X12 guides, published as PDFs, differ requirement by requirement. This project takes the framing from Egyedi and Coiera and the profile-analysis method from Kramer, and applies them to X12 214 guides with page-level evidence.
+These works establish that partner-level variants of one standard are normal and costly, but they describe the phenomenon or measure it on machine-readable profiles. None measures how partners' X12 guides, published as PDFs, differ requirement by requirement. This project takes the framing from Egyedi and Verwater-Lukszo and from Coiera and the profile-analysis method from Kramer, and applies them to X12 214 guides with page-level evidence.
 
 ### B2B message interoperability
 
@@ -121,24 +121,22 @@ Aligning the requirements of two guides is a case of schema matching. Rahm and B
 
 | # | Source | Type, year | Theme | Approach | Main finding | Limitation for this project |
 |---|---|---|---|---|---|---|
-| 1 | Egyedi (2007) | Journal, 2007 | Divergence | Institutional analysis, cases | Compliance does not ensure compatibility; development and implementation are inseparable | Conceptual, no detection method |
-| 2 | Egyedi & Verwater-Lukszo (2005) | Journal, 2005 | Divergence | Comparative case study | Four properties make standards flexible | Design of standards, not divergence of profiles |
-| 3 | Premkumar et al. (1997) | Journal, 1997 | EDI in transport | Survey of trucking firms | Size, pressure, customer and management support drive adoption | Adoption, not guide content |
-| 4 | Coiera (2023) | Journal, 2023 | Divergence | Conceptual framework | No single persistent standard in open systems; conformance needs fitting | Health informatics, no measurement |
-| 5 | Kramer (2022) | Conference, 2022 | Divergence | Analysis of ~3,000 FHIR profiles | Profiling of the same resources is heavy and inconsistent | Machine-readable profiles, counts not pairwise comparison |
-| 6 | Vujasinovic et al. (2010) | Journal, 2010 | B2B interoperability | Ontological message metamodel | Semantic mediation between incompatible message sets | Needs schemas and manual annotation |
-| 7 | Shin et al. (2009) | Journal, 2009 | B2B interoperability | Test procedure | Efficient content-level equivalence testing | Tests one implementation |
-| 8 | Rosenau et al. (2024) | Journal, 2024 | Interoperability | Validation pipeline, 20 hospitals | Systematic discrepancies against shared profiles | Instance data, not specifications |
-| 9 | Smock et al. (2022) | Conference, 2022 | PDF extraction | Dataset, transformer detection | Strong table detection and structure recognition | Scientific tables, no EDI semantics |
-| 10 | Livathinos et al. (2025) | Preprint, 2025 | PDF extraction | Open-source conversion toolkit | Layout and table models on commodity hardware | Generic output, needs domain mapping |
-| 11 | Meuschke et al. (2023) | Conference, 2023 | PDF extraction | Benchmark of 10 tools | Tables are the weakest element for all tools | Academic documents |
-| 12 | Xu et al. (2024) | Journal, 2024 | PDF extraction | Survey of LLM extraction | Generative extraction across subtasks | Plain text, no page traceability |
-| 13 | Bogner et al. (2024) | Conference, 2024 | Specification checking | Static analysis of OpenAPI | 91% precision, 68% recall on rule violations | One spec against generic rules |
-| 14 | Serbout & Pautasso (2024a) | Conference, 2024 | Specification checking | Metrics for 1.27M OpenAPI files | Large-scale comparison of API designs | No element-level alignment |
-| 15 | Serbout & Pautasso (2024b) | Conference, 2024 | Specification diffing | Mining 3,075 API histories | Breaking changes often violate versioning | Versions over time, not parallel partners |
-| 16 | Bogner et al. (2023) | Journal, 2023 | Specification quality | Controlled experiment, 105 participants | Rule violations reduce understandability | Indirect |
-| 17 | Rahm & Bernstein (2001) | Journal, 2001 | Matching | Taxonomy | Element/structure, linguistic/constraint matchers | Generic, pre-LLM |
-| 18 | Liu et al. (2025) | Journal, 2025 | Matching | Small + large language models | Accurate scalable schema matching | Tabular schemas, untested on EDI |
+| 1 | Egyedi & Verwater-Lukszo (2005) | Journal, 2005 | Divergence | Comparative case study | Four properties make standards flexible | Design of standards, not divergence of profiles |
+| 2 | Coiera (2023) | Journal, 2023 | Divergence | Conceptual framework | No single persistent standard in open systems; conformance needs fitting | Health informatics, no measurement |
+| 3 | Kramer (2022) | Conference, 2022 | Divergence | Analysis of ~3,000 FHIR profiles | Profiling of the same resources is heavy and inconsistent | Machine-readable profiles, counts not pairwise comparison |
+| 4 | Vujasinovic et al. (2010) | Journal, 2010 | B2B interoperability | Ontological message metamodel | Semantic mediation between incompatible message sets | Needs schemas and manual annotation |
+| 5 | Shin et al. (2009) | Journal, 2009 | B2B interoperability | Test procedure | Efficient content-level equivalence testing | Tests one implementation |
+| 6 | Rosenau et al. (2024) | Journal, 2024 | Interoperability | Validation pipeline, 20 hospitals | Systematic discrepancies against shared profiles | Instance data, not specifications |
+| 7 | Smock et al. (2022) | Conference, 2022 | PDF extraction | Dataset, transformer detection | Strong table detection and structure recognition | Scientific tables, no EDI semantics |
+| 8 | Livathinos et al. (2025) | Preprint, 2025 | PDF extraction | Open-source conversion toolkit | Layout and table models on commodity hardware | Generic output, needs domain mapping |
+| 9 | Meuschke et al. (2023) | Conference, 2023 | PDF extraction | Benchmark of 10 tools | Tables are the weakest element for all tools | Academic documents |
+| 10 | Xu et al. (2024) | Journal, 2024 | PDF extraction | Survey of LLM extraction | Generative extraction across subtasks | Plain text, no page traceability |
+| 11 | Bogner et al. (2024) | Conference, 2024 | Specification checking | Static analysis of OpenAPI | 91% precision, 68% recall on rule violations | One spec against generic rules |
+| 12 | Serbout & Pautasso (2024a) | Conference, 2024 | Specification checking | Metrics for 1.27M OpenAPI files | Large-scale comparison of API designs | No element-level alignment |
+| 13 | Serbout & Pautasso (2024b) | Conference, 2024 | Specification diffing | Mining 3,075 API histories | Breaking changes often violate versioning | Versions over time, not parallel partners |
+| 14 | Bogner et al. (2023) | Journal, 2023 | Specification quality | Controlled experiment, 105 participants | Rule violations reduce understandability | Indirect |
+| 15 | Rahm & Bernstein (2001) | Journal, 2001 | Matching | Taxonomy | Element/structure, linguistic/constraint matchers | Generic, pre-LLM |
+| 16 | Liu et al. (2025) | Journal, 2025 | Matching | Small + large language models | Accurate scalable schema matching | Tabular schemas, untested on EDI |
 
 ### Gap
 
@@ -456,39 +454,35 @@ On the three development guides the extractor finds 118 of 118 reference require
 
 ## References
 
-Bogner, J., Kotstein, S., Abajirov, D., Ernst, T., & Merkel, M. (2024). RESTRuler: Towards automatically identifying violations of RESTful design rules in web APIs. In *2024 IEEE 21st International Conference on Software Architecture (ICSA)* (pp. 123–134). IEEE. https://doi.org/10.1109/ICSA59870.2024.00020
+Bogner, J., Kotstein, S., Abajirov, D., Ernst, T., & Merkel, M. (2024). RESTRuler: Towards automatically identifying violations of RESTful design rules in web APIs. In *2024 IEEE 21st International Conference on Software Architecture (ICSA)* (pp. 123–134). IEEE. https://doi.org/10.1109/ICSA59870.2024.00020 Free full text: https://arxiv.org/abs/2402.13710
 
 Bogner, J., Kotstein, S., & Pfaff, T. (2023). Do RESTful API design rules have an impact on the understandability of Web APIs? *Empirical Software Engineering, 28*(6), Article 132. https://doi.org/10.1007/s10664-023-10367-y
 
-Coiera, E. (2023). The standard problem. *Journal of the American Medical Informatics Association, 30*(12), 2086–2097. https://doi.org/10.1093/jamia/ocad176
+Coiera, E. (2023). The standard problem. *Journal of the American Medical Informatics Association, 30*(12), 2086–2097. https://doi.org/10.1093/jamia/ocad176 Free full text: https://arxiv.org/abs/2304.09114
 
-Egyedi, T. M. (2007). Standard-compliant, but incompatible?! *Computer Standards & Interfaces, 29*(6), 605–613. https://doi.org/10.1016/j.csi.2007.04.001
-
-Egyedi, T. M., & Verwater-Lukszo, Z. (2005). Which standards' characteristics increase system flexibility? Comparing ICT and batch processing infrastructures. *Technology in Society, 27*(3), 347–362. https://doi.org/10.1016/j.techsoc.2005.04.007
+Egyedi, T. M., & Verwater-Lukszo, Z. (2005). Which standards' characteristics increase system flexibility? Comparing ICT and batch processing infrastructures. *Technology in Society, 27*(3), 347–362. https://doi.org/10.1016/j.techsoc.2005.04.007 Free full text: https://repository.tudelft.nl/file/File_994e2113-4769-4e9c-bfc9-14a7e538e78c
 
 Kramer, M. A. (2022). Reducing FHIR "profiliferation": A data-driven approach. *AMIA Annual Symposium Proceedings, 2022*, 634–643. https://pmc.ncbi.nlm.nih.gov/articles/PMC10148270/
 
-Liu, Y., Pena, E. H. M., Santos, A., Wu, E., & Freire, J. (2025). Magneto: Combining small and large language models for schema matching. *Proceedings of the VLDB Endowment, 18*(8), 2681–2694. https://doi.org/10.14778/3742728.3742757
+Liu, Y., Pena, E. H. M., Santos, A., Wu, E., & Freire, J. (2025). Magneto: Combining small and large language models for schema matching. *Proceedings of the VLDB Endowment, 18*(8), 2681–2694. https://doi.org/10.14778/3742728.3742757 Free full text: https://arxiv.org/abs/2412.08194
 
 Livathinos, N., Auer, C., Lysak, M., Nassar, A., Dolfi, M., Vagenas, P., Berrospi Ramis, C., Omenetti, M., Dinkla, K., Kim, Y., Gupta, S., Teixeira de Lima, R., Weber, V., Morin, L., Meijer, I., Kuropiatnyk, V., & Staar, P. W. J. (2025). *Docling: An efficient open-source toolkit for AI-driven document conversion* (arXiv:2501.17887). arXiv. https://doi.org/10.48550/arXiv.2501.17887
 
-Meuschke, N., Jagdale, A., Spinde, T., Mitrović, J., & Gipp, B. (2023). A benchmark of PDF information extraction tools using a multi-task and multi-domain evaluation framework for academic documents. In *Information for a Better World: Normality, Virtuality, Physicality, Inclusivity* (Lecture Notes in Computer Science, Vol. 13972, pp. 383–405). Springer. https://doi.org/10.1007/978-3-031-28032-0_31
+Meuschke, N., Jagdale, A., Spinde, T., Mitrović, J., & Gipp, B. (2023). A benchmark of PDF information extraction tools using a multi-task and multi-domain evaluation framework for academic documents. In *Information for a Better World: Normality, Virtuality, Physicality, Inclusivity* (Lecture Notes in Computer Science, Vol. 13972, pp. 383–405). Springer. https://doi.org/10.1007/978-3-031-28032-0_31 Free full text: https://arxiv.org/abs/2303.09957
 
-Premkumar, G., Ramamurthy, K., & Crum, M. (1997). Determinants of EDI adoption in the transportation industry. *European Journal of Information Systems, 6*(2), 107–121. https://doi.org/10.1057/palgrave.ejis.3000260
-
-Rahm, E., & Bernstein, P. A. (2001). A survey of approaches to automatic schema matching. *The VLDB Journal, 10*(4), 334–350. https://doi.org/10.1007/s007780100057
+Rahm, E., & Bernstein, P. A. (2001). A survey of approaches to automatic schema matching. *The VLDB Journal, 10*(4), 334–350. https://doi.org/10.1007/s007780100057 Free full text: https://nbn-resolving.org/urn:nbn:de:bsz:15-qucosa2-319685
 
 Rosenau, L., Behrend, P., Wiedekopf, J., Gruendner, J., & Ingenerf, J. (2024). Uncovering harmonization potential in health care data through iterative refinement of Fast Healthcare Interoperability Resources profiles based on retrospective discrepancy analysis: Case study. *JMIR Medical Informatics, 12*, e57005. https://doi.org/10.2196/57005
 
 Serbout, S., & Pautasso, C. (2024a). APIstic: A large collection of OpenAPI metrics. In *Proceedings of the 21st International Conference on Mining Software Repositories (MSR '24)* (pp. 265–277). ACM. https://doi.org/10.1145/3643991.3644932
 
-Serbout, S., & Pautasso, C. (2024b). How many web APIs evolve following semantic versioning? In *Web Engineering: ICWE 2024* (Lecture Notes in Computer Science, Vol. 14629, pp. 344–359). Springer. https://doi.org/10.1007/978-3-031-62362-2_25
+Serbout, S., & Pautasso, C. (2024b). How many web APIs evolve following semantic versioning? In *Web Engineering: ICWE 2024* (Lecture Notes in Computer Science, Vol. 14629, pp. 344–359). Springer. https://doi.org/10.1007/978-3-031-62362-2_25 Free full text: https://design.inf.usi.ch/sites/default/files/biblio/apiace-icwe2024.pdf
 
-Shin, J., Kim, J., & Ivezic, N. (2009). Application information mapping test: An efficient content-level semantic equivalence test procedure for B2B integration. *International Journal of Computer Integrated Manufacturing, 22*(10), 976–986. https://doi.org/10.1080/09511920903030361
+Shin, J., Kim, J., & Ivezic, N. (2009). Application information mapping test: An efficient content-level semantic equivalence test procedure for B2B integration. *International Journal of Computer Integrated Manufacturing, 22*(10), 976–986. https://doi.org/10.1080/09511920903030361 Free full text: https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=902747
 
-Smock, B., Pesala, R., & Abraham, R. (2022). PubTables-1M: Towards comprehensive table extraction from unstructured documents. In *2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)* (pp. 4624–4632). IEEE. https://doi.org/10.1109/CVPR52688.2022.00459
+Smock, B., Pesala, R., & Abraham, R. (2022). PubTables-1M: Towards comprehensive table extraction from unstructured documents. In *2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)* (pp. 4624–4632). IEEE. https://doi.org/10.1109/CVPR52688.2022.00459 Free full text: https://arxiv.org/abs/2110.00061
 
-Vujasinovic, M., Ivezic, N., Barkmeyer, E., & Marjanovic, Z. (2010). Semantic B2B-integration using an ontological message metamodel. *Concurrent Engineering, 18*(3), 219–232. https://doi.org/10.1177/1063293X10379764
+Vujasinovic, M., Ivezic, N., Barkmeyer, E., & Marjanovic, Z. (2010). Semantic B2B-integration using an ontological message metamodel. *Concurrent Engineering, 18*(3), 219–232. https://doi.org/10.1177/1063293X10379764 Free full text: https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=906036
 
 Xu, D., Chen, W., Peng, W., Zhang, C., Xu, T., Zhao, X., Wu, X., Zheng, Y., Wang, Y., & Chen, E. (2024). Large language models for generative information extraction: A survey. *Frontiers of Computer Science, 18*(6), Article 186357. https://doi.org/10.1007/s11704-024-40555-y
 
