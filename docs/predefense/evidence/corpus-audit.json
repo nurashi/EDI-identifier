@@ -1,0 +1,69 @@
+{
+  "dataset_sha256": "2d1b43f8513c01b63489aa1676da6d2ea4d52187cf56aa85817ed91febd5be95",
+  "guide_content_sha256": {
+    "chr-214": "652a9061f61336f3827784fa49139c942bea5517a3a4ea6946a859b9da959231",
+    "kbx-214": "d658e262609282a8ef8a2313db83600615d089b5b059dc8c140ec98a9882ae6c",
+    "domtar-214": "950d55a07f171b717ef2e8be59906d90c4a076f224d7b206ca111a1d74864279"
+  },
+  "alignment_rule": "qualifier",
+  "guides": [
+    {
+      "id": "chr-214",
+      "partner": "C.H. Robinson",
+      "requirements": 45,
+      "pages": 32
+    },
+    {
+      "id": "kbx-214",
+      "partner": "KBX Technology Solutions",
+      "requirements": 43,
+      "pages": 30
+    },
+    {
+      "id": "domtar-214",
+      "partner": "Domtar Industries",
+      "requirements": 30,
+      "pages": 23
+    }
+  ],
+  "requirements": 118,
+  "units": 188,
+  "labelled": 0,
+  "by_pair": {
+    "chr-214 ~ kbx-214": 72,
+    "chr-214 ~ domtar-214": 54,
+    "kbx-214 ~ domtar-214": 62
+  },
+  "by_category": {
+    "usage": 91,
+    "repetition": 23,
+    "condition": 48,
+    "codes": 26
+  },
+  "by_verdict": {
+    "same": 42,
+    "review": 16,
+    "different": 52,
+    "one_side": 78
+  },
+  "unmatched_by_pair": [
+    {
+      "left": "chr-214",
+      "right": "kbx-214",
+      "left_only": 11,
+      "right_only": 9
+    },
+    {
+      "left": "chr-214",
+      "right": "domtar-214",
+      "left_only": 18,
+      "right_only": 3
+    },
+    {
+      "left": "kbx-214",
+      "right": "domtar-214",
+      "left_only": 13,
+      "right_only": 0
+    }
+  ]
+}

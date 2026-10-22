@@ -1,0 +1,18 @@
+{
+  "checked_at_utc": "2026-10-22T14:45:21.748Z",
+  "viewports": [
+    "1366x900",
+    "390x844"
+  ],
+  "checks": [
+    "CLI dataset: 188 findings; initial pair has 72 findings and 20 unmatched requirements",
+    "Pair, category, result and text filters select the expected source-linked finding",
+    "Local review survives reload while the automated verdict remains unchanged",
+    "Empty filters hide stale details and disable editing",
+    "Storage failure gives an actionable export message",
+    "390-pixel layout has no horizontal page overflow",
+    "Local review makes no external requests and has no browser errors"
+  ],
+  "errors": [],
+  "external_requests": []
+}

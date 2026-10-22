@@ -1,0 +1,174 @@
+{
+  "checked_at_utc": "2026-10-22T13:54:52.227105+00:00",
+  "implementation_base": "cf4d3d2e15e3c8464804f6f9255caf6795f174ad",
+  "poppler": "pdftotext version 26.09.0",
+  "guide_schema": "PASS",
+  "extraction": [
+    {
+      "guide": "chr-214",
+      "total_extracted_records": 65,
+      "reference_records": 45,
+      "extracted_in_reference_scope": 45,
+      "matched_reference_keys": 45,
+      "fields_correct_and_total": {
+        "usage": [
+          45,
+          45
+        ],
+        "base": [
+          45,
+          45
+        ],
+        "max_use": [
+          45,
+          45
+        ],
+        "loop_repeat": [
+          45,
+          45
+        ],
+        "codes": [
+          45,
+          45
+        ],
+        "syntax": [
+          45,
+          45
+        ]
+      },
+      "reference_free_text_conditions_not_scored": 19,
+      "extracted_records_flagged_for_review": 28,
+      "schema": "PASS"
+    },
+    {
+      "guide": "kbx-214",
+      "total_extracted_records": 78,
+      "reference_records": 43,
+      "extracted_in_reference_scope": 43,
+      "matched_reference_keys": 43,
+      "fields_correct_and_total": {
+        "usage": [
+          43,
+          43
+        ],
+        "base": [
+          43,
+          43
+        ],
+        "max_use": [
+          43,
+          43
+        ],
+        "loop_repeat": [
+          43,
+          43
+        ],
+        "codes": [
+          43,
+          43
+        ],
+        "syntax": [
+          43,
+          43
+        ]
+      },
+      "reference_free_text_conditions_not_scored": 54,
+      "extracted_records_flagged_for_review": 24,
+      "schema": "PASS"
+    },
+    {
+      "guide": "domtar-214",
+      "total_extracted_records": 55,
+      "reference_records": 30,
+      "extracted_in_reference_scope": 30,
+      "matched_reference_keys": 30,
+      "fields_correct_and_total": {
+        "usage": [
+          30,
+          30
+        ],
+        "base": [
+          30,
+          30
+        ],
+        "max_use": [
+          30,
+          30
+        ],
+        "loop_repeat": [
+          30,
+          30
+        ],
+        "codes": [
+          30,
+          30
+        ],
+        "syntax": [
+          30,
+          30
+        ]
+      },
+      "reference_free_text_conditions_not_scored": 2,
+      "extracted_records_flagged_for_review": 6,
+      "schema": "PASS"
+    }
+  ],
+  "evidence": [
+    {
+      "dataset": "reference",
+      "guide": "chr-214",
+      "pages": 32,
+      "requirements": 45,
+      "excerpt_fragments": 151,
+      "missing_fragments": 0,
+      "sha256": "PASS"
+    },
+    {
+      "dataset": "reference",
+      "guide": "kbx-214",
+      "pages": 30,
+      "requirements": 43,
+      "excerpt_fragments": 212,
+      "missing_fragments": 0,
+      "sha256": "PASS"
+    },
+    {
+      "dataset": "reference",
+      "guide": "domtar-214",
+      "pages": 23,
+      "requirements": 30,
+      "excerpt_fragments": 51,
+      "missing_fragments": 0,
+      "sha256": "PASS"
+    },
+    {
+      "dataset": "extracted",
+      "guide": "chr-214",
+      "pages": 32,
+      "requirements": 65,
+      "excerpt_fragments": 164,
+      "missing_fragments": 0,
+      "sha256": "PASS"
+    },
+    {
+      "dataset": "extracted",
+      "guide": "kbx-214",
+      "pages": 30,
+      "requirements": 78,
+      "excerpt_fragments": 355,
+      "missing_fragments": 0,
+      "sha256": "PASS"
+    },
+    {
+      "dataset": "extracted",
+      "guide": "domtar-214",
+      "pages": 23,
+      "requirements": 55,
+      "excerpt_fragments": 249,
+      "missing_fragments": 0,
+      "sha256": "PASS"
+    }
+  ],
+  "prototype_data_rebuild": "byte-identical",
+  "scope": "Regression on three development guides and their manually normalized pilot subset. Free-text obligation extraction, independent human annotation and unseen-guide accuracy are not measured here."
+}

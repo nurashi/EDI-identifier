@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>EDI Identifier — Guide review prototype</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="index.html"
+        ><span class="brand-icon">E</span> EDI Identifier</a
+      >
+      <p class="side-caption">FREIGHT GUIDE RESEARCH</p>
+      <nav aria-label="Project navigation">
+        <a class="active" href="index.html">Guide review <span>01</span></a>
+        <a href="../sections/01-proposal.md">Project scope <span>02</span></a>
+        <a
+          href="https://github.com/nurashi/EDI-identifier-rmt/blob/main/docs/codebook.md"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Annotation codebook <span>03</span></a
+        >
+        <a href="../sections/09-evaluation.md"
+          >Evaluation plan <span>04</span></a
+        >
+      </nav>
+      <div class="scope">
+        <span class="tiny-label">PILOT SCOPE</span
+        ><strong>X12 214 / 004010</strong>
+        <p>Truckload shipment status<br />3 partner implementation guides</p>
+      </div>
+      <div class="side-footer">
+        AITU · SE-2405<br />First pre-defense · October 2026
+      </div>
+    </aside>
+    <main>
+      <header class="page-head">
+        <div>
+          <p class="eyebrow">RESEARCH WORKSPACE / COMPARISON</p>
+          <h1>Guide review</h1>
+          <p class="subtitle">
+            Inspect requirements in context. Keep every judgment linked to its
+            source.
+          </p>
+        </div>
+        <span class="prototype-tag">UX prototype</span>
+      </header>
+      <div class="notice">
+        <strong>Comparison results, ready for review.</strong> Findings come
+        from the CLI comparison of three manually normalized reference guides.
+        PDF extraction is available separately; free-text conditions can require
+        review.
+      </div>
+      <section class="metrics" aria-label="Corpus summary">
+        <div>
+          <span class="metric-number" id="guide-count"></span
+          ><span>Partner guides</span>
+        </div>
+        <div>
+          <span class="metric-number" id="requirement-count"></span
+          ><span>Reference requirements</span>
+        </div>
+        <div>
+          <span class="metric-number" id="finding-count"></span
+          ><span>Automated findings</span>
+        </div>
+        <div>
+          <span class="metric-number" id="local-count">0</span
+          ><span>Reviewed on this device</span>
+        </div>
+      </section>
+      <section class="workbench" aria-labelledby="workbench-title">
+        <div class="workbench-head">
+          <div>
+            <h2 id="workbench-title">Comparison workbook</h2>
+            <p id="pair-description"></p>
+          </div>
+          <button class="secondary" id="export">
+            Export all reviews <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div class="filters">
+          <label>Guide pair<select id="pair"></select></label>
+          <label
+            >Category<select id="category">
+              <option value="all">All categories</option>
+              <option value="usage">Usage</option>
+              <option value="codes">Codes</option>
+              <option value="repetition">Repetition</option>
+              <option value="condition">Condition</option>
+            </select></label
+          >
+          <label
+            >Automated result<select id="verdict">
+              <option value="all">All results</option>
+              <option value="same">Same</option>
+              <option value="different">Different</option>
+              <option value="one_side">Stated on one side</option>
+              <option value="review">Needs review</option>
+            </select></label
+          >
+          <label class="search-label"
+            >Find a requirement<input
+              id="search"
+              type="search"
+              placeholder="Unit, segment or requirement text…"
+          /></label>
+        </div>
+        <div class="workspace">
+          <section class="unit-pane" aria-label="Comparison units">
+            <div class="list-heading">
+              <span>UNIT / REQUIREMENT</span><span id="visible-count"></span>
+            </div>
+            <div id="units"></div>
+            <p id="empty" hidden>
+              No units match these filters. Try another category or search.
+            </p>
+          </section>
+          <p id="detail-empty" class="empty-detail" hidden>
+            Select another filter to view a finding.
+          </p>
+          <section
+            id="detail-pane"
+            class="detail-pane"
+            aria-label="Selected requirement"
+          >
+            <div class="detail-top">
+              <span id="unit-id" class="unit-id"></span
+              ><span id="category-tag" class="category-tag"></span
+              ><span id="verdict-tag" class="verdict-tag"></span>
+            </div>
+            <h2 id="unit-key"></h2>
+            <p id="alignment" class="muted"></p>
+            <p id="finding-detail" class="finding-detail"></p>
+            <div class="guide-values">
+              <article>
+                <h3 id="left-partner"></h3>
+                <p id="left-summary"></p>
+                <span id="left-pages" class="page-label"></span>
+              </article>
+              <article>
+                <h3 id="right-partner"></h3>
+                <p id="right-summary"></p>
+                <span id="right-pages" class="page-label"></span>
+              </article>
+            </div>
+            <details open>
+              <summary>Source evidence</summary>
+              <div class="evidence-grid">
+                <div id="left-evidence"></div>
+                <div id="right-evidence"></div>
+              </div>
+            </details>
+            <details>
+              <summary>Normalized records</summary>
+              <div class="records">
+                <pre id="left-record"></pre>
+                <pre id="right-record"></pre>
+              </div>
+            </details>
+            <section class="annotation" aria-label="Your annotation">
+              <div class="annotation-head">
+                <h3>Your review</h3>
+                <span>Stored separately from the automated result</span>
+              </div>
+              <label
+                >Label<select id="label-choice">
+                  <option value="">Not reviewed</option>
+                  <option value="same">Same</option>
+                  <option value="different">Different</option>
+                  <option value="unknown">Unknown</option>
+                </select></label
+              ><label
+                >Review note<textarea
+                  id="note"
+                  rows="3"
+                  placeholder="Describe any ambiguity or issue with the finding."
+                ></textarea>
+              </label>
+              <div class="save-row">
+                <span id="save-status" role="status" aria-live="polite"></span
+                ><button id="save">Save review</button>
+              </div>
+            </section>
+          </section>
+        </div>
+        <details class="unmatched">
+          <summary>
+            Requirements listed in one guide only ·
+            <span id="unmatched-count"></span>
+          </summary>
+          <p>
+            These requirements have no match under the selected alignment rule.
+            Check the source before drawing a conclusion about their use.
+          </p>
+          <div id="unmatched-list" class="unmatched-list"></div>
+        </details>
+      </section>
+      <footer>
+        Annotations are saved on this device. Export a CSV to keep or share your
+        review.
+      </footer>
+    </main>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

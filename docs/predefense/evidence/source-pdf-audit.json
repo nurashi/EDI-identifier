@@ -1,0 +1,26 @@
+[
+  {
+    "guide": "chr-214",
+    "sha256": "0d28243812f1bac25b550008054c59e652061688da47b15665a39f412d883eaa",
+    "pages": 32,
+    "expected_pages": 32,
+    "hash_matches": true,
+    "method": "SHA-256 and pypdf page-count verification"
+  },
+  {
+    "guide": "kbx-214",
+    "sha256": "c5e6ed5f63faf46304aa9c012b3b9ae34de44e79cc0b2d654a92b48e8f5f224e",
+    "pages": 30,
+    "expected_pages": 30,
+    "hash_matches": true,
+    "method": "SHA-256 and pypdf page-count verification"
+  },
+  {
+    "guide": "domtar-214",
+    "sha256": "098b98e96d796a67380f06788764749ed3e06a61d3122be83f6abf9527ac1691",
+    "pages": 23,
+    "expected_pages": 23,
+    "hash_matches": true,
+    "method": "SHA-256 and pypdf page-count verification"
+  }
+]
