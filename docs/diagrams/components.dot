@@ -1,0 +1,31 @@
+digraph components {
+  graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.45, ranksep=0.9, compound=true, label="Components (solid: implemented, dashed: planned)", labelloc=t];
+  node  [fontname="Helvetica", fontsize=10, shape=box];
+  edge  [fontname="Helvetica", fontsize=9, color="#444444"];
+
+  viewer    [style="rounded,dashed", label="«component»\nWeb viewer\nTypeScript, React"];
+  cli       [style="rounded", label="«component»\nCLI edi\nalign · diff · evidence"];
+
+  subgraph cluster_backend {
+    label="Backend (Go)"; fontname="Helvetica"; fontsize=10; style="rounded"; color="#888888";
+    api       [style="rounded,dashed", label="«component»\nREST API\nGin"];
+    compare   [style="rounded", label="«component»\nComparison engine\nalignment · divergence classification"];
+    evidence  [style="rounded", label="«component»\nEvidence checker\nexcerpt ↔ PDF page"];
+    validator [style="rounded,dashed", label="«component»\nMessage validator\nX12 parser · rule check"];
+  }
+
+  extractor [style="rounded", label="«component»\nExtractor\nPython, poppler pdftotext\nlayout parsers · evaluation"];
+  store     [shape=cylinder, style=dashed, label="Requirement store\nPostgreSQL"];
+  files     [shape=cylinder, style=dashed, label="PDF store\nkeyed by SHA-256"];
+  schema    [shape=note, label="guide.schema.json\n(contract)"];
+
+  viewer -> api [label="HTTP / JSON"];
+  api -> compare; api -> validator; api -> evidence;
+  api -> extractor [style=dashed, label="HTTP / JSON:\nPDF in, guide out"];
+  api -> store [style=dashed, label="SQL"];
+  api -> files [style=dashed];
+  cli -> compare; cli -> evidence;
+  validator -> compare [style=dashed, label="requirements\nof both partners"];
+  extractor -> schema [style=dotted, arrowhead=none];
+  compare -> schema [style=dotted, arrowhead=none];
+}

@@ -1,0 +1,25 @@
+digraph usecases {
+  graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.35, ranksep=1.2, label="Use cases (solid: prototype exists, dashed: planned)", labelloc=t];
+  node  [fontname="Helvetica", fontsize=10];
+  edge  [fontname="Helvetica", fontsize=9, arrowhead=none, color="#444444"];
+
+  engineer  [shape=box, style="rounded", label="«actor»\nIntegration\nengineer"];
+  annotator [shape=box, style="rounded", label="«actor»\nReviewer /\nannotator"];
+
+  subgraph cluster_system {
+    label="EDI-identifier"; fontname="Helvetica"; fontsize=11; style="rounded"; color="#888888";
+    uc1 [shape=ellipse, label="UC1 Import a partner guide\n(FR1, FR2, FR4)"];
+    uc2 [shape=ellipse, style=dashed, label="UC2 Review flagged requirements\n(FR3)"];
+    uc3 [shape=ellipse, label="UC3 Compare two guides\n(FR5, FR6, FR8)"];
+    uc4 [shape=ellipse, label="UC4 Inspect a divergence\nat its source page (FR7, FR10)"];
+    uc5 [shape=ellipse, label="UC5 Export the comparison\nreport (FR9)"];
+    uc6 [shape=ellipse, style=dashed, label="UC6 Validate a test message\nagainst two partners (FR11)"];
+    uc7 [shape=ellipse, style=dashed, label="UC7 Label reference findings\n(FR13)"];
+    uc8 [shape=ellipse, label="UC8 Evaluate extraction and\ncomparison accuracy (FR14)"];
+  }
+
+  engineer -> uc1; engineer -> uc2; engineer -> uc3; engineer -> uc4; engineer -> uc5; engineer -> uc6;
+  annotator -> uc2; annotator -> uc7; annotator -> uc8;
+  uc4 -> uc3 [style=dashed, arrowhead=vee, label="«extend»"];
+  uc5 -> uc3 [style=dashed, arrowhead=vee, label="«extend»"];
+}
