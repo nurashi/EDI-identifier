@@ -1,0 +1,19 @@
+digraph context {
+  graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.5, ranksep=1.1, label="System context: EDI-identifier", labelloc=t];
+  node  [fontname="Helvetica", fontsize=10];
+  edge  [fontname="Helvetica", fontsize=9, color="#444444"];
+
+  engineer  [shape=box, style="rounded", label="«actor»\nIntegration engineer\n(logistics company, TMS vendor)"];
+  annotator [shape=box, style="rounded", label="«actor»\nReviewer / annotator\n(project team)"];
+  publisher [shape=box, style="rounded,dashed", label="«external»\nTrading partners\npublishing PDF guides"];
+  messages  [shape=box, style="rounded,dashed", label="«external»\nTest X12 messages\n(214, later 204 / 210)"];
+
+  system [shape=box, style="filled,bold", fillcolor="#e8f0fe", label="EDI-identifier\n\nextracts partner requirements from PDF guides,\naligns them across partners, reports divergences\nwith the source page, validates test messages"];
+
+  publisher -> system [label="implementation guide PDF\n(URL, SHA-256)"];
+  engineer  -> system [label="import guides, compare,\nvalidate a message"];
+  system    -> engineer [label="divergence report\nwith page references"];
+  messages  -> system [label="X12 file"];
+  annotator -> system [label="review flagged records,\nlabel reference findings"];
+  system    -> annotator [label="extraction and\ncomparison results"];
+}

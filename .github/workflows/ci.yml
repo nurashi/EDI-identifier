@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+env:
+  GUIDES: corpus/214-004010/guides/chr-214.json corpus/214-004010/guides/kbx-214.json corpus/214-004010/guides/domtar-214.json
+
 jobs:
   backend:
     runs-on: ubuntu-latest
@@ -20,3 +23,64 @@ jobs:
       - run: go vet ./...
       - run: go test -race ./...
       - run: docker build -t edi-backend .
+
+  schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: pipx run check-jsonschema --check-metaschema schema/guide.schema.json
+      - run: pipx run check-jsonschema --schemafile schema/guide.schema.json corpus/214-004010/guides/*.json
+
+  extractor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m unittest extractor.test_extractor -v
+
+  pilot:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: backend/go.mod
+          cache-dependency-path: backend/go.sum
+      - run: go -C backend build -o ../edi ./cmd/edi
+      - name: Download guides
+        run: |
+          mkdir pdfs
+          for f in $GUIDES; do
+            curl -fsSL --retry 3 -o "pdfs/$(jq -r .guide.id "$f").pdf" "$(jq -r .guide.source.url "$f")"
+          done
+          sha256sum pdfs/*.pdf
+      - run: sudo apt-get update -q && sudo apt-get install -y --no-install-recommends poppler-utils
+      - run: ./edi evidence -pdfs pdfs $GUIDES | tee evidence.txt
+      - run: ./edi align $GUIDES | tee alignment.txt
+      - run: ./edi diff -json diff.json $GUIDES | tee diff.txt
+      - name: Extract guides from PDF
+        run: |
+          mkdir extracted
+          for f in $GUIDES; do
+            id=$(jq -r .guide.id "$f")
+            python3 -m extractor extract "pdfs/$id.pdf" --meta "$f" -o "extracted/$id.json"
+            python3 -m extractor evaluate "extracted/$id.json" "$f"
+          done | tee extraction.txt
+          ./edi evidence -pdfs pdfs extracted/*.json | tee -a extraction.txt
+          pipx run check-jsonschema --schemafile schema/guide.schema.json extracted/*.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pilot
+          path: |
+            evidence.txt
+            alignment.txt
+            diff.txt
+            diff.json
+            extraction.txt
+            extracted/
