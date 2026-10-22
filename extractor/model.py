@@ -5,7 +5,12 @@ BASE = {"Mandatory": "M", "Optional": "O", "Conditional": "X"}
 
 
 def pdf_pages(path):
-    out = subprocess.run(["pdftotext", "-layout", path, "-"], check=True, capture_output=True, text=True).stdout
+    out = subprocess.run(
+        ["pdftotext", "-layout", path, "-"],
+        check=True,
+        capture_output=True,
+        encoding="utf-8",
+    ).stdout
     pages = out.split("\f")
     if pages and not pages[-1].strip():
         pages.pop()
@@ -58,7 +63,12 @@ class Segment:
     def qualifier(self):
         suffix = QUALIFIER_ELEMENT.get(self.segment)
         for e in self.elements:
-            if suffix and e.element == self.segment + suffix and e.codes and e.codes["mode"] == "enumerated":
+            if (
+                suffix
+                and e.element == self.segment + suffix
+                and e.codes
+                and e.codes["mode"] == "enumerated"
+            ):
                 return e.codes["values"]
         return None
 
@@ -71,7 +81,10 @@ def evidence(entries):
             fields.append(field)
         if excerpt not in excerpts:
             excerpts.append(excerpt)
-    return [{"page": p, "excerpt": " / ".join(x), "supports": f} for p, (f, x) in sorted(by_page.items())]
+    return [
+        {"page": p, "excerpt": " / ".join(x), "supports": f}
+        for p, (f, x) in sorted(by_page.items())
+    ]
 
 
 def requirements(segments, parents):

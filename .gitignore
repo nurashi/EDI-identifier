@@ -19,3 +19,22 @@ __pycache__/
 node_modules/
 dist/
 coverage/
+
+# Local working files, downloaded PDFs and page renders
+.predefense-local/
+docs/predefense/private/
+docs/predefense/local/
+docs/predefense/human/
+docs/predefense/report-variants/
+docs/predefense/report.html
+docs/predefense/*.md
+!docs/predefense/README.md
+!docs/predefense/DEMO.md
+!docs/predefense/REQUIREMENTS-MATRIX.md
+!docs/predefense/BIBLIOGRAPHY.md
+docs/predefense/tracker/*.json
+docs/predefense/evidence/*-ci.json
+docs/predefense/evidence/*-qa.json
+docs/predefense/output/*
+!docs/predefense/output/.gitattributes
+!docs/predefense/output/report.pdf
