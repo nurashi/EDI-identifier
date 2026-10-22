@@ -1,7 +1,14 @@
+import io
+import json
+import tempfile
 import unittest
+from contextlib import redirect_stdout
+from pathlib import Path
+from unittest.mock import patch
 
 from . import ecs, spec
-from .evaluate import evaluate
+from .__main__ import main
+from .evaluate import evaluate, report
 
 ECS_LOOP = """
                                                                 Pos: 130             Repeat: 1
@@ -116,7 +123,7 @@ class SpecTest(unittest.TestCase):
 
 
 class EvaluateTest(unittest.TestCase):
-    def test_counts(self):
+    def test_json(self):
         key = {"segment": "AT7", "position": "140"}
         ref = {"guide": {"id": "g"}, "requirements": [
             {"key": key, "usage": {"declared": "required"}, "max_use": 1},
@@ -124,14 +131,44 @@ class EvaluateTest(unittest.TestCase):
              "conditions": [{"kind": "timing", "text": "Within 15 minutes."}]},
         ]}
         got = {"guide": {"id": "g"}, "requirements": [
-            {"key": key, "usage": {"declared": "required"}, "max_use": 2},
+            {"key": key, "usage": {"declared": "required"}, "max_use": 2, "review": ["Check max use."]},
+            {"key": dict(key, element="AT702"), "usage": {"declared": "conditional"}},
+            {"key": dict(key, element="AT703"), "usage": {"declared": "conditional"}},
             {"key": {"segment": "N1", "position": "050"}, "usage": {"declared": "optional"}},
         ]}
         e = evaluate(got, ref)
-        self.assertEqual((e["reference"], e["extracted"], e["matched"]), (2, 1, 1))
+        self.assertEqual((e["reference"], e["extracted"], e["matched"]), (2, 3, 1))
         self.assertEqual(e["missing"], ["AT7@140/AT701"])
         self.assertEqual(e["fields"]["max_use"], [0, 1])
         self.assertEqual(e["free_conditions"], 1)
+        with tempfile.TemporaryDirectory() as d:
+            extracted, reference, out = [str(Path(d) / name) for name in ("got.json", "ref.json", "out.json")]
+            Path(extracted).write_text(json.dumps(got), encoding="utf-8")
+            Path(reference).write_text(json.dumps(ref), encoding="utf-8")
+            for options in ([], ["--json", out]):
+                with patch("sys.argv", ["extractor", "evaluate", extracted, reference] + options):
+                    with redirect_stdout(io.StringIO()) as text:
+                        main()
+                self.assertEqual(text.getvalue(), report(e))
+            data = json.loads(Path(out).read_text(encoding="utf-8"))
+        self.assertEqual(set(data), {"guide", "reference", "extracted", "matched", "recall", "precision",
+                                     "fields", "missing", "extra", "mismatches", "free_conditions", "flagged"})
+        self.assertEqual(data["guide"], "g")
+        self.assertEqual((data["reference"], data["extracted"], data["matched"]), (2, 3, 1))
+        self.assertEqual(data["recall"], 0.5)
+        self.assertAlmostEqual(data["precision"], 1 / 3)
+        self.assertEqual(data["fields"], {
+            "usage": {"correct": 1, "total": 1, "accuracy": 1.0},
+            "base": {"correct": 1, "total": 1, "accuracy": 1.0},
+            "max_use": {"correct": 0, "total": 1, "accuracy": 0.0},
+            "loop_repeat": {"correct": 1, "total": 1, "accuracy": 1.0},
+            "codes": {"correct": 1, "total": 1, "accuracy": 1.0},
+            "syntax": {"correct": 1, "total": 1, "accuracy": 1.0},
+        })
+        self.assertEqual(data["missing"], ["AT7@140/AT701"])
+        self.assertEqual(data["extra"], ["AT7@140/AT702", "AT7@140/AT703"])
+        self.assertEqual(data["mismatches"], [{"key": "AT7@140", "field": "max_use", "extracted": 2, "reference": 1}])
+        self.assertEqual((data["free_conditions"], data["flagged"]), (1, 1))
 
 
 if __name__ == "__main__":
