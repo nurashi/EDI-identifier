@@ -34,7 +34,7 @@ The report draft was prepared by Asylan. GH-4, GH-5, GH-6 and GH-8 were reopened
 
 ## Implementation tasks and next stage
 
-The board also includes the existing foundation tasks: GH-14 (schema and initial corpus), GH-15 (structural alignment), GH-18 (extraction prototype) and GH-20 (constraint comparison), completed by Nurassyl in PR #1. GH-16 remains assigned to Anuar for independent source checking of all 118 normalized records, due 23 October. Locating excerpts automatically does not complete that semantic review.
+The repository also tracks the existing foundation tasks: GH-14 (schema and initial corpus), GH-15 (structural alignment), GH-18 (extraction prototype) and GH-20 (constraint comparison), completed by Nurassyl in PR #1. GH-16 remains assigned to Anuar for independent source checking of all 118 normalized records, due 23 October. Locating excerpts automatically does not complete that semantic review.
 
 | Task | Planned deliverable | Owner | Stage / acceptance gate |
 |---|---|---|---|

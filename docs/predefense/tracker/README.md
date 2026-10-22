@@ -33,4 +33,4 @@ Package coordinator: Asylan Usen (`Asylann`). Component owners: Anuar Zhenissov 
 | [GH-24](https://github.com/nurashi/EDI-identifier/issues/24) | Asylan | Versioned guide selection and held-out reference corpus | Planned after first pre-defense |
 | [GH-25](https://github.com/nurashi/EDI-identifier/issues/25) | Nurassyl, Asylan | Independent annotation and held-out evaluation | Planned after first pre-defense |
 
-The board is private; intended reviewers need access before submission. Live issues are authoritative for current status. The documentation links above identify deliverables without duplicating board snapshots or internal project identifiers.
+The board shows the eleven preparation tasks. Foundation and next-stage tasks are also tracked in repository Issues. The board is private; intended reviewers need access before submission. Live issues are authoritative for current status. The documentation links above identify deliverables without duplicating board snapshots or internal project identifiers.
