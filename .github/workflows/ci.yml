@@ -43,7 +43,7 @@ jobs:
   documentation:
     runs-on: ubuntu-latest
     env:
-      EDI_AUDIT_TMP: ${{ runner.temp }}/edi-prototype-check
+      EDI_AUDIT_TMP: ${{ github.workspace }}/.predefense-local/browser-export
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-go@v6

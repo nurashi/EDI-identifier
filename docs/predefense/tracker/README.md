@@ -1,6 +1,6 @@
 # Project tasks
 
-[Project board](https://github.com/users/Asylann/projects/1) · [Repository issues](https://github.com/nurashi/EDI-identifier/issues) · [Preparation PR](https://github.com/nurashi/EDI-identifier/pull/12)
+[Project board](https://github.com/users/Asylann/projects/1) · [Repository issues](https://github.com/nurashi/EDI-identifier/issues) · [Preparation PR](https://github.com/nurashi/EDI-identifier/pull/26)
 
 Package coordinator: Asylan Usen (`Asylann`). Component owners: Anuar Zhenissov (`azhenissov`) for extraction; Nurassyl Orazbek (`nurashi`) for backend; Asylan for frontend and corpus; Nurassyl and Asylan for evaluation. Deadline: 24 October 2026, 18:00 UTC+05:00. Individual tasks carry their priority, acceptance criteria, assignment and current status in GitHub.
 

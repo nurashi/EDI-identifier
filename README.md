@@ -58,7 +58,7 @@ The [consolidated pre-defense report](docs/predefense/output/report.pdf) contain
 - [Report sections](docs/predefense/sections/), [bibliography](docs/predefense/BIBLIOGRAPHY.md) and [diagram sources and exports](docs/predefense/diagrams/).
 - [Review prototype](docs/predefense/prototype/index.html), [demonstration](docs/predefense/DEMO.md) and [verification record](docs/predefense/evidence/verification.md).
 - [Project board](https://github.com/users/Asylann/projects/1) and [task index](docs/predefense/tracker/README.md).
-- [Preparation PR #12](https://github.com/nurashi/EDI-identifier/pull/12).
+- [Preparation PR #26](https://github.com/nurashi/EDI-identifier/pull/26).
 
 The board uses GitHub Projects as the permitted tracker equivalent. Reviewer access must be configured before submission. The first pre-defense deadline is **24 October 2026, 18:00 UTC+05:00**.
 
