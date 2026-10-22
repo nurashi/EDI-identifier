@@ -42,6 +42,8 @@ Build a toolkit that extracts the requirements of X12 implementation guides from
 
 ### Scope
 
+Table: Scope of the project
+
 | In scope | Out of scope |
 |---|---|
 | X12 214 (shipment status), release 004010, truckload; 204 and 210 as extensions | EDIFACT, XML and API-based exchange |
@@ -59,16 +61,20 @@ The guides follow no common layout, and the same requirement is written as a tab
 
 The requirements in Section 6 rest on four assumptions. Each is listed with the evidence that supports it so far and its status.
 
+Table: Assumptions behind the requirements and their evidence
+
 | ID | Assumption | Evidence | Status |
 |---|---|---|---|
 | A1 | Guides for the same message differ materially between partners | Analysis of three public 214 guides (below) | Verified on three guides |
-| A2 | Engineers compare guides by hand when onboarding a partner, and it takes significant time | Professional practice of one team member; user discussions | Being verified in discussions |
-| A3 | Engineers need the source page to trust a reported difference | User discussions | Being verified in discussions |
-| A4 | A report of differences would be used in onboarding and guide updates | User discussions | Being verified in discussions |
+| A2 | Engineers compare guides by hand when onboarding a partner, and it takes significant time | User discussions (P1, P2) | Supported: manual comparison, 3–8 hours per specification, a new partner or guide update every one to four weeks |
+| A3 | Engineers need the source page to trust a reported difference | User discussions (P1, P2) | Supported: both would not trust a difference without the page |
+| A4 | A report of differences would be used in onboarding and guide updates | User discussions (P1, P2) | Supported: both want a web view with export to a spreadsheet |
 
 ### Analysis of available data
 
 The pilot corpus contains three public truckload 214/004010 guides: C.H. Robinson (32 pages), KBX (30 pages) and Domtar (23 pages). Their 118 requirements were normalized by hand and every value was checked against its page in CI. Comparing them with the prototype (`edi diff`) gives the following counts of aligned requirement pairs.
+
+Table: Differing requirement pairs in the pilot corpus
 
 | Guide pair | Usage | Code list | Repetition | Only in one guide |
 |---|---|---|---|---|
@@ -84,20 +90,33 @@ Examples: C.H. Robinson allows all 42 standard shipment status codes in AT701, K
 
 Three to five integration engineers and EDI analysts outside the team are interviewed with five questions: how often they onboard partners or receive guide updates, how they compare guides today and how long it takes, which differences occur and which caused failures, whether the source page matters, and which form of tool they would use. Participants are anonymous; the record keeps role, company type and experience.
 
-| ID | Date | Role | Company type | EDI experience | Findings | Linked requirements |
-|---|---|---|---|---|---|---|
+Table: Discussions with user representatives
+
+| ID | Participant | Findings | Linked requirements |
+|---|---|---|---|
+| P1 | EDI integration engineer, transportation software company; written answers | A new partner or broker integration every month, updates of existing specifications every quarter. Compares a new guide by hand with a similar partner, 3–5 hours per specification. Language models help with basic fields but invent code lists, confuse loops and miss the difference between optional and conditional, so both PDFs are still checked by eye. Most failures come from conditional dependencies and closed code lists: in one case a broker required a reason code in AT702 for status X6 only when another element was filled; the condition was in a footnote on page 18, and messages were silently rejected in staging until it was found. Will not trust a reported difference without the page. Wants a web interface and an export to a spreadsheet to attach the differences to a development task; the report must show code-list differences, loop repeat limits, and syntax notes and conditional dependencies | FR6, FR7, FR9, FR10, FR16 |
+| P2 | EDI integration engineer, transportation software company; video call | A new partner every one to two weeks; large shippers release updates, including version changes and new qualifier rules, without a change log. Reads the PDF in full and compares it by hand with a template; the first audit and mapping matrix take 4–8 hours. Language models invent qualifiers from the base standard that the guide does not allow and move elements between loops, so both PDFs are checked line by line. Failures come from date and time formats, hidden mandatory qualifiers and repeat limits: a retailer required AT7 date and time in the local time of the delivery point, the team sent UTC, statuses arrived "from the future" and the customer's ERP quarantined them for two days until the footnote on page 23 was found. Will not trust a difference without the exact page and item. Wants a side-by-side view like a Git diff with export to a spreadsheet; the report must show "mandatory at A, optional at B", allowed qualifier codes, and a link to the exact place in the PDF | FR4, FR6, FR7, FR9, FR10, FR17 |
+
+### What the discussions changed
+
+- The export of the report to a spreadsheet becomes a Must (FR9), because the differences are attached to development tasks; it was implemented the same day (`edi diff -csv`, DIP-23).
+- Conditional dependencies caused the most failures, while the prototype only flags them for review; comparing them becomes a separate Must requirement (FR16, DIP-24).
+- Partners publish new revisions, including version changes and new qualifier rules, without a change log (P2); comparing two revisions of one partner's guide becomes a requirement (FR17).
+- P2's production failure, arrival statuses sent in UTC while the partner required local time in AT7, explained in a footnote on page 23 of its guide, is the kind of difference the tool already reports for AT707 between Domtar and the other two guides (Section 2, analysis of available data).
+- Manual comparison at 3–5 hours (P1) and 4–8 hours (P2) per specification becomes the time baseline of the evaluation (Section 9).
+- Both engineers tried language models on guide excerpts and report invented code lists and qualifiers, confused loop hierarchy and optional mixed up with conditional; this supports the choice of deterministic structural comparison (Section 5.5).
 
 ## 3. Literature review
 
 ### Search and selection
 
-Sources were searched in Crossref, Google Scholar and publisher libraries for five themes: divergence in the implementation of standards, B2B message interoperability, extraction of structured content from PDF, comparison of machine-readable interface specifications, and schema matching. A source was kept if it is peer reviewed or a widely used open-source system description, if it addresses one of the themes directly, if its metadata could be confirmed at the publisher, and if its full text can be read free of charge. Sixteen sources are used: fifteen peer-reviewed publications and one preprint; twelve are from 2021–2026, the rest are foundational. Every reference was checked against Crossref or PubMed, and every full text was opened; where the publisher's copy is paywalled, the reference gives the free copy (author, institutional or arXiv version).
+Sources were searched in Crossref, Google Scholar and publisher libraries for five themes: divergence in the implementation of standards, B2B message interoperability, extraction of structured content from PDF, comparison of machine-readable interface specifications, and schema matching. A source was kept if it is peer reviewed or a widely used open-source system description, if it addresses one of the themes directly, if its metadata could be confirmed at the publisher, and if its full text can be read free of charge. Fifteen sources are used: fourteen peer-reviewed publications and one preprint; twelve are from 2021–2026, the rest are foundational. Every reference was checked against Crossref or PubMed, and every full text was opened; where the publisher's copy is paywalled, the reference gives the free copy (author, institutional or arXiv version).
 
 ### Partner-specific divergence from a shared standard
 
-That conformance to one standard does not guarantee compatibility is an old observation in standardisation research. Egyedi and Verwater-Lukszo (2005) identify the properties that make a standard flexible, specificity, abstraction, system level and simplicity, which is exactly the room partners use when they publish their own guides. Coiera (2023) generalises this as "the standard problem": in an open system no single definitive standard can persist, because contexts, implementations and versions drift, and interoperability then depends on fitting work between local variants. The most direct quantitative evidence comes from health care rather than freight: Kramer (2022) analysed about 3,000 FHIR profiles from 125 implementation guides and found heavy, inconsistent profiling of the same resources, and Rosenau et al. (2024) found systematic discrepancies when data from 20 hospitals were validated against stricter shared profiles. Our search found no comparable study of freight EDI guides.
+Conformance to one standard does not guarantee compatibility between its users. Coiera (2023) describes this as "the standard problem": in an open system no single definitive standard can persist, because contexts, implementations and versions drift, and interoperability then depends on fitting work between local variants. The most direct quantitative evidence comes from health care rather than freight: Kramer (2022) analysed about 3,000 FHIR profiles from 125 implementation guides and found heavy, inconsistent profiling of the same resources, and Rosenau et al. (2024) found systematic discrepancies when data from 20 hospitals were validated against stricter shared profiles. Our search found no comparable study of freight EDI guides.
 
-These works establish that partner-level variants of one standard are normal and costly, but they describe the phenomenon or measure it on machine-readable profiles. None measures how partners' X12 guides, published as PDFs, differ requirement by requirement. This project takes the framing from Egyedi and Verwater-Lukszo and from Coiera and the profile-analysis method from Kramer, and applies them to X12 214 guides with page-level evidence.
+These works establish that partner-level variants of one standard are normal and costly, but they describe the phenomenon or measure it on machine-readable profiles. None measures how partners' X12 guides, published as PDFs, differ requirement by requirement. This project takes the framing from Coiera and the profile-analysis method from Kramer, and applies them to X12 214 guides with page-level evidence.
 
 ### B2B message interoperability
 
@@ -119,24 +138,25 @@ Aligning the requirements of two guides is a case of schema matching. Rahm and B
 
 ### Analysis table
 
+Table: Analysis of the reviewed publications
+
 | # | Source | Type, year | Theme | Approach | Main finding | Limitation for this project |
 |---|---|---|---|---|---|---|
-| 1 | Egyedi & Verwater-Lukszo (2005) | Journal, 2005 | Divergence | Comparative case study | Four properties make standards flexible | Design of standards, not divergence of profiles |
-| 2 | Coiera (2023) | Journal, 2023 | Divergence | Conceptual framework | No single persistent standard in open systems; conformance needs fitting | Health informatics, no measurement |
-| 3 | Kramer (2022) | Conference, 2022 | Divergence | Analysis of ~3,000 FHIR profiles | Profiling of the same resources is heavy and inconsistent | Machine-readable profiles, counts not pairwise comparison |
-| 4 | Vujasinovic et al. (2010) | Journal, 2010 | B2B interoperability | Ontological message metamodel | Semantic mediation between incompatible message sets | Needs schemas and manual annotation |
-| 5 | Shin et al. (2009) | Journal, 2009 | B2B interoperability | Test procedure | Efficient content-level equivalence testing | Tests one implementation |
-| 6 | Rosenau et al. (2024) | Journal, 2024 | Interoperability | Validation pipeline, 20 hospitals | Systematic discrepancies against shared profiles | Instance data, not specifications |
-| 7 | Smock et al. (2022) | Conference, 2022 | PDF extraction | Dataset, transformer detection | Strong table detection and structure recognition | Scientific tables, no EDI semantics |
-| 8 | Livathinos et al. (2025) | Preprint, 2025 | PDF extraction | Open-source conversion toolkit | Layout and table models on commodity hardware | Generic output, needs domain mapping |
-| 9 | Meuschke et al. (2023) | Conference, 2023 | PDF extraction | Benchmark of 10 tools | Tables are the weakest element for all tools | Academic documents |
-| 10 | Xu et al. (2024) | Journal, 2024 | PDF extraction | Survey of LLM extraction | Generative extraction across subtasks | Plain text, no page traceability |
-| 11 | Bogner et al. (2024) | Conference, 2024 | Specification checking | Static analysis of OpenAPI | 91% precision, 68% recall on rule violations | One spec against generic rules |
-| 12 | Serbout & Pautasso (2024a) | Conference, 2024 | Specification checking | Metrics for 1.27M OpenAPI files | Large-scale comparison of API designs | No element-level alignment |
-| 13 | Serbout & Pautasso (2024b) | Conference, 2024 | Specification diffing | Mining 3,075 API histories | Breaking changes often violate versioning | Versions over time, not parallel partners |
-| 14 | Bogner et al. (2023) | Journal, 2023 | Specification quality | Controlled experiment, 105 participants | Rule violations reduce understandability | Indirect |
-| 15 | Rahm & Bernstein (2001) | Journal, 2001 | Matching | Taxonomy | Element/structure, linguistic/constraint matchers | Generic, pre-LLM |
-| 16 | Liu et al. (2025) | Journal, 2025 | Matching | Small + large language models | Accurate scalable schema matching | Tabular schemas, untested on EDI |
+| 1 | Coiera (2023) | Journal, 2023 | Divergence | Conceptual framework | No single persistent standard in open systems; conformance needs fitting | Health informatics, no measurement |
+| 2 | Kramer (2022) | Conference, 2022 | Divergence | Analysis of ~3,000 FHIR profiles | Profiling of the same resources is heavy and inconsistent | Machine-readable profiles, counts not pairwise comparison |
+| 3 | Vujasinovic et al. (2010) | Journal, 2010 | B2B interoperability | Ontological message metamodel | Semantic mediation between incompatible message sets | Needs schemas and manual annotation |
+| 4 | Shin et al. (2009) | Journal, 2009 | B2B interoperability | Test procedure | Efficient content-level equivalence testing | Tests one implementation |
+| 5 | Rosenau et al. (2024) | Journal, 2024 | Interoperability | Validation pipeline, 20 hospitals | Systematic discrepancies against shared profiles | Instance data, not specifications |
+| 6 | Smock et al. (2022) | Conference, 2022 | PDF extraction | Dataset, transformer detection | Strong table detection and structure recognition | Scientific tables, no EDI semantics |
+| 7 | Livathinos et al. (2025) | Preprint, 2025 | PDF extraction | Open-source conversion toolkit | Layout and table models on commodity hardware | Generic output, needs domain mapping |
+| 8 | Meuschke et al. (2023) | Conference, 2023 | PDF extraction | Benchmark of 10 tools | Tables are the weakest element for all tools | Academic documents |
+| 9 | Xu et al. (2024) | Journal, 2024 | PDF extraction | Survey of LLM extraction | Generative extraction across subtasks | Plain text, no page traceability |
+| 10 | Bogner et al. (2024) | Conference, 2024 | Specification checking | Static analysis of OpenAPI | 91% precision, 68% recall on rule violations | One spec against generic rules |
+| 11 | Serbout & Pautasso (2024a) | Conference, 2024 | Specification checking | Metrics for 1.27M OpenAPI files | Large-scale comparison of API designs | No element-level alignment |
+| 12 | Serbout & Pautasso (2024b) | Conference, 2024 | Specification diffing | Mining 3,075 API histories | Breaking changes often violate versioning | Versions over time, not parallel partners |
+| 13 | Bogner et al. (2023) | Journal, 2023 | Specification quality | Controlled experiment, 105 participants | Rule violations reduce understandability | Indirect |
+| 14 | Rahm & Bernstein (2001) | Journal, 2001 | Matching | Taxonomy | Element/structure, linguistic/constraint matchers | Generic, pre-LLM |
+| 15 | Liu et al. (2025) | Journal, 2025 | Matching | Small + large language models | Accurate scalable schema matching | Tabular schemas, untested on EDI |
 
 ### Gap
 
@@ -145,6 +165,8 @@ Work on standards explains why partner variants exist, health-informatics studie
 ## 4. Existing system comparison
 
 Five systems were compared: three EDI guide tools that model partner guides, one free specification editor, and a generic PDF comparison as the baseline an engineer could use today. Claims are taken only from the vendors' documentation, listed under the table; "not documented" means the documentation does not say.
+
+Table: Comparison of existing systems
 
 | Criterion | Stedi Guides | GEFEG.FX | TIBCO Foresight EDISIM Comparator | EdiNation / Spec Builder | Adobe Acrobat Compare | EDI-identifier |
 |---|---|---|---|---|---|---|
@@ -159,13 +181,31 @@ Five systems were compared: three EDI guide tools that model partner guides, one
 
 TIBCO Foresight EDISIM Comparator is the closest system: its documentation describes checking a new partner's guideline against those of existing partners and reports requirement, code and repetition differences. It requires the guide to be entered by hand in its editor first and does not compare syntax rules. Stedi and EdiNation turn a guide into a machine-readable specification for validation but document no comparison between partners. GEFEG.FX compares guides modelled in it. Acrobat shows any textual change with its page, but it compares two versions of one document; on two different partners' guides almost every line differs, so the structural differences are lost in layout noise. None of the systems combines reading the PDF, structural comparison and page evidence, which is the combination the toolkit provides. Altova MapForce was also reviewed; it maps and validates EDI but documents no guide comparison, so it is not in the table.
 
-Sources: [ST1] stedi.com/docs/edi-platform/guides/what-is-a-stedi-guide; [ST2] stedi.com/docs/edi-platform/guides/customize-guides; [ST3] stedi.com/docs/edi-platform/guides/import-guides; [ST4] stedi.com/docs/edi-platform/guides/public-guides; [ST5] stedi.com/changelog/schemas-for-reading-or-writing; [ST6] stedi.com/pricing; [GF1] gefeg.com/en/gefeg-fx; [GF2] gefeg.com/en/news/2024/06/now-also-develop-json-schema-guides-with-gefeg-fx-gefeg-fx-2024-q2; [TB1] docs.tibco.com, TIBCO Foresight EDISIM 6.21.0 Comparator User's Guide (2021); [TB2] docs.tibco.com, Introduction to TIBCO Foresight EDISIM (Instream 9.3.0); [EN1] edifabric.com/edination.html; [EN2] edifabric.com/docs/edination/create-and-import-edi-specs.html; [EN3] edifabric.com/openedi; [EN5] edifabric.com/pricing.html; [AD2] adobe.com/acrobat/how-to/compare-two-pdf-files.html. Accessed 22 October 2026.
+Sources:
+
+- [ST1] stedi.com/docs/edi-platform/guides/what-is-a-stedi-guide
+- [ST2] stedi.com/docs/edi-platform/guides/customize-guides
+- [ST3] stedi.com/docs/edi-platform/guides/import-guides
+- [ST4] stedi.com/docs/edi-platform/guides/public-guides
+- [ST5] stedi.com/changelog/schemas-for-reading-or-writing
+- [ST6] stedi.com/pricing
+- [GF1] gefeg.com/en/gefeg-fx
+- [GF2] gefeg.com/en/news/2024/06/now-also-develop-json-schema-guides-with-gefeg-fx-gefeg-fx-2024-q2
+- [TB1] docs.tibco.com, TIBCO Foresight EDISIM 6.21.0 Comparator User's Guide (2021)
+- [TB2] docs.tibco.com, Introduction to TIBCO Foresight EDISIM (Instream 9.3.0)
+- [EN1] edifabric.com/edination.html
+- [EN2] edifabric.com/docs/edination/create-and-import-edi-specs.html
+- [EN3] edifabric.com/openedi
+- [EN5] edifabric.com/pricing.html
+- [AD2] adobe.com/acrobat/how-to/compare-two-pdf-files.html
 
 ## 5. Technology comparison
 
 Each decision lists the options considered, the criteria taken from the requirements in Section 6, and the choice.
 
 ### 5.1 Reading text from PDF guides
+
+Table: Options for reading text from PDF guides
 
 | Criterion | poppler `pdftotext -layout` | pdfplumber | PyMuPDF | Learned layout models (Table Transformer, LayoutLMv3) |
 |---|---|---|---|---|
@@ -179,6 +219,8 @@ Choice: `pdftotext -layout` for the prototype. The two guide layouts in the corp
 
 ### 5.2 Backend platform
 
+Table: Backend platform options
+
 | Criterion | Go + Gin | Python + FastAPI | Java + Spring Boot |
 |---|---|---|---|
 | Deployment | Single static binary, small image | Interpreter and packages | JVM and packages |
@@ -189,6 +231,8 @@ Choice: `pdftotext -layout` for the prototype. The two guide layouts in the corp
 Choice: Go with Gin. The comparison engine and validator are CPU-bound code over in-memory requirement sets, the result ships as one binary, and the team member responsible for the backend uses Go daily. Python stays where its libraries matter, in extraction.
 
 ### 5.3 Requirement storage
+
+Table: Requirement storage options
 
 | Criterion | PostgreSQL (relational + JSONB) | MongoDB | JSON files in Git |
 |---|---|---|---|
@@ -201,6 +245,8 @@ Choice: JSON files in Git for the corpus during development, because every chang
 
 ### 5.4 Interaction between extractor and backend
 
+Table: Options for interaction between extractor and backend
+
 | Criterion | HTTP with JSON | Subprocess call to a CLI | Message queue |
 |---|---|---|---|
 | Independent deployment of Python and Go parts | Yes | No | Yes |
@@ -212,6 +258,8 @@ Choice: HTTP with JSON. The extractor already works as a CLI that writes schema-
 
 ### 5.5 Comparison method
 
+Table: Comparison method options
+
 | Criterion | Structural alignment by X12 key | Text similarity of requirement descriptions | Large language model comparison |
 |---|---|---|---|
 | Uses the structure the standard defines | Yes | No | Partly |
@@ -219,9 +267,11 @@ Choice: HTTP with JSON. The extractor already works as a CLI that writes schema-
 | Each result traceable to both pages | Yes | Yes | Hard to guarantee |
 | Handles prose-only requirements | No, flags them | Partly | Yes |
 
-Choice: structural alignment by segment, position, loop, element and qualifier, with a rule per category. Prose that the rules cannot judge is flagged for review instead of guessed; a language model may later propose labels for such items, but only as suggestions checked against the source page.
+Choice: structural alignment by segment, position, loop, element and qualifier, with a rule per category. The user discussions confirm the risk of the third option: an engineer who tried a language model on guide excerpts reported invented code lists, confused loops and optional mixed up with conditional (Section 2). Prose that the rules cannot judge is flagged for review instead of guessed; a language model may later propose labels for such items, but only as suggestions checked against the source page.
 
 ### 5.6 Web viewer
+
+Table: Web viewer options
 
 | Criterion | React + TypeScript | Server-rendered Go templates | Vue |
 |---|---|---|---|
@@ -237,6 +287,8 @@ Priorities use MoSCoW. Status: done, prototype (works on the pilot corpus), plan
 
 ### Functional requirements
 
+Table: Functional requirements
+
 | ID | Requirement | Priority | Acceptance criterion | Status |
 |---|---|---|---|---|
 | FR1 | Extract a guide PDF of a supported layout into the requirement schema, with page and excerpt for every value | Must | On the pilot guides all structured fields equal the hand-normalized reference; every excerpt is found on its cited page | Prototype |
@@ -247,15 +299,19 @@ Priorities use MoSCoW. Status: done, prototype (works on the pilot corpus), plan
 | FR6 | Classify each aligned pair in usage, codes, repetition and conditions as same, different, stated by one side, or needs review | Must | The known cases of the pilot corpus give the expected verdicts in tests | Done |
 | FR7 | Show both source pages and excerpts for every finding | Must | No finding without pages on both sides | Done |
 | FR8 | List requirements defined in one guide only | Must | Matches the alignment result | Done |
-| FR9 | Export the comparison report as JSON and CSV | Should | JSON validates against a report schema; CSV opens in a spreadsheet | JSON done |
+| FR9 | Export the comparison report as JSON and CSV | Must | JSON validates against a report schema; CSV opens in a spreadsheet | Done |
 | FR10 | Web viewer: two guides side by side, filters by category and verdict, source page panel | Must | A user opens the page of any finding in one action from the list | Prototype |
 | FR11 | Validate a test X12 214 message against the requirements of two partners | Should | Seeded violations in test messages are reported with the partner and rule | Planned |
 | FR12 | REST API for import, comparison and validation | Must | Endpoints documented with OpenAPI; integration tests in CI | Planned |
 | FR13 | Record reference labels for findings | Must | Labels stored per finding and reviewer; used by the evaluation | Planned |
 | FR14 | Evaluate extraction and comparison against reference data | Must | Command reports recall, precision and field accuracy per guide | Extraction done |
 | FR15 | Support transaction sets 204 and 210 | Could | One guide of each extracted and compared | Planned |
+| FR16 | Compare syntax notes and conditional dependencies between partners, not only flag them | Must | Syntax rules and conditions written in a structured form ("if X then Y") are aligned and compared; the rest stays flagged with both texts | Planned (syntax rules extracted) |
+| FR17 | Compare two revisions of one partner's guide and list what changed | Should | Two revisions of one guide give a report of changed, added and removed requirements, labelled with both revision dates | Works with the current comparison; revision history with FR4 |
 
 ### Non-functional requirements
+
+Table: Non-functional requirements
 
 | ID | Requirement | Acceptance criterion | Status |
 |---|---|---|---|
@@ -281,29 +337,31 @@ The toolkit is a pipeline around one contract, `schema/guide.schema.json`. A gui
 5. The **web viewer** (React) shows the report next to the source pages.
 6. The **message validator** (Go) checks a test message against two partners' requirements using the same engine.
 
-The CLI `edi` uses the comparison engine and evidence checker directly; it is the current user interface and the test harness.
+The CLI `edi` uses the comparison engine and evidence checker directly and serves as the test harness; together with the viewer prototype (Section 8) it is the current user interface.
 
 ### System context
 
-![System context](diagrams/context.svg)
+![System context diagram](diagrams/context.svg)
 
 ### Use cases
 
-![Use cases](diagrams/use-cases.svg)
+![Use case diagram](diagrams/use-cases.svg)
 
 ### Components
 
-![Components](diagrams/components.svg)
+![Component diagram (draft)](diagrams/components.svg)
 
 Diagram sources are in `docs/diagrams/*.dot` (Graphviz) and are exported to SVG.
 
 ### Alignment of use cases, requirements and components
 
+Table: Alignment of use cases, requirements and components
+
 | Use case | Requirements | Components | Data |
 |---|---|---|---|
 | UC1 Import a partner guide | FR1, FR2, FR4 | Extractor, evidence checker, REST API, stores | PDF, guide JSON |
 | UC2 Review flagged requirements | FR3 | Web viewer, REST API, requirement store | Guide versions |
-| UC3 Compare two guides | FR5, FR6, FR8 | Comparison engine, REST API, CLI | Two guide versions, report |
+| UC3 Compare two guides | FR5, FR6, FR8, FR16, FR17 | Comparison engine, REST API, CLI | Two guide versions, report |
 | UC4 Inspect a divergence at its source page | FR7, FR10 | Web viewer, PDF store | Finding with pages |
 | UC5 Export the report | FR9 | REST API, CLI | Report JSON / CSV |
 | UC6 Validate a test message | FR11 | Message validator, comparison engine | X12 file, two guides |
@@ -363,7 +421,7 @@ chr-214 ~ kbx-214
     loop repeat 1 vs 10
 ```
 
-`edi diff -json report.json` writes the same findings for the API and the viewer; `edi evidence -pdfs DIR` checks every excerpt of a guide file against its PDF.
+`edi diff -json report.json` writes the same findings for the API and the viewer, and `-csv report.csv` as a table to attach to a development task (added after user discussion P1); `edi evidence -pdfs DIR` checks every excerpt of a guide file against its PDF.
 
 ### Viewer prototype
 
@@ -377,6 +435,8 @@ In the figure C.H. Robinson allows all 42 standard shipment status codes in AT70
 
 ### Testing
 
+Table: Testing levels
+
 | Level | What | Where |
 |---|---|---|
 | Unit | Key normalisation, alignment rules, each divergence rule, both layout parsers, evaluation counts | Go and Python tests, CI jobs `backend` and `extractor` |
@@ -385,6 +445,8 @@ In the figure C.H. Robinson allows all 42 standard shipment status codes in AT70
 | API and viewer | Endpoint integration tests; scripted viewer scenarios | Planned with FR10, FR12 |
 
 ### Metrics
+
+Table: Evaluation metrics and targets
 
 | Aim | Metric | Target |
 |---|---|---|
@@ -403,7 +465,7 @@ In the figure C.H. Robinson allows all 42 standard shipment status codes in AT70
 ### Baselines
 
 - **Text diff:** `diff` of the `pdftotext` output of two guides, the closest thing to what a generic document comparison offers. Measured: how many reference divergences it surfaces and how much unrelated change it reports.
-- **Manual comparison:** time an engineer needs to list the divergences of two guides by hand, from the user discussions and the usability sessions.
+- **Manual comparison:** 3–5 hours (P1) and 4–8 hours (P2) per specification reported in the user discussions; measured again in the usability sessions.
 - **Hand-normalized corpus:** the reference for extraction.
 
 ### Current results
@@ -420,21 +482,37 @@ On the three development guides the extractor finds 118 of 118 reference require
 
 ### Responsibilities
 
+Table: Responsibilities of the team members
+
 | Member | Responsibility (approved plan) |
 |---|---|
 | Nurassyl Orazbek | Requirement model, comparison engine, backend and REST API, evaluation |
 | Asylan Usen | Guide selection, reference corpus and labelling, web viewer |
 | Anuar Zhenissov | PDF extraction and normalization |
 
+### Contributions to pre-defense 1
+
+Table: Contributions to pre-defense 1
+
+| Member | Contribution | Where to see it |
+|---|---|---|
+| Nurassyl Orazbek | Requirement schema, pilot corpus, alignment and divergence classification, extraction prototype, CI, diagrams, viewer prototype, report | Commits in `main`; DIP-1 to DIP-9, DIP-14 |
+| Asylan Usen | Review of PR #1; check of PDF identity before extraction and UTF-8 handling in the extractor and the prototype | PR #1 review; PR #26, DIP-26 |
+| Anuar Zhenissov | YouTrack project: fields, versions, board; machine-readable evaluation of the extractor in CI | YouTrack project DIP; PR #29, DIP-27 |
+
 ### Milestones
 
-| Date | Milestone | Content |
-|---|---|---|
-| 24 Oct 2026 | Pre-defense 1 (`pre-defense-1`) | Analysis, design, plan; requirement model, pilot corpus, extraction and comparison prototypes |
-| Pre-defense 2 | 50% of the work | REST API with storage, viewer for comparison and source pages, held-out corpus, first evaluation, all report chapters except results |
-| Final pre-defense | Complete system | Validation of test messages, 204 and 210, full evaluation, final report |
+Table: Milestones
+
+| Milestone | Content |
+|---|---|
+| Pre-defense 1 (`pre-defense-1`) | Analysis, design, plan; requirement model, pilot corpus, extraction and comparison prototypes |
+| Pre-defense 2 (`pre-defense-2`), 50% of the work | REST API with storage, viewer for comparison and source pages, held-out corpus, first evaluation, all report chapters except results |
+| Final pre-defense (`final-pre-defense`), complete system | Validation of test messages, 204 and 210, full evaluation, final report |
 
 ### Risks
+
+Table: Risks and mitigation
 
 | Risk | Likelihood | Impact | Mitigation |
 |---|---|---|---|
@@ -454,6 +532,8 @@ On the three development guides the extractor finds 118 of 118 reference require
 
 ## 11. Supervisor feedback
 
+Table: Supervisor feedback and decisions
+
 | Date | Deliverable reviewed | Comment | Decision |
 |---|---|---|---|
 
@@ -464,8 +544,6 @@ Bogner, J., Kotstein, S., Abajirov, D., Ernst, T., & Merkel, M. (2024). RESTRule
 Bogner, J., Kotstein, S., & Pfaff, T. (2023). Do RESTful API design rules have an impact on the understandability of Web APIs? *Empirical Software Engineering, 28*(6), Article 132. https://doi.org/10.1007/s10664-023-10367-y
 
 Coiera, E. (2023). The standard problem. *Journal of the American Medical Informatics Association, 30*(12), 2086–2097. https://doi.org/10.1093/jamia/ocad176 Free full text: https://arxiv.org/abs/2304.09114
-
-Egyedi, T. M., & Verwater-Lukszo, Z. (2005). Which standards' characteristics increase system flexibility? Comparing ICT and batch processing infrastructures. *Technology in Society, 27*(3), 347–362. https://doi.org/10.1016/j.techsoc.2005.04.007 Free full text: https://repository.tudelft.nl/file/File_994e2113-4769-4e9c-bfc9-14a7e538e78c
 
 Kramer, M. A. (2022). Reducing FHIR "profiliferation": A data-driven approach. *AMIA Annual Symposium Proceedings, 2022*, 634–643. https://pmc.ncbi.nlm.nih.gov/articles/PMC10148270/
 
