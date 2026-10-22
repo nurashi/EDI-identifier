@@ -504,11 +504,11 @@ Table: Contributions to pre-defense 1
 
 Table: Milestones
 
-| Milestone | Content  |
+| Milestone | Content |
 |---|---|
-| Pre-defense 1 (`pre-defense-1`) | Analysis, design, plan; requirement model, pilot corpus, extraction and comparison prototypes  |
-| 50% of the work | REST API with storage, viewer for comparison and source pages, held-out corpus, first evaluation, all report chapters except results  |
-| Complete system | Validation of test messages, 204 and 210, full evaluation, final report  |
+| Pre-defense 1 (`pre-defense-1`) | Analysis, design, plan; requirement model, pilot corpus, extraction and comparison prototypes |
+| Pre-defense 2 (`pre-defense-2`), 50% of the work | REST API with storage, viewer for comparison and source pages, held-out corpus, first evaluation, all report chapters except results |
+| Final pre-defense (`final-pre-defense`), complete system | Validation of test messages, 204 and 210, full evaluation, final report |
 
 ### Risks
 
