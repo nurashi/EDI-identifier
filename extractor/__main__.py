@@ -1,6 +1,8 @@
 import argparse
+import hashlib
 import json
 import sys
+from pathlib import Path
 
 from . import ecs, spec
 from .evaluate import evaluate, report
@@ -10,7 +12,11 @@ PARSERS = [ecs, spec]
 
 
 def extract(pdf, meta):
+    if hashlib.sha256(Path(pdf).read_bytes()).hexdigest() != meta["source"]["sha256"]:
+        raise ValueError("PDF SHA-256 does not match the supplied guide metadata")
     pages = pdf_pages(pdf)
+    if len(pages) != meta["source"]["pages"]:
+        raise ValueError("PDF page count does not match the supplied guide metadata")
     for parser in PARSERS:
         if parser.detect(pages):
             return {"guide": meta, "requirements": parser.parse(pages)}
@@ -32,7 +38,10 @@ def main():
     if args.cmd == "extract":
         with open(args.meta) as f:
             meta = json.load(f)["guide"]
-        data = json.dumps(extract(args.pdf, meta), indent=2, ensure_ascii=False) + "\n"
+        try:
+            data = json.dumps(extract(args.pdf, meta), indent=2, ensure_ascii=False) + "\n"
+        except ValueError as error:
+            ap.exit(1, f"extractor: {error}\n")
         if args.out:
             with open(args.out, "w") as f:
                 f.write(data)
