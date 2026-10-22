@@ -65,11 +65,11 @@ jobs:
       - run: ./edi diff -json diff.json $GUIDES | tee diff.txt
       - name: Extract guides from PDF
         run: |
-          mkdir extracted
+          mkdir extracted evaluation
           for f in $GUIDES; do
             id=$(jq -r .guide.id "$f")
             python3 -m extractor extract "pdfs/$id.pdf" --meta "$f" -o "extracted/$id.json"
-            python3 -m extractor evaluate "extracted/$id.json" "$f"
+            python3 -m extractor evaluate "extracted/$id.json" "$f" --json "evaluation/$id.json"
           done | tee extraction.txt
           ./edi evidence -pdfs pdfs extracted/*.json | tee -a extraction.txt
           pipx run check-jsonschema --schemafile schema/guide.schema.json extracted/*.json
@@ -84,3 +84,4 @@ jobs:
             diff.json
             extraction.txt
             extracted/
+            evaluation/

@@ -72,6 +72,25 @@ def evaluate(extracted, reference):
     }
 
 
+def summary(e):
+    return {
+        "guide": e["guide"],
+        "reference": e["reference"],
+        "extracted": e["extracted"],
+        "matched": e["matched"],
+        "recall": e["matched"] / max(e["reference"], 1),
+        "precision": e["matched"] / max(e["extracted"], 1),
+        "fields": {f: {"correct": ok, "total": n, "accuracy": ok / max(n, 1)}
+                   for f, (ok, n) in e["fields"].items()},
+        "missing": e["missing"],
+        "extra": e["extra"],
+        "mismatches": [{"key": k, "field": f, "extracted": a, "reference": b}
+                       for k, f, a, b in e["misses"]],
+        "free_conditions": e["free_conditions"],
+        "flagged": e["flagged"],
+    }
+
+
 def report(e):
     out = [f"{e['guide']}: {e['matched']} of {e['reference']} reference requirements found, "
            f"{e['extracted']} extracted in the same segments"]
