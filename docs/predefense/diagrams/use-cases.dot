@@ -1,0 +1,30 @@
+digraph usecases {
+  graph [rankdir=LR, bgcolor="white", pad="0.35", nodesep="0.4", ranksep="0.65", splines=polyline, fontname="Arial", fontsize=20, label="Use cases - current toolkit", labelloc=t];
+  node [fontname="Arial", fontsize=13, color="#78929c", margin="0.14,0.1"];
+  edge [fontname="Arial", fontsize=11, color="#5d7783"];
+  analyst [shape=box, label="«actor»\nEDI analyst"];
+  reviewer [shape=box, label="«actor»\nReviewer"];
+  {rank=same; analyst; reviewer;}
+  subgraph cluster_toolkit {
+    label="EDI Identifier"; color="#92b2a4"; style=rounded; fontname="Arial"; fontsize=16; margin=24;
+    node [shape=ellipse, style=filled, fillcolor="#eff5f2"];
+    extract [label="Extract requirements\nfrom PDF"];
+    compare [label="Compare guides"];
+    review [label="Review findings"];
+    export [label="Export comparison JSON"];
+    reviews [label="Save / export\nreview decisions"];
+    verify [label="Verify source identity"];
+    align [label="Align requirements"];
+    evidence [label="Inspect source evidence"];
+    {rank=same; extract; compare; review; export; reviews;}
+    {rank=same; verify; align; evidence;}
+    extract -> verify [label="«include»", style=dashed, arrowhead=open];
+    compare -> align [label="«include»", style=dashed, arrowhead=open];
+    review -> evidence [label="«include»", style=dashed, arrowhead=open];
+  }
+  analyst -> extract [dir=none];
+  analyst -> compare [dir=none];
+  analyst -> export [dir=none];
+  reviewer -> review [dir=none];
+  reviewer -> reviews [dir=none];
+}

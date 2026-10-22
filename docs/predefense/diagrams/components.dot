@@ -1,0 +1,29 @@
+digraph components {
+  graph [rankdir=LR, bgcolor="white", pad="0.35", nodesep="0.45", ranksep="0.55", fontname="Arial", fontsize=20, label="Draft component design", labelloc=t];
+  node [shape=component, fontname="Arial", fontsize=13, style=filled, fillcolor="#edf4f0", color="#739684", margin="0.14,0.12"];
+  edge [fontname="Arial", fontsize=11, color="#657f8b", arrowsize=0.7];
+  pdf [shape=folder, label="Source PDFs\nHash / physical pages", fillcolor="#f4f6f7"];
+  reference [shape=folder, label="Manual reference JSON\n3 guides / 118 requirements"];
+  extractor [label="Python PDF extractor\nPoppler + layout rules"];
+  cli [label="Go CLI / compare package\nevidence | align | diff"];
+  evaluator [label="Python extraction evaluator\nScoped keys + six fields"];
+  prototype [label="Review prototype\nHTML/JS + data builder\nLocal review CSV"];
+  health [label="Go/Gin API host\nGET /healthz"];
+  subgraph cluster_future {
+    label="Planned integration"; labeljust=l; fontname="Arial"; fontsize=12; color="#aebec5"; style=dashed;
+    node [style="dashed,filled", fillcolor="#fafafa", color="#8b9ca5"];
+    frontend [label="React frontend"];
+    api [label="Comparison API routes"];
+    database [shape=cylinder, label="PostgreSQL storage"];
+    frontend -> api [style=dashed, dir=both];
+    api -> database [style=dashed, dir=both];
+  }
+  pdf -> extractor;
+  extractor -> cli [label="guide JSON"];
+  extractor -> evaluator [label="candidate records"];
+  reference -> cli;
+  reference -> evaluator [label="reference records"];
+  cli -> prototype [label="comparison JSON"];
+  health -> api [label="extend routes", style=dashed];
+  cli -> api [label="reuse comparison package", style=dashed, constraint=false];
+}

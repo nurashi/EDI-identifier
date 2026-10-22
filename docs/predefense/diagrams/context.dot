@@ -1,0 +1,19 @@
+digraph context {
+  graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.5", ranksep="0.65", fontname="Arial", fontsize=20, label="System context", labelloc=t];
+  node [shape=box, style="rounded,filled", fillcolor="#f2f5f6", color="#8da1ad", fontname="Arial", fontsize=14, margin="0.18,0.13"];
+  edge [fontname="Arial", fontsize=11, color="#607b89", arrowsize=0.7];
+  analyst [label="EDI analyst / reviewer\nSelect guides and inspect findings"];
+  providers [label="Guide publishers\nPartner implementation PDFs"];
+  toolkit [label="EDI Identifier toolkit\nPDF extraction | evidence checks\nAlignment | comparison | local review", fillcolor="#e4efeb", color="#34705f", penwidth=2];
+  research [label="Independent annotation study\nEDI-identifier-rmt\nCodebook, sheets and adjudication"];
+  repository [label="GitHub repository and Project\nSource, deliverables, tasks and PRs"];
+  supervisor [label="Supervisor and team reviewers\nReview scope, evidence and design"];
+  {rank=same; analyst; providers;}
+  analyst -> toolkit [label="inputs / findings / review exports", dir=both];
+  providers -> toolkit [label="hash-identified PDFs"];
+  toolkit -> repository [label="versioned implementation and documents"];
+  repository -> supervisor [label="deliverables / comments", dir=both];
+  toolkit -> research [label="source identity and reference guides"];
+  research -> toolkit [label="reviewed reference for later evaluation", style=dashed];
+  legend [shape=plaintext, label="Dashed flow: planned evaluation input", fontsize=11];
+}

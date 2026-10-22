@@ -1,0 +1,288 @@
+[
+  {
+    "id": "S01",
+    "type": "scientific",
+    "year": 2022,
+    "authors": "Yupan Huang, Tengchao Lv, Lei Cui, Yutong Lu, Furu Wei",
+    "title": "LayoutLMv3: Pre-training for Document AI with Unified Text and Image Masking",
+    "venue": "ACM Multimedia 2022",
+    "url": "https://arxiv.org/abs/2204.08387",
+    "full_text": "https://arxiv.org/html/2204.08387v3",
+    "doi": "10.1145/3503161.3548112",
+    "verification": "Author manuscript and conference metadata opened; method and experimental sections inspected.",
+    "used_in": [
+      "03-literature",
+      "05-technologies",
+      "09-evaluation"
+    ]
+  },
+  {
+    "id": "S02",
+    "type": "scientific",
+    "year": 2022,
+    "authors": "Geewook Kim et al.",
+    "title": "OCR-Free Document Understanding Transformer",
+    "venue": "ECCV 2022",
+    "url": "https://www.ecva.net/papers/eccv_2022/papers_ECCV/html/8042_ECCV_2022_paper.php",
+    "full_text": "https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136880493.pdf",
+    "doi": "10.1007/978-3-031-19815-1_29",
+    "verification": "Official conference page, authors, abstract and PDF link checked.",
+    "used_in": [
+      "03-literature",
+      "05-technologies"
+    ]
+  },
+  {
+    "id": "S03",
+    "type": "scientific",
+    "year": 2022,
+    "authors": "Birgit Pfitzmann, Christoph Auer, Michele Dolfi, Ahmed S. Nassar, Peter Staar",
+    "title": "DocLayNet: A Large Human-Annotated Dataset for Document-Layout Analysis",
+    "venue": "KDD 2022; publisher listing uses Document-Layout Segmentation",
+    "url": "https://arxiv.org/abs/2206.01062",
+    "full_text": "https://arxiv.org/html/2206.01062v1",
+    "doi": "10.1145/3534678.3539043",
+    "verification": "Author manuscript, DOI and KDD metadata checked against IBM Research; annotation and experiment sections inspected.",
+    "used_in": [
+      "03-literature",
+      "09-evaluation"
+    ]
+  },
+  {
+    "id": "S04",
+    "type": "scientific",
+    "year": 2023,
+    "authors": "Štěpán Šimsa et al.",
+    "title": "DocILE Benchmark for Document Information Localization and Extraction",
+    "venue": "ICDAR 2023",
+    "url": "https://arxiv.org/abs/2302.05658",
+    "full_text": "https://arxiv.org/html/2302.05658v2",
+    "doi": "10.48550/arXiv.2302.05658",
+    "verification": "Author manuscript records ICDAR acceptance; dataset splits and evaluation sections inspected. DOI is for the manuscript.",
+    "used_in": [
+      "03-literature",
+      "09-evaluation"
+    ]
+  },
+  {
+    "id": "S05",
+    "type": "scientific",
+    "year": 2025,
+    "authors": "Linke Ouyang et al.",
+    "title": "OmniDocBench: Benchmarking Diverse PDF Document Parsing with Comprehensive Annotations",
+    "venue": "CVPR 2025, pp. 24838-24848",
+    "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Ouyang_OmniDocBench_Benchmarking_Diverse_PDF_Document_Parsing_with_Comprehensive_Annotations_CVPR_2025_paper.html",
+    "full_text": "https://openaccess.thecvf.com/content/CVPR2025/papers/Ouyang_OmniDocBench_Benchmarking_Diverse_PDF_Document_Parsing_with_Comprehensive_Annotations_CVPR_2025_paper.pdf",
+    "verification": "Conference record checked in the original review; current CVF access returned 403. Author preprint v1 abstract and metadata rechecked; discussion is limited to the stated benchmark design.",
+    "used_in": [
+      "03-literature",
+      "09-evaluation"
+    ],
+    "supporting_urls": [
+      "https://arxiv.org/abs/2412.07626v1"
+    ]
+  },
+  {
+    "id": "S06",
+    "type": "scientific",
+    "year": 2023,
+    "authors": "Hiuyi Cheng et al.",
+    "title": "M6Doc: A Large-Scale Multi-Format, Multi-Type, Multi-Layout, Multi-Language, Multi-Annotation Category Dataset for Modern Document Layout Analysis",
+    "venue": "CVPR 2023",
+    "url": "https://arxiv.org/abs/2305.08719",
+    "full_text": "https://arxiv.org/pdf/2305.08719",
+    "verification": "Primary author manuscript opened; metadata records CVPR acceptance.",
+    "used_in": [
+      "03-literature",
+      "09-evaluation"
+    ]
+  },
+  {
+    "id": "S07",
+    "type": "scientific",
+    "year": 2022,
+    "authors": "Ahmed Nassar, Nikolaos Livathinos, Maksym Lysak, Peter Staar",
+    "title": "TableFormer: Table Structure Understanding With Transformers",
+    "venue": "CVPR 2022, pp. 4614-4623",
+    "url": "https://openaccess.thecvf.com/content/CVPR2022/html/Nassar_TableFormer_Table_Structure_Understanding_With_Transformers_CVPR_2022_paper.html",
+    "full_text": "https://openaccess.thecvf.com/content/CVPR2022/papers/Nassar_TableFormer_Table_Structure_Understanding_With_Transformers_CVPR_2022_paper.pdf",
+    "verification": "Author manuscript metadata and abstract rechecked. Correct Nassar et al. table-structure paper; not the different TableFormer table-text encoding paper. CVF direct access returned 403.",
+    "used_in": [
+      "03-literature",
+      "05-technologies"
+    ],
+    "supporting_urls": [
+      "https://arxiv.org/abs/2203.01017"
+    ]
+  },
+  {
+    "id": "S08",
+    "type": "scientific",
+    "year": 2022,
+    "authors": "Brandon Smock, Rohith Pesala, Robin Abraham",
+    "title": "PubTables-1M: Towards Comprehensive Table Extraction From Unstructured Documents",
+    "venue": "CVPR 2022, pp. 4634-4642",
+    "url": "https://arxiv.org/abs/2110.00061",
+    "full_text": "https://openaccess.thecvf.com/content/CVPR2022/papers/Smock_PubTables-1M_Towards_Comprehensive_Table_Extraction_From_Unstructured_Documents_CVPR_2022_paper.pdf",
+    "verification": "Author manuscript and official CVPR paper checked. Manuscript appeared in 2021; conference publication is 2022.",
+    "used_in": [
+      "03-literature",
+      "09-evaluation"
+    ]
+  },
+  {
+    "id": "S09",
+    "type": "scientific",
+    "year": 2019,
+    "authors": "Nils Reimers, Iryna Gurevych",
+    "title": "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks",
+    "venue": "EMNLP-IJCNLP 2019, pp. 3982-3992",
+    "url": "https://aclanthology.org/D19-1410/",
+    "full_text": "https://aclanthology.org/D19-1410.pdf",
+    "doi": "10.18653/v1/D19-1410",
+    "verification": "Official ACL Anthology metadata and abstract checked; foundational exception for semantic retrieval.",
+    "used_in": [
+      "03-literature",
+      "09-evaluation"
+    ]
+  },
+  {
+    "id": "S10",
+    "type": "scientific",
+    "year": 2001,
+    "authors": "Erhard Rahm, Philip A. Bernstein",
+    "title": "A Survey of Approaches to Automatic Schema Matching",
+    "venue": "The VLDB Journal 10(4)",
+    "url": "https://dbs.uni-leipzig.de/research/publications/a-survey-of-approaches-to-automatic-schema-matching",
+    "verification": "Author-institution metadata and indexed primary abstract checked; direct fetch returned 403. Foundational taxonomy only, no quantitative claim.",
+    "used_in": [
+      "03-literature",
+      "07-architecture"
+    ]
+  },
+  {
+    "id": "S11",
+    "type": "scientific",
+    "year": 1960,
+    "authors": "Jacob Cohen",
+    "title": "A Coefficient of Agreement for Nominal Scales",
+    "venue": "Educational and Psychological Measurement 20(1), pp. 37-46",
+    "url": "https://journals.sagepub.com/doi/abs/10.1177/001316446002000104",
+    "doi": "10.1177/001316446002000104",
+    "verification": "Foundational article/DOI metadata retained from the original review. Current publisher retrieval timed out; formulas used are the standard nominal two-coder agreement definition.",
+    "used_in": [
+      "03-literature",
+      "09-evaluation"
+    ]
+  },
+  {
+    "id": "P01",
+    "type": "official",
+    "authors": "X12",
+    "title": "214 Transportation Carrier Shipment Status Message",
+    "url": "https://x12.org/node/4214",
+    "verification": "Official transaction-set description opened.",
+    "used_in": [
+      "01-proposal",
+      "02-relevance"
+    ]
+  },
+  {
+    "id": "P02",
+    "type": "official",
+    "authors": "Stedi",
+    "title": "What is an EDI guide?",
+    "url": "https://www.stedi.com/docs/edi-platform/guides/what-is-a-stedi-guide",
+    "verification": "Official documentation opened.",
+    "used_in": [
+      "02-relevance",
+      "03-literature",
+      "04-systems"
+    ]
+  },
+  {
+    "id": "P03",
+    "type": "official",
+    "authors": "IBM",
+    "title": "Associated External Applications, Sterling B2B Integrator 6.2.2",
+    "url": "https://www.ibm.com/docs/en/b2b-integrator/6.2.2?topic=integrator-associated-external-applications",
+    "verification": "Indexed official 6.2.2 page explicitly describes offline Windows Map Editor, translation formats and process integration. Direct retrieval returned 403; no product trial.",
+    "used_in": [
+      "04-systems"
+    ],
+    "supporting_urls": [
+      "https://www.ibm.com/docs/en/b2b-integrator/6.2.0?topic=integrator-mapping-data-transformation-components"
+    ]
+  },
+  {
+    "id": "P04",
+    "type": "official",
+    "authors": "Adobe",
+    "title": "Compare two versions of a PDF file in Adobe Acrobat",
+    "url": "https://helpx.adobe.com/acrobat/using/compare-documents.html",
+    "verification": "Official comparison documentation read directly; supports input PDFs, side-by-side differences, filters/statuses and a comparison report. No licensed run.",
+    "used_in": [
+      "04-systems",
+      "09-evaluation"
+    ]
+  },
+  {
+    "id": "P05",
+    "type": "official",
+    "authors": "Docling project",
+    "title": "Docling documentation",
+    "url": "https://docling-project.github.io/docling/",
+    "verification": "Overview and DoclingDocument concepts read directly. Documented local execution, formats, CLI/API, item provenance and geometry. Source-PDF-link review workflow not established.",
+    "used_in": [
+      "04-systems",
+      "05-technologies"
+    ],
+    "supporting_urls": [
+      "https://docling-project.github.io/docling/concepts/docling_document/"
+    ]
+  },
+  {
+    "id": "P06",
+    "type": "official",
+    "authors": "PyMuPDF",
+    "title": "The Basics and text extraction documentation",
+    "url": "https://pymupdf.readthedocs.io/en/latest/the-basics.html",
+    "verification": "Official extraction and table API documentation checked.",
+    "used_in": [
+      "05-technologies"
+    ]
+  },
+  {
+    "id": "P07",
+    "type": "official",
+    "authors": "Jeremy Singer-Vine and contributors",
+    "title": "pdfplumber documentation",
+    "url": "https://github.com/jsvine/pdfplumber/blob/stable/README.md",
+    "verification": "Maintainer documentation checked.",
+    "used_in": [
+      "05-technologies"
+    ]
+  },
+  {
+    "id": "P08",
+    "type": "official",
+    "authors": "PostgreSQL Global Development Group",
+    "title": "JSON Types",
+    "url": "https://www.postgresql.org/docs/current/datatype-json.html",
+    "verification": "Official documentation; storage is planned, not evidence of implemented persistence.",
+    "used_in": [
+      "05-technologies"
+    ]
+  },
+  {
+    "id": "P09",
+    "type": "official",
+    "authors": "Poppler contributors; Debian manpages",
+    "title": "pdftotext(1): PDF to text converter",
+    "url": "https://manpages.debian.org/trixie/poppler-utils/pdftotext.1.en.html",
+    "verification": "Primary distribution manual checked: layout preservation, UTF-8 output, page breaks and command-line behavior.",
+    "used_in": [
+      "05-technologies"
+    ]
+  }
+]
