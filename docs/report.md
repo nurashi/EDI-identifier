@@ -497,7 +497,7 @@ Table: Contributions to pre-defense 1
 | Member | Contribution | Where to see it |
 |---|---|---|
 | Nurassyl Orazbek | Requirement schema, pilot corpus, alignment and divergence classification, extraction prototype, CI, diagrams, viewer prototype, report | Commits in `main`; DIP-1 to DIP-9, DIP-14 |
-| Asylan Usen | Review and approval of PR #1; pre-defense preparation materials (draft PR #26) | PR #1 review; PR #26 |
+| Asylan Usen | Review of PR #1; check of PDF identity before extraction and UTF-8 handling in the extractor and the prototype | PR #1 review; PR #26, DIP-26 |
 | Anuar Zhenissov | YouTrack project: fields, versions, board; verification of the pilot corpus | YouTrack project DIP; DIP-13 |
 
 ### Milestones
