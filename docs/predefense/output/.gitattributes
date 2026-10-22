@@ -1,0 +1,2 @@
+# Preserve PDF bytes when exported files are added to version control.
+*.pdf binary

@@ -1,0 +1,291 @@
+@page {
+  size: A4;
+  margin: 18mm 17mm 18mm;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, "Segoe UI", sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.45;
+  color: #1a2026;
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #111;
+  break-after: avoid;
+  font-weight: 650;
+}
+h1 {
+  font-size: 25pt;
+  line-height: 1.22;
+  margin: 25mm 0 12mm;
+}
+h2 {
+  font-size: 19pt;
+  margin: 0 0 7mm;
+}
+h3 {
+  font-size: 13pt;
+  margin: 6mm 0 2mm;
+}
+h4 {
+  font-size: 11pt;
+}
+p {
+  margin: 0 0 3.3mm;
+  orphans: 3;
+  widows: 3;
+}
+a {
+  color: #245369;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.citation {
+  white-space: nowrap;
+}
+code {
+  font-family: Consolas, monospace;
+  font-size: 0.85em;
+  background: #f0f3f4;
+  overflow-wrap: anywhere;
+}
+pre {
+  font:
+    8.5pt/1.4 Consolas,
+    monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #f4f6f7;
+  padding: 4mm;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 9pt;
+  line-height: 1.38;
+  margin: 4mm 0 6mm;
+  table-layout: fixed;
+}
+th,
+td {
+  border: 1px solid #d9d9d9;
+  padding: 2.2mm 2mm;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+}
+th {
+  background: #243f50;
+  color: white;
+  text-align: left;
+  font-weight: 600;
+}
+tbody tr:nth-child(even) {
+  background: #f2f5f7;
+}
+thead {
+  display: table-header-group;
+}
+tr {
+  break-inside: avoid;
+}
+li {
+  margin: 0 0 2.5mm;
+}
+ul,
+ol {
+  padding-left: 6mm;
+}
+section.chapter {
+  break-before: page;
+  margin-top: 8mm;
+}
+section.chapter h2 {
+  margin-top: 6mm;
+}
+.title-page {
+  min-height: 245mm;
+  break-after: page;
+}
+.title-page .kicker {
+  font-size: 11pt;
+  letter-spacing: 1.2px;
+  margin-top: 10mm;
+}
+.title-page .stage {
+  font-size: 16pt;
+  margin: 12mm 0 6mm;
+}
+.title-page .meta {
+  font-size: 11pt;
+  line-height: 1.8;
+}
+.state {
+  border-top: 1px solid #bbb;
+  margin-top: 12mm;
+  padding-top: 5mm;
+  color: #394b56;
+}
+.contents {
+  break-after: page;
+}
+.contents h2 {
+  margin-top: 6mm;
+}
+.contents li {
+  margin-bottom: 4mm;
+}
+.figure-page {
+  break-inside: avoid;
+  break-before: page;
+  break-after: page;
+}
+.chapter figure {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+.chapter figure img {
+  width: 100%;
+  max-height: 215mm;
+  object-fit: contain;
+}
+figcaption {
+  font-size: 9pt;
+  color: #60727c;
+  margin-top: 3mm;
+  width: 100%;
+  text-align: left;
+}
+.bib {
+  font-size: 9pt;
+}
+.bib li {
+  margin-bottom: 1.8mm;
+  break-inside: avoid;
+}
+.bib {
+  line-height: 1.3;
+}
+.appendix table {
+  font-size: 8.6pt;
+}
+.toc-note {
+  margin-top: 9mm;
+  font-size: 9pt;
+  color: #596b75;
+}
+
+@page diagramwide {
+  size: A4 landscape;
+  margin: 17mm;
+}
+.figure-page.landscape-figure {
+  page: diagramwide;
+}
+.landscape-figure figure img {
+  max-height: 137mm;
+}
+.figure-page h3 {
+  margin-top: 0;
+}
+.appendix {
+  page: literaturewide;
+}
+.appendix th:nth-child(1) {
+  width: 5%;
+}
+.appendix th:nth-child(2) {
+  width: 20%;
+}
+.appendix th:nth-child(3) {
+  width: 21%;
+}
+.appendix th:nth-child(4) {
+  width: 23%;
+}
+.appendix th:nth-child(5) {
+  width: 10%;
+}
+.appendix th:nth-child(6) {
+  width: 21%;
+}
+.appendix td {
+  padding: 1.8mm;
+}
+section.chapter.bib,
+section.chapter.appendix {
+  break-before: page;
+}
+
+@page literaturewide {
+  size: A4 landscape;
+  margin: 17mm;
+}
+#section-03 table {
+  page: literaturewide;
+  font-size: 8.8pt;
+}
+#section-11 {
+  break-before: page;
+}
+th a {
+  color: #e1f2ff;
+}
+#section-06 th:nth-child(1) {
+  width: 10%;
+}
+#section-06 th:nth-child(2) {
+  width: 14%;
+}
+#section-06 th:nth-child(3) {
+  width: 43%;
+}
+#section-06 th:nth-child(4) {
+  width: 33%;
+}
+#section-10 table:has(th:nth-child(4)) th:nth-child(1) {
+  width: 10%;
+}
+#section-10 table:has(th:nth-child(4)) th:nth-child(2) {
+  width: 40%;
+}
+#section-10 table:has(th:nth-child(4)) th:nth-child(3) {
+  width: 18%;
+}
+#section-10 table:has(th:nth-child(4)) th:nth-child(4) {
+  width: 32%;
+}
+#section-10 table:first-of-type th:nth-child(1) {
+  width: 28%;
+}
+#section-10 table:first-of-type th:nth-child(2) {
+  width: 28%;
+}
+#section-10 table:first-of-type th:nth-child(3) {
+  width: 44%;
+}
+
+#section-09 p {
+  margin-bottom: 2mm;
+}
+#section-09 {
+  font-size: 10pt;
+  line-height: 1.42;
+}
+#section-09 table {
+  margin-bottom: 4mm;
+}
+#section-09 th,
+#section-09 td {
+  padding-top: 1.8mm;
+  padding-bottom: 1.8mm;
+}
