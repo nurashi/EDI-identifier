@@ -248,7 +248,7 @@ Priorities use MoSCoW. Status: done, prototype (works on the pilot corpus), plan
 | FR7 | Show both source pages and excerpts for every finding | Must | No finding without pages on both sides | Done |
 | FR8 | List requirements defined in one guide only | Must | Matches the alignment result | Done |
 | FR9 | Export the comparison report as JSON and CSV | Should | JSON validates against a report schema; CSV opens in a spreadsheet | JSON done |
-| FR10 | Web viewer: two guides side by side, filters by category and verdict, source page panel | Must | A user opens the page of any finding in one action from the list | Planned |
+| FR10 | Web viewer: two guides side by side, filters by category and verdict, source page panel | Must | A user opens the page of any finding in one action from the list | Prototype |
 | FR11 | Validate a test X12 214 message against the requirements of two partners | Should | Seeded violations in test messages are reported with the partner and rule | Planned |
 | FR12 | REST API for import, comparison and validation | Must | Endpoints documented with OpenAPI; integration tests in CI | Planned |
 | FR13 | Record reference labels for findings | Must | Labels stored per finding and reviewer; used by the evaluation | Planned |
@@ -312,7 +312,7 @@ Diagram sources are in `docs/diagrams/*.dot` (Graphviz) and are exported to SVG.
 
 ## 8. Prototype
 
-The toolkit has no web interface yet; the prototype is the command line, its input and output data, and the planned viewer layout.
+The prototype consists of the command line with its input and output data, and a clickable viewer prototype on real data.
 
 ### Extract a guide from its PDF
 
@@ -365,9 +365,13 @@ chr-214 ~ kbx-214
 
 `edi diff -json report.json` writes the same findings for the API and the viewer; `edi evidence -pdfs DIR` checks every excerpt of a guide file against its PDF.
 
-### Planned viewer
+### Viewer prototype
 
-The viewer has three panes: the list of findings with filters by guide pair, category and verdict; the two requirements side by side with the difference highlighted; and the PDF page of each side with the excerpt marked. Choosing a finding opens both pages (FR7, FR10, NFR5).
+A clickable prototype of the viewer, `prototype/viewer.html`, shows the key scenario on the real comparison of the three guides; it opens in any browser without a server. On the left are the findings of the chosen guide pair, filtered by category and verdict. On the right is the selected requirement in both guides with its classification and reason, and for each side the excerpts of every cited page with a link that opens that page of the partner's PDF (FR7, FR10, NFR5).
+
+![Viewer prototype: C.H. Robinson against KBX, element AT701](images/viewer.png)
+
+In the figure C.H. Robinson allows all 42 standard shipment status codes in AT701 (page 21), while KBX lists 16 (pages 3, 5 and 18). The prototype is generated from `edi diff -all -json` and the corpus by `prototype/build.py`. The React viewer (DIP-17) will add the rendered PDF page beside the excerpts and the reviewer's actions (FR3, FR13).
 
 ## 9. Verification and evaluation plan
 

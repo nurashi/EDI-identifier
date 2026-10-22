@@ -35,7 +35,7 @@ First stage: X12 214 Transportation Carrier Shipment Status, release 004010, tru
 | Evidence check of every excerpt against its PDF page | `backend/internal/compare/` | Done |
 | Command-line tool `edi` | `backend/cmd/edi/` | Done |
 | REST API and PostgreSQL store | `backend/` | Skeleton |
-| Web viewer | | Planned |
+| Web viewer | `prototype/` | Clickable prototype on real data (`prototype/viewer.html`); React viewer planned |
 | Validation of test messages | | Planned |
 
 ## Technologies
