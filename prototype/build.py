@@ -17,7 +17,7 @@ def key_id(k):
 def main(report_path, out_path, guide_paths):
     guides = {}
     for p in guide_paths:
-        g = json.load(open(p))
+        g = json.load(open(p, encoding="utf-8"))
         meta = g["guide"]
         guides[meta["id"]] = {
             "partner": meta["partner"],
@@ -25,9 +25,9 @@ def main(report_path, out_path, guide_paths):
             "url": meta["source"]["url"],
             "evidence": {key_id(r["key"]): r["evidence"] for r in g["requirements"]},
         }
-    data = {"guides": guides, "reports": json.load(open(report_path))}
-    html = open(__file__.replace("build.py", "viewer.template.html")).read()
-    open(out_path, "w").write(html.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False)))
+    data = {"guides": guides, "reports": json.load(open(report_path, encoding="utf-8"))}
+    html = open(__file__.replace("build.py", "viewer.template.html"), encoding="utf-8").read()
+    open(out_path, "w", encoding="utf-8").write(html.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False)))
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ BASE = {"Mandatory": "M", "Optional": "O", "Conditional": "X"}
 
 
 def pdf_pages(path):
-    out = subprocess.run(["pdftotext", "-layout", path, "-"], check=True, capture_output=True, text=True).stdout
+    out = subprocess.run(["pdftotext", "-layout", path, "-"], check=True, capture_output=True, encoding="utf-8").stdout
     pages = out.split("\f")
     if pages and not pages[-1].strip():
         pages.pop()
