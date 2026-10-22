@@ -9,14 +9,14 @@ import (
 type Verdict string
 
 const (
-	Same      Verdict = "same"
-	Different Verdict = "different"
-	OneSide   Verdict = "one_side"
-	Review    Verdict = "review"
+	Same        Verdict = "same"
+	Different   Verdict = "different"
+	OneSide     Verdict = "one_side"
+	NeedsReview Verdict = "review"
 )
 
 var (
-	Verdicts       = []Verdict{Same, Different, OneSide, Review}
+	Verdicts       = []Verdict{Same, Different, OneSide, NeedsReview}
 	DiffCategories = []string{"usage", "codes", "repetition", "condition"}
 )
 
@@ -249,7 +249,7 @@ func diffRepetition(f Finding, lid, rid string, p Pair) (Finding, bool) {
 		return f, false
 	}
 	if p.Rule == Qualifier {
-		f.Verdict, f.Detail = Review, "the definitions cover different qualifiers"
+		f.Verdict, f.Detail = NeedsReview, "the definitions cover different qualifiers"
 		return f, true
 	}
 	var diffs, missing []string
@@ -306,7 +306,7 @@ func diffConditions(f Finding, lid, rid string, p Pair) (Finding, bool) {
 	case slices.Equal(l, r):
 		f.Verdict = Same
 	default:
-		f.Verdict, f.Detail = Review, fmt.Sprintf("%d vs %d conditions in free text", len(l), len(r))
+		f.Verdict, f.Detail = NeedsReview, fmt.Sprintf("%d vs %d conditions in free text", len(l), len(r))
 	}
 	return f, true
 }

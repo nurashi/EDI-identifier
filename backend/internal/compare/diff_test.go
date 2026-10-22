@@ -102,7 +102,7 @@ func TestDiffQualifierScope(t *testing.T) {
 	split.Requirements[1].MaxUse, single.Requirements[1].MaxUse = 1, 300
 	for _, f := range Diff(split, single, Qualifier).Findings {
 		if f.LeftKey == "0200:L11@150[QN]" && f.Category == "repetition" {
-			if f.Verdict != Review {
+			if f.Verdict != NeedsReview {
 				t.Fatalf("qualifier-aligned repetition = %s, want review", f.Verdict)
 			}
 			return
@@ -142,7 +142,7 @@ func TestDiffCorpus(t *testing.T) {
 		"chr-214 domtar-214 0200/0205:AT7@140/AT707 codes": Different,
 		"domtar-214 kbx-214 0200/0205:AT7@140/AT704 codes": Different,
 		"chr-214 kbx-214 0200/0205:AT7@140 repetition":     Different,
-		"chr-214 kbx-214 0200:L11@150[QN] repetition":      Review,
+		"chr-214 kbx-214 0200:L11@150[QN] repetition":      NeedsReview,
 		"chr-214 domtar-214 0200/0205:AT7@140/AT707 usage": OneSide,
 		"chr-214 kbx-214 0200/0205:AT7@140/AT706 usage":    Different,
 	} {
