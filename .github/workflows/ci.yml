@@ -31,6 +31,15 @@ jobs:
       - run: pipx run check-jsonschema --check-metaschema schema/guide.schema.json
       - run: pipx run check-jsonschema --schemafile schema/guide.schema.json corpus/214-004010/guides/*.json
 
+  extractor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m unittest extractor.test_extractor -v
+
   pilot:
     runs-on: ubuntu-latest
     defaults:
@@ -54,6 +63,16 @@ jobs:
       - run: ./edi evidence -pdfs pdfs $GUIDES | tee evidence.txt
       - run: ./edi align $GUIDES | tee alignment.txt
       - run: ./edi diff -json diff.json $GUIDES | tee diff.txt
+      - name: Extract guides from PDF
+        run: |
+          mkdir extracted
+          for f in $GUIDES; do
+            id=$(jq -r .guide.id "$f")
+            python3 -m extractor extract "pdfs/$id.pdf" --meta "$f" -o "extracted/$id.json"
+            python3 -m extractor evaluate "extracted/$id.json" "$f"
+          done | tee extraction.txt
+          ./edi evidence -pdfs pdfs extracted/*.json | tee -a extraction.txt
+          pipx run check-jsonschema --schemafile schema/guide.schema.json extracted/*.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -63,3 +82,5 @@ jobs:
             alignment.txt
             diff.txt
             diff.json
+            extraction.txt
+            extracted/

@@ -28,7 +28,11 @@ guides="corpus/214-004010/guides/chr-214.json corpus/214-004010/guides/kbx-214.j
 ./edi evidence -pdfs pdfs $guides
 ./edi align $guides
 ./edi diff $guides
+
+# Extract a guide from its PDF and compare the result with the hand-normalized record:
+python3 -m extractor extract pdfs/chr-214.pdf --meta corpus/214-004010/guides/chr-214.json -o chr-214.json
+python3 -m extractor evaluate chr-214.json corpus/214-004010/guides/chr-214.json
 ```
 
-`evidence` verifies the SHA-256 and the page count of every PDF, then checks that every excerpt fragment occurs on the page it cites. `align` pairs the requirements of every two guides by structural key and lists those found in one guide only. `diff` compares each aligned pair in four categories (usage, codes, repetition, conditions) and gives every finding with the pages of both PDFs; `-all` also lists matching pairs and `-json` writes the reports to a file. CI runs all three commands in the `pilot` job.
+`evidence` verifies the SHA-256 and the page count of every PDF, then checks that every excerpt fragment occurs on the page it cites. `align` pairs the requirements of every two guides by structural key and lists those found in one guide only. `diff` compares each aligned pair in four categories (usage, codes, repetition, conditions) and gives every finding with the pages of both PDFs; `-all` also lists matching pairs and `-json` writes the reports to a file. `extractor` recognises two common guide layouts, writes every value with its page and excerpt, and flags free-text notes it does not classify for review; `evaluate` reports recall, precision and per-field accuracy against the hand-normalized file. CI runs all of these in the `pilot` job and checks the extracted files against the schema and the PDFs.
 
