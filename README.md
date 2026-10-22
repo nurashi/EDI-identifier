@@ -18,7 +18,7 @@ The first stage covers X12 214 Transportation Carrier Shipment Status Message, r
 
 ## Pilot corpus
 
-Three X12 214/004010 truckload guides normalized into [`schema/guide.schema.json`](schema/guide.schema.json) ([description](docs/schema.md)); scope and reproduction steps are in [`corpus/214-004010`](corpus/214-004010/README.md). `backend/cmd/edi` checks every record against the source PDF and aligns requirements across guides.
+Three X12 214/004010 truckload guides normalized into [`schema/guide.schema.json`](schema/guide.schema.json) ([description](docs/schema.md)); scope and reproduction steps are in [`corpus/214-004010`](corpus/214-004010/README.md). `backend/cmd/edi` checks every record against the source PDF, aligns requirements across guides and reports the divergences of every aligned pair with page references.
 
 ## Running locally
 

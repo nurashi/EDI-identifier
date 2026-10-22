@@ -1,11 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"text/tabwriter"
 
@@ -14,6 +16,7 @@ import (
 
 const usage = `usage:
   edi align [-rule exact|qualifier] GUIDE.json...
+  edi diff [-rule exact|qualifier] [-all] [-json OUT.json] GUIDE.json...
   edi evidence -pdfs DIR GUIDE.json...`
 
 func main() {
@@ -23,6 +26,7 @@ func main() {
 	}
 	cmds := map[string]func([]string) error{
 		"align":    runAlign,
+		"diff":     runDiff,
 		"evidence": runEvidence,
 	}
 	run, ok := cmds[os.Args[1]]
@@ -76,6 +80,91 @@ func runAlign(args []string) error {
 		}
 	}
 	return nil
+}
+
+func runDiff(args []string) error {
+	fs := flag.NewFlagSet("diff", flag.ExitOnError)
+	rule := fs.String("rule", string(compare.Qualifier), "alignment rule: exact or qualifier")
+	all := fs.Bool("all", false, "list every finding, not only differences and findings to review")
+	out := fs.String("json", "", "also write the reports to this JSON file")
+	guides, err := compare.LoadAll(parse(fs, args))
+	if err != nil {
+		return err
+	}
+	reports := compare.DiffAll(guides, compare.Rule(*rule))
+
+	tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.AlignRight)
+	fmt.Fprint(tw, "guide pair\tcategory\t")
+	for _, v := range compare.Verdicts {
+		fmt.Fprintf(tw, "%s\t", strings.ReplaceAll(string(v), "_", " "))
+	}
+	fmt.Fprintln(tw)
+	for _, rep := range reports {
+		counts := map[string]int{}
+		for _, f := range rep.Findings {
+			counts[f.Category+" "+string(f.Verdict)]++
+		}
+		for _, c := range compare.DiffCategories {
+			fmt.Fprintf(tw, "%s ~ %s\t%s\t", rep.Left, rep.Right, c)
+			for _, v := range compare.Verdicts {
+				fmt.Fprintf(tw, "%d\t", counts[c+" "+string(v)])
+			}
+			fmt.Fprintln(tw)
+		}
+	}
+	if err := tw.Flush(); err != nil {
+		return err
+	}
+	fmt.Println()
+	fmt.Fprintln(tw, "guide pair\tonly in left\tonly in right\t")
+	for _, rep := range reports {
+		fmt.Fprintf(tw, "%s ~ %s\t%d\t%d\t\n", rep.Left, rep.Right, len(rep.LeftOnly), len(rep.RightOnly))
+	}
+	if err := tw.Flush(); err != nil {
+		return err
+	}
+
+	for _, rep := range reports {
+		fmt.Printf("\n%s ~ %s\n", rep.Left, rep.Right)
+		for _, f := range rep.Findings {
+			if !*all && (f.Verdict == compare.Same || f.Verdict == compare.OneSide) {
+				continue
+			}
+			key := f.LeftKey
+			if f.RightKey != f.LeftKey {
+				key += " = " + f.RightKey
+			}
+			fmt.Printf("  %s %s %s\n", f.Verdict, f.Category, key)
+			fmt.Printf("    %s %s: %s\n", rep.Left, pageList(f.LeftPages), f.Left)
+			fmt.Printf("    %s %s: %s\n", rep.Right, pageList(f.RightPages), f.Right)
+			if f.Detail != "" {
+				fmt.Printf("    %s\n", f.Detail)
+			}
+		}
+		for _, a := range rep.LeftOnly {
+			fmt.Printf("  only in %s: %s %s\n", rep.Left, a.Key, pageList(a.Pages))
+		}
+		for _, a := range rep.RightOnly {
+			fmt.Printf("  only in %s: %s %s\n", rep.Right, a.Key, pageList(a.Pages))
+		}
+	}
+
+	if *out == "" {
+		return nil
+	}
+	data, err := json.MarshalIndent(reports, "", "  ")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(*out, append(data, '\n'), 0o644)
+}
+
+func pageList(ps []int) string {
+	s := make([]string, len(ps))
+	for i, p := range ps {
+		s[i] = strconv.Itoa(p)
+	}
+	return "p." + strings.Join(s, ",")
 }
 
 func runEvidence(args []string) error {
