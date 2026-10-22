@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 from . import ecs, spec
-from .evaluate import evaluate, report
+from .evaluate import evaluate, report, summary
 from .model import pdf_pages
 
 PARSERS = [ecs, spec]
@@ -33,6 +33,7 @@ def main():
     ev = sub.add_parser("evaluate", help="compare an extracted guide with a hand-normalized one")
     ev.add_argument("extracted")
     ev.add_argument("reference")
+    ev.add_argument("--json", help="write the evaluation to a JSON file")
     args = ap.parse_args()
 
     if args.cmd == "extract":
@@ -53,7 +54,11 @@ def main():
         extracted = json.load(f)
     with open(args.reference) as f:
         reference = json.load(f)
-    sys.stdout.write(report(evaluate(extracted, reference)))
+    e = evaluate(extracted, reference)
+    sys.stdout.write(report(e))
+    if args.json:
+        with open(args.json, "w", encoding="utf-8") as f:
+            f.write(json.dumps(summary(e), indent=2, ensure_ascii=False) + "\n")
 
 
 if __name__ == "__main__":
