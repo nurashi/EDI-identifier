@@ -4,44 +4,56 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EDI-identifier viewer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-:root { --bg:#f6f7f9; --panel:#fff; --line:#dde1e6; --text:#1d2329; --muted:#66707a; --diff:#c0392b; --review:#b9770e; --one:#5d6d7e; --same:#1e8449; --accent:#1f5fae; }
+:root { --ink:#10242b; --bg:#eef2f0; --panel:#fcfdfb; --line:#d5ddd9; --text:#33454c; --muted:#62737a; --a:#0b7a75; --a-soft:#dcefec; --b:#c2462b; --b-soft:#fbe7e1; --amber:#7a4e06; --amber-soft:#f6e7c9; --grey-soft:#e3e7e5; --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace; }
 * { box-sizing: border-box; }
-body { margin:0; font:14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color:var(--text); background:var(--bg); }
-header { display:flex; gap:16px; align-items:center; padding:10px 16px; background:var(--panel); border-bottom:1px solid var(--line); flex-wrap:wrap; }
-header h1 { font-size:16px; margin:0 12px 0 0; }
-select { font:inherit; padding:4px 6px; }
+body { margin:0; font:15px/1.45 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--text); background:var(--bg); }
+header { display:flex; gap:20px; align-items:center; padding:12px 20px; background:var(--ink); color:#eef3f1; flex-wrap:wrap; }
+header h1 { font-size:17px; font-weight:600; margin:0 8px 0 0; }
+header h1 span { color:#a7bab8; font-weight:400; }
+header label { color:#a7bab8; font-size:14px; }
+select { font:inherit; color:var(--ink); padding:5px 8px; border-radius:6px; border:0; margin-left:6px; }
 .chips { display:flex; gap:6px; flex-wrap:wrap; }
-.chip { border:1px solid var(--line); border-radius:12px; padding:2px 10px; cursor:pointer; user-select:none; background:#fff; }
-.chip.off { opacity:.4; }
-.layout { display:grid; grid-template-columns: 400px 1fr; gap:12px; padding:12px; height:calc(100vh - 58px); }
-.panel { background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:auto; }
-.list .row { display:grid; grid-template-columns: 80px 78px 1fr; gap:6px; padding:7px 10px; border-bottom:1px solid var(--line); cursor:pointer; font-size:13px; }
-.list .row:hover { background:#f0f4fa; }
-.list .row.sel { background:#e3edf9; }
-.badge { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.02em; }
-.v-different { color:var(--diff); } .v-review { color:var(--review); } .v-one_side { color:var(--one); } .v-same { color:var(--same); }
-.key { font-family: ui-monospace, Menlo, monospace; font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.detail { padding:14px 16px; }
-.detail h2 { font-size:15px; margin:0 0 4px; font-family: ui-monospace, Menlo, monospace; }
-.detail .sub { color:var(--muted); margin-bottom:12px; }
-.sides { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.side { border:1px solid var(--line); border-radius:8px; padding:10px 12px; }
-.side h3 { margin:0 0 6px; font-size:13px; color:var(--muted); font-weight:600; }
-.value { font-size:14px; margin-bottom:10px; }
-.src { background:#fafbfc; border:1px solid var(--line); border-radius:6px; padding:8px 10px; margin-top:8px; }
-.src .pg { font-size:12px; color:var(--muted); display:flex; justify-content:space-between; }
-.src mark { background:#fff3c4; padding:0 2px; }
-.src ul { margin:6px 0 0; padding-left:16px; font-family: ui-monospace, Menlo, monospace; font-size:12px; }
-.why { margin:12px 0 0; padding:8px 10px; border-left:3px solid var(--accent); background:#f2f6fb; }
-a { color:var(--accent); }
-.only { padding:8px 10px; font-size:13px; color:var(--muted); }
+.chip { border:1px solid #3a5560; color:#eef3f1; border-radius:999px; padding:3px 12px; cursor:pointer; user-select:none; font-size:13px; }
+.chip.off { opacity:.35; }
+.layout { display:grid; grid-template-columns: 430px 1fr; gap:14px; padding:14px; height:calc(100vh - 60px); }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:auto; }
+.list .row { display:grid; grid-template-columns: 92px 84px 1fr; gap:8px; align-items:center; padding:8px 12px; border-bottom:1px solid var(--line); border-left:4px solid transparent; cursor:pointer; font-size:14px; }
+.list .row:hover { background:#f1f5f3; }
+.list .row.sel { background:var(--a-soft); border-left-color:var(--a); }
+.pill { display:inline-block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.03em; padding:2px 8px; border-radius:999px; text-align:center; }
+.v-different { background:var(--b-soft); color:#a3361d; }
+.v-review { background:var(--amber-soft); color:var(--amber); }
+.v-one_side { background:var(--grey-soft); color:#4a5a60; }
+.v-same { background:var(--a-soft); color:#0b5c58; }
+.key { font-family:var(--mono); font-size:13px; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.detail { padding:18px 20px; }
+.detail h2 { font-family:var(--mono); font-size:20px; font-weight:500; color:var(--ink); margin:0 0 8px; }
+.meta { display:flex; gap:10px; align-items:center; color:var(--muted); font-size:14px; }
+.why { margin:14px 0 0; padding:10px 14px; border-left:4px solid var(--b); background:var(--b-soft); color:var(--ink); border-radius:0 8px 8px 0; font-size:15px; }
+.sides { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; }
+.side { border:1px solid var(--line); border-top:4px solid var(--a); border-radius:10px; padding:12px 14px; background:#fff; }
+.side.b { border-top-color:var(--b); }
+.side .who { display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+.side h3 { margin:0; font-size:16px; color:var(--ink); font-weight:600; }
+.tag { font-size:12px; font-weight:600; color:var(--a); }
+.side.b .tag { color:var(--b); }
+.rev { font-size:12px; color:var(--muted); margin:2px 0 10px; }
+.value { font-size:18px; font-weight:500; color:var(--ink); margin-bottom:10px; }
+.src { background:#f6f8f7; border:1px solid var(--line); border-radius:8px; padding:8px 10px; margin-top:8px; }
+.src .pg { font-size:13px; color:var(--muted); display:flex; justify-content:space-between; align-items:center; }
+.src a { font-size:12px; font-weight:600; color:var(--a); text-decoration:none; border:1px solid var(--a); border-radius:999px; padding:1px 10px; }
+.side.b .src a { color:var(--b); border-color:var(--b); }
+.src ul { margin:6px 0 0; padding-left:16px; font-family:var(--mono); font-size:12.5px; color:var(--ink); }
+.src mark { background:#fff1c2; padding:0 2px; }
+.only { padding:10px 12px; font-size:13px; color:var(--muted); }
 </style>
 </head>
 <body>
 <header>
-  <h1>EDI-identifier · comparison viewer <span style="color:var(--muted);font-weight:400">prototype</span></h1>
-  <label>Guides <select id="pair"></select></label>
+  <h1>EDI-identifier <span>· comparison viewer</span></h1>
+  <label>Guides<select id="pair"></select></label>
   <div class="chips" id="cats"></div>
   <div class="chips" id="verdicts"></div>
 </header>
@@ -69,7 +81,7 @@ function chips(id, values, set) {
   el(id).innerHTML = "";
   for (const v of values) {
     const c = document.createElement("span");
-    c.className = "chip" + (set.has(v) ? "" : " off") + (id === "verdicts" ? " v-" + v : "");
+    c.className = "chip" + (set.has(v) ? "" : " off");
     c.textContent = label(v);
     c.onclick = () => { set.has(v) ? set.delete(v) : set.add(v); state.sel = null; render(); };
     el(id).append(c);
@@ -81,9 +93,14 @@ function source(guideId, key, pages) {
   const ev = (g.evidence[key] || []).filter(e => pages.includes(e.page));
   return pages.map(p => {
     const items = ev.filter(e => e.page === p).flatMap(e => e.excerpt.split(" / ")).slice(0, 6);
-    return `<div class="src"><div class="pg"><span>${esc(g.partner)} · page ${p}</span><a href="${esc(g.url)}#page=${p}" target="_blank">open page ${p}</a></div>
+    return `<div class="src"><div class="pg"><span>Page ${p}</span><a href="${esc(g.url)}#page=${p}" target="_blank">Open page ${p} ↗</a></div>
       <ul>${items.map(x => `<li><mark>${esc(x)}</mark></li>`).join("")}</ul></div>`;
   }).join("");
+}
+
+function side(cls, tag, g, value, guideId, key, pages) {
+  return `<div class="side ${cls}"><div class="who"><h3>${esc(g.partner)}</h3><span class="tag">${tag}</span></div>
+    <div class="rev">${esc(g.revision)}</div><div class="value">${esc(value)}</div>${source(guideId, key, pages)}</div>`;
 }
 
 function render() {
@@ -96,7 +113,7 @@ function render() {
   for (const f of rows) {
     const d = document.createElement("div");
     d.className = "row" + (f === state.sel ? " sel" : "");
-    d.innerHTML = `<span class="badge v-${f.verdict}">${label(f.verdict)}</span><span>${f.category}</span><span class="key" title="${esc(f.left_key)}">${esc(f.left_key.split(":").pop())}</span>`;
+    d.innerHTML = `<span class="pill v-${f.verdict}">${label(f.verdict)}</span><span>${f.category}</span><span class="key" title="${esc(f.left_key)}">${esc(f.left_key.split(":").pop())}</span>`;
     d.onclick = () => { state.sel = f; render(); };
     el("list").append(d);
   }
@@ -107,11 +124,11 @@ function render() {
   const L = DATA.guides[r.left], R = DATA.guides[r.right];
   el("detail").innerHTML = `
     <h2>${esc(f.left_key)}${f.right_key !== f.left_key ? " = " + esc(f.right_key) : ""}</h2>
-    <div class="sub"><span class="badge v-${f.verdict}">${label(f.verdict)}</span> · ${f.category} · aligned by ${f.alignment}</div>
+    <div class="meta"><span class="pill v-${f.verdict}">${label(f.verdict)}</span><span>${f.category}</span><span>aligned by ${f.alignment}</span></div>
     ${f.detail ? `<div class="why">${esc(f.detail)}</div>` : ""}
-    <div class="sides" style="margin-top:12px">
-      <div class="side"><h3>${esc(L.partner)} · ${esc(L.revision)}</h3><div class="value">${esc(f.left)}</div>${source(r.left, f.left_key, f.left_pages)}</div>
-      <div class="side"><h3>${esc(R.partner)} · ${esc(R.revision)}</h3><div class="value">${esc(f.right)}</div>${source(r.right, f.right_key, f.right_pages)}</div>
+    <div class="sides">
+      ${side("a", "Partner A", L, f.left, r.left, f.left_key, f.left_pages)}
+      ${side("b", "Partner B", R, f.right, r.right, f.right_key, f.right_pages)}
     </div>`;
 }
 
