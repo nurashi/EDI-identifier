@@ -411,7 +411,8 @@ On the three development guides the extractor finds 118 of 118 reference require
 ### Repository and tracker
 
 - Repository: https://github.com/nurashi/EDI-identifier. `main` is the reviewed baseline; work is done in branches and merged through pull requests reviewed by another team member; CI must pass.
-- Tracker: GitHub issues with milestone "Approbation", grouped on the project board. Each task names the responsible student, expected outcome, acceptance criteria and deadline, and links the pull request and commits.
+- Tracker: YouTrack project DIP, https://edi-ide.youtrack.cloud/projects/DIP, with a Kanban board (Backlog, In Progress, Review, Done). Each task names the responsible student, expected outcome, acceptance criteria, deadline, priority, subsystem and target pre-defense, and links its commits and pull request. Branches are named after their task (`DIP-14-viewer-mockup`), commit titles end with the task ID, and pull requests list their tasks and how the work was checked.
+- At submission of pre-defense 1 the project holds 22 tasks: DIP-1 to DIP-8 done (repository and CI, schema, pilot corpus, alignment, divergence classification, extraction prototype, diagrams, README), DIP-9 to DIP-15 for this stage (report, user discussions, supervisor feedback, review, corpus verification, viewer mockup, submission), and DIP-16 to DIP-22 planned for the next stages with proposed deadlines.
 
 ### Responsibilities
 

@@ -47,7 +47,7 @@ Go and Gin for the backend and comparison engine, Python with poppler `pdftotext
 - [Pre-defense report](docs/report.md): proposal, relevance, literature, existing systems, technologies, requirements, architecture, prototype, evaluation plan, management and risks, supervisor feedback.
 - [Architecture diagrams](docs/diagrams): Graphviz sources and SVG exports.
 - [Requirement schema](docs/schema.md) and [pilot corpus](corpus/214-004010/README.md).
-- Tracker: [issues of the Approbation milestone](https://github.com/nurashi/EDI-identifier/milestone/1).
+- Tracker: [YouTrack project DIP](https://edi-ide.youtrack.cloud/projects/DIP) and its [Kanban board](https://edi-ide.youtrack.cloud/agiles/204-1/current).
 
 ## Repository layout
 
@@ -84,6 +84,7 @@ CI runs all of this on every pull request, including the download of the PDFs an
 
 ## Workflow
 
-- Every work item is an issue with the responsible student, expected outcome, acceptance criteria and deadline.
-- Work is done in a branch and reaches `main` through a pull request that references its issues, says how it was checked and is reviewed by another team member; CI must pass.
+- Every work item is a YouTrack task (`DIP-n`) with the responsible student, expected outcome, acceptance criteria, deadline, priority and target pre-defense.
+- Work is done in a branch named after the task (`DIP-14-viewer-mockup`); commit titles end with the task ID, for example `feat(report): add viewer mockup (DIP-14)`.
+- Changes reach `main` through a pull request that lists its tasks, says how it was checked and is reviewed by another team member; CI must pass. A task is closed only when its acceptance criteria are met.
 - Each pre-defense submission is tagged: `pre-defense-1`, `pre-defense-2`, `final-pre-defense`.
