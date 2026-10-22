@@ -426,6 +426,14 @@ On the three development guides the extractor finds 118 of 118 reference require
 | Asylan Usen | Guide selection, reference corpus and labelling, web viewer |
 | Anuar Zhenissov | PDF extraction and normalization |
 
+### Contributions to pre-defense 1
+
+| Member | Contribution | Where to see it |
+|---|---|---|
+| Nurassyl Orazbek | Requirement schema, pilot corpus, alignment and divergence classification, extraction prototype, CI, diagrams, viewer prototype, report | Commits in `main`; DIP-1 to DIP-9, DIP-14 |
+| Asylan Usen | Review and approval of PR #1; pre-defense preparation materials (draft PR #26) | PR #1 review; PR #26 |
+| Anuar Zhenissov | YouTrack project: fields, versions, board; verification of the pilot corpus | YouTrack project DIP; DIP-13 |
+
 ### Milestones
 
 | Date | Milestone | Content |
