@@ -55,11 +55,15 @@ Table: Scope of the project
 
 The guides follow no common layout, and the same requirement is written as a table value in one guide and as prose in another. One segment can have several definitions at one position, split by qualifier codes, so matching by segment name is wrong. Code lists can be given as an explicit list, as "all standard codes" or by reference to another element. Every extracted and compared value has to stay traceable to its page so that an engineer can check it. The prototype already covers these cases on three guides (Sections 7–9).
 
+### Team experience in the domain
+
+The project starts from a problem the team meets in practice. Nurassyl Orazbek works as a software engineer at a transportation management system vendor, where he builds integrations with carriers and logistics partners over ANSI X12 EDI and carrier APIs; the manual comparison of partner guides described above is part of that work, and it shapes his part of the project: the comparison engine, the backend and the evaluation. Asylan Usen has built full-stack web applications with client and server parts, the basis for the web viewer and its connection to the API. Anuar Zhenissov has experience collecting, cleaning and transforming heterogeneous data, the core of extracting requirements from guides of different layouts into one model, and has analysed the structure of public X12 214 guides of several companies. To avoid relying on the team's own view, the problem is also checked with integration engineers outside the team (Section 2).
+
 ## 2. Evidence of relevance
 
 ### What the evidence must show
 
-The requirements in Section 6 rest on four assumptions. Each is listed with the evidence that supports it so far and its status.
+The requirements in Section 6 rest on four assumptions. Each is listed with the evidence that supports it so far and its status. Published research on freight EDI guides is scarce (Section 3), so the evidence comes mainly from primary sources: the guides themselves and discussions with integration engineers.
 
 Table: Assumptions behind the requirements and their evidence
 
@@ -478,7 +482,7 @@ On the three development guides the extractor finds 118 of 118 reference require
 
 - Repository: https://github.com/nurashi/EDI-identifier. `main` is the reviewed baseline; work is done in branches and merged through pull requests reviewed by another team member; CI must pass.
 - Tracker: YouTrack project DIP, https://edi-ide.youtrack.cloud/projects/DIP, with a Kanban board (Backlog, In Progress, Review, Done). Each task names the responsible student, expected outcome, acceptance criteria, deadline, priority, subsystem and target pre-defense, and links its commits and pull request. Branches are named after their task (`DIP-14-viewer-mockup`), commit titles end with the task ID, and pull requests list their tasks and how the work was checked.
-- At submission of pre-defense 1 the project holds 22 tasks: DIP-1 to DIP-8 done (repository and CI, schema, pilot corpus, alignment, divergence classification, extraction prototype, diagrams, README), DIP-9 to DIP-15 for this stage (report, user discussions, supervisor feedback, review, corpus verification, viewer mockup, submission), and DIP-16 to DIP-22 planned for the next stages with proposed deadlines.
+- At submission of pre-defense 1 the project holds 27 tasks: 17 done (repository and CI, schema, pilot corpus, alignment, divergence classification, extraction prototype, diagrams, README, report, supervisor feedback, viewer mockup, CSV export, reviews, PDF identity check, machine-readable evaluation, submission), 3 in progress (further user discussions, verification of the corpus against the PDFs, web viewer) and 7 in the backlog for the next stages with proposed deadlines.
 
 ### Responsibilities
 
@@ -496,7 +500,7 @@ Table: Contributions to pre-defense 1
 
 | Member | Contribution | Where to see it |
 |---|---|---|
-| Nurassyl Orazbek | Requirement schema, pilot corpus, alignment and divergence classification, extraction prototype, CI, diagrams, viewer prototype, report | Commits in `main`; DIP-1 to DIP-9, DIP-14 |
+| Nurassyl Orazbek | Requirement schema, pilot corpus, alignment and divergence classification, extraction prototype, CI, diagrams, viewer prototype, CSV export, user discussions, report | Commits in `main`; DIP-1 to DIP-8, DIP-10, DIP-14, DIP-23, DIP-25 |
 | Asylan Usen | Review of PR #1; check of PDF identity before extraction and UTF-8 handling in the extractor and the prototype | PR #1 review; PR #26, DIP-26 |
 | Anuar Zhenissov | YouTrack project: fields, versions, board; machine-readable evaluation of the extractor in CI | YouTrack project DIP; PR #29, DIP-27 |
 
@@ -532,10 +536,17 @@ Table: Risks and mitigation
 
 ## 11. Supervisor feedback
 
+The supervisor, Elvira Aitmukhanbetova, reviewed the draft of this report, the repository and the YouTrack project in person.
+
 Table: Supervisor feedback and decisions
 
-| Date | Deliverable reviewed | Comment | Decision |
-|---|---|---|---|
+| Deliverable reviewed | Comment | Decision |
+|---|---|---|
+| Topic and problem statement | A strong topic. Few published articles support the problem statement, which is expected for a niche topic | Kept the topic and scope. The scarcity is stated as part of the research gap (Section 3), and Section 2 now says that the evidence comes mainly from primary sources: the guides and discussions with integration engineers |
+| Team | The report should state that the team has experience in this domain | Added "Team experience in the domain" to Section 1 |
+| Repository | Well organised | Kept the workflow: task branches, pull requests reviewed by another member, CI on every pull request |
+| YouTrack project | Set up well | Kept for the next stages; every task names its owner and links its pull request |
+| Pre-defense 1 materials as a whole | The effort is visible | Continue with the plan for pre-defense 2 (Section 10) |
 
 ## References
 
