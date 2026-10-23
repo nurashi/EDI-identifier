@@ -582,9 +582,9 @@ Xu, D., Chen, W., Peng, W., Zhang, C., Xu, T., Zhao, X., Wu, X., Zheng, Y., Wang
 
 Implementation guides of the pilot corpus. Revision, cover and printed dates are distinguished where they differ. SHA-256 hashes of the exact files are recorded in `corpus/214-004010/guides/*.json`.
 
-C.H. Robinson. (2022). *Truckload TL carrier X12-214 implementation guide* (Version 1.7 Final, modified 13 September 2022; page headers dated 12 October 2021). <https://www.chrobinson.com/en-us/-/media/chrobinson/documents/carrier-specs-docs/carrier-specs-dec-2020/chr-truckload-tl-carrier-x12-214.pdf>
+C.H. Robinson. (2022). *Truckload TL carrier X12-214 implementation guide* (Version 1.7 Final, modified 2022; page headers dated 2021). <https://www.chrobinson.com/en-us/-/media/chrobinson/documents/carrier-specs-docs/carrier-specs-dec-2020/chr-truckload-tl-carrier-x12-214.pdf>
 
-Domtar Industries. (2008). *Paper transportation EDI implementation guidelines: ASC X12 4010 214 transportation carrier shipment status message* (copy with internal headers and printed date of 24 September 2008; cover dated 12 March 2002). <https://www.iconnect-corp.com/specifications/vendors/Domtar/214SPECS_toolkit.pdf>
+Domtar Industries. (2008). *Paper transportation EDI implementation guidelines: ASC X12 4010 214 transportation carrier shipment status message* (copy with internal headers and printed date of 2008; cover dated 2002). <https://www.iconnect-corp.com/specifications/vendors/Domtar/214SPECS_toolkit.pdf>
 
-KBX Technology Solutions. (2023). *ASC X12 4010 214: Transportation carrier shipment status message* (latest change-summary entry 9 November 2023; page footers dated 9 May 2022). <https://kbx.com/wp-content/uploads/2025/09/KBXTECH214-1.pdf>
+KBX Technology Solutions. (2023). *ASC X12 4010 214: Transportation carrier shipment status message* (latest change-summary entry 2023; page footers dated 2022). <https://kbx.com/wp-content/uploads/2025/09/KBXTECH214-1.pdf>
 
