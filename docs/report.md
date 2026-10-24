@@ -4,7 +4,7 @@
 
 Astana IT University, School of Software Engineering, group SE-2405. Diploma project, team of three.
 Supervisor: Elvira Aitmukhanbetova, senior lecturer.
-Repository: https://github.com/nurashi/EDI-identifier, tag `pre-defense-1`.
+Repository: https://github.com/nurashi/EDI-identifier, tag `prob-period-1` (the same commit is tagged `pre-defense-1`).
 
 ## 1. Project proposal
 
@@ -355,7 +355,7 @@ The CLI `edi` uses the comparison engine and evidence checker directly and serve
 
 ![Component diagram (draft)](diagrams/components.svg)
 
-Diagram sources are in `docs/diagrams/*.dot` (Graphviz) and are exported to SVG.
+Editable diagram sources are in `docs/diagrams/*.dot` (Graphviz) and are exported to SVG: <https://github.com/nurashi/EDI-identifier/tree/prob-period-1/docs/diagrams>.
 
 ### Alignment of use cases, requirements and components
 
@@ -375,6 +375,13 @@ Table: Alignment of use cases, requirements and components
 ## 8. Prototype
 
 The prototype consists of the command line with its input and output data, and a clickable viewer prototype on real data.
+
+- Viewer prototype, opens in the browser: <https://raw.githack.com/nurashi/EDI-identifier/prob-period-1/prototype/viewer.html>
+- Viewer source and generator: <https://github.com/nurashi/EDI-identifier/tree/prob-period-1/prototype>
+- Command line and comparison engine: <https://github.com/nurashi/EDI-identifier/tree/prob-period-1/backend>
+- Extractor: <https://github.com/nurashi/EDI-identifier/tree/prob-period-1/extractor>
+- Pilot corpus: <https://github.com/nurashi/EDI-identifier/tree/prob-period-1/corpus/214-004010>
+- Requirement schema: <https://github.com/nurashi/EDI-identifier/blob/prob-period-1/schema/guide.schema.json>
 
 ### Extract a guide from its PDF
 
@@ -480,6 +487,7 @@ On the three development guides the extractor finds 118 of 118 reference require
 
 ### Repository and tracker
 
+- This report matches the tag `prob-period-1`, <https://github.com/nurashi/EDI-identifier/tree/prob-period-1>; the same commit is tagged `pre-defense-1`. CI runs: <https://github.com/nurashi/EDI-identifier/actions>.
 - Repository: https://github.com/nurashi/EDI-identifier. `main` is the reviewed baseline; work is done in branches and merged through pull requests reviewed by another team member; CI must pass.
 - Tracker: YouTrack project DIP, https://edi-ide.youtrack.cloud/projects/DIP, with a Kanban board (Backlog, In Progress, Review, Done). Each task names the responsible student, expected outcome, acceptance criteria, deadline, priority, subsystem and target pre-defense, and links its commits and pull request. Branches are named after their task (`DIP-14-viewer-mockup`), commit titles end with the task ID, and pull requests list their tasks and how the work was checked.
 - At submission of pre-defense 1 the project holds 27 tasks: 17 done (repository and CI, schema, pilot corpus, alignment, divergence classification, extraction prototype, diagrams, README, report, supervisor feedback, viewer mockup, CSV export, reviews, PDF identity check, machine-readable evaluation, submission), 3 in progress (further user discussions, verification of the corpus against the PDFs, web viewer) and 7 in the backlog for the next stages with proposed deadlines.
