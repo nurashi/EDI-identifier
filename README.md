@@ -45,6 +45,7 @@ Go and Gin for the backend and comparison engine, Python with poppler `pdftotext
 ## Documentation and tracker
 
 - [Pre-defense report](docs/report.md): proposal, relevance, literature, existing systems, technologies, requirements, architecture, prototype, evaluation plan, management and risks, supervisor feedback.
+- [Pre-defense report as PDF](docs/SE-2405_Orazbek_ProbPeriod1.pdf): the consolidated report submitted for the approbation period, built from `docs/report.md` at tag `prob-period-1`.
 - [Architecture diagrams](docs/diagrams): Graphviz sources and SVG exports.
 - [Requirement schema](docs/schema.md) and [pilot corpus](corpus/214-004010/README.md).
 - Tracker: [YouTrack project DIP](https://edi-ide.youtrack.cloud/projects/DIP) and its [Kanban board](https://edi-ide.youtrack.cloud/agiles/204-1/current).
